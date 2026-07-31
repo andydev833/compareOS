@@ -4,10 +4,13 @@
  * サイト共通ヘッダー
  */
 import { markets } from '../../data/markets.js';
+import { loadJsonMarkets } from '../../lib/loadMarkets.js';
 
-const equipmentMarkets = markets.filter((m) => m.category === 'equipment');
-const officeMarkets = markets.filter((m) => m.category === 'office');
-const hrMarkets = markets.filter((m) => m.category === 'hr-marketing');
+const allMarkets = [...markets, ...loadJsonMarkets().map((jm) => jm.market)];
+const equipmentMarkets = allMarkets.filter((m) => m.category === 'equipment');
+const officeMarkets = allMarkets.filter((m) => m.category === 'office');
+const hrMarkets = allMarkets.filter((m) => m.category === 'hr-marketing');
+const lifeMarkets = allMarkets.filter((m) => m.category === 'life');
 
 const currentPath = Astro.url.pathname;
 ---
@@ -87,6 +90,29 @@ const currentPath = Astro.url.pathname;
             </div>
           </li>
 
+          {lifeMarkets.length > 0 && (
+            <li class="site-header__nav-item site-header__nav-item--dropdown">
+              <button
+                class="site-header__nav-trigger"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls="dropdown-life"
+              >
+                暮らし・パーソナル
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="site-header__dropdown" id="dropdown-life" role="list">
+                {lifeMarkets.map((market) => (
+                  <a href={`/${market.slug}/`} class="site-header__dropdown-item" role="listitem">
+                    {market.shortName}
+                  </a>
+                ))}
+              </div>
+            </li>
+          )}
+
           <li class="site-header__nav-item">
             <a href="/about/" class="site-header__nav-link">運営について</a>
           </li>
@@ -145,6 +171,20 @@ const currentPath = Astro.url.pathname;
             ))}
           </ul>
         </div>
+        {lifeMarkets.length > 0 && (
+          <div class="site-header__mobile-section">
+            <p class="site-header__mobile-category">暮らし・パーソナル</p>
+            <ul role="list">
+              {lifeMarkets.map((market) => (
+                <li>
+                  <a href={`/${market.slug}/`} class="site-header__mobile-link">
+                    {market.shortName}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div class="site-header__mobile-section">
           <ul role="list">
             <li><a href="/about/" class="site-header__mobile-link">運営について</a></li>

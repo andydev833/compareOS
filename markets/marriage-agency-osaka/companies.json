@@ -1,0 +1,98 @@
+[
+  {
+    "id": "partner-agent-osaka",
+    "name": "パートナーエージェント 大阪店",
+    "officialUrl": "https://www.p-a.jp/branch/kansai/index_osaka.html",
+    "areas": ["大阪市北区", "梅田"],
+    "address": "大阪府大阪市北区曽根崎2-16-19 メッセージ梅田ビル8階",
+    "price": {
+      "initial": null,
+      "monthly": null,
+      "successFee": null,
+      "note": "料金は公式サイトで公開されていないため要問い合わせ。"
+    },
+    "features": ["関西エリアに大阪店・天王寺店を展開", "定休日は火曜日"],
+    "freeConsultation": null,
+    "onlineAvailable": null,
+    "weekendAvailable": null,
+    "sources": [
+      {
+        "url": "https://www.p-a.jp/branch/kansai/index_osaka.html",
+        "type": "official",
+        "checkedAt": "2026-07-31"
+      }
+    ]
+  },
+  {
+    "id": "ibj-members-osaka",
+    "name": "IBJメンバーズ 大阪店",
+    "officialUrl": "https://www.loungemembers.com/osaka/",
+    "areas": ["大阪市北区", "梅田"],
+    "address": "大阪府大阪市北区梅田2-1-3 桜橋御幸ビル4階",
+    "price": {
+      "initial": null,
+      "monthly": null,
+      "successFee": null,
+      "note": "公式サイトに料金ページへの案内はあるが、当ページ確認時点で具体的な金額の記載は未確認。"
+    },
+    "features": ["無料カウンセリングを実施", "営業時間10:00〜19:00", "定休日は火曜日"],
+    "freeConsultation": true,
+    "onlineAvailable": null,
+    "weekendAvailable": null,
+    "sources": [
+      {
+        "url": "https://www.loungemembers.com/osaka/",
+        "type": "official",
+        "checkedAt": "2026-07-31"
+      }
+    ]
+  },
+  {
+    "id": "zwei-osaka",
+    "name": "ツヴァイ（ZWEI）",
+    "officialUrl": "https://www.zwei.com/",
+    "areas": ["大阪"],
+    "address": null,
+    "price": {
+      "initial": 118800,
+      "monthly": 15950,
+      "successFee": 0,
+      "note": "紹介プラン（税込）の場合。IBJプランは入会金129,800円/月会費18,700円/成婚料220,000円（税込、IBJ会員との成婚時のみ）。20代割等の割引プランあり。詳細・大阪店の店舗情報は公式サイトで要確認。"
+    },
+    "features": ["業界最大級クラスの会員数・全国53店舗", "マッチング無料体験を実施", "料金プランが複数用意されている"],
+    "freeConsultation": true,
+    "onlineAvailable": null,
+    "weekendAvailable": null,
+    "sources": [
+      {
+        "url": "https://www.zwei.com/price_2/",
+        "type": "official",
+        "checkedAt": "2026-07-31"
+      }
+    ]
+  },
+  {
+    "id": "sunmarie-osaka",
+    "name": "サンマリエ 大阪心斎橋サロン",
+    "officialUrl": "https://www.sunmarie.co.jp/store/kinki/shinsaibashi/",
+    "areas": ["心斎橋", "大阪市中央区"],
+    "address": null,
+    "price": {
+      "initial": null,
+      "monthly": null,
+      "successFee": null,
+      "note": "公式店舗ページに具体的な金額の記載は未確認。要問い合わせ。"
+    },
+    "features": ["無料カウンセリング体験を実施"],
+    "freeConsultation": true,
+    "onlineAvailable": null,
+    "weekendAvailable": null,
+    "sources": [
+      {
+        "url": "https://www.sunmarie.co.jp/store/kinki/shinsaibashi/",
+        "type": "official",
+        "checkedAt": "2026-07-31"
+      }
+    ]
+  }
+]

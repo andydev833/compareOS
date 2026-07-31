@@ -26,7 +26,7 @@ export type InfoStatus =
 // ------------------------------------
 // 市場カテゴリー
 // ------------------------------------
-export type MarketCategory = 'equipment' | 'office' | 'hr-marketing';
+export type MarketCategory = 'equipment' | 'office' | 'hr-marketing' | 'life';
 
 // ------------------------------------
 // FAQ

@@ -1,0 +1,37 @@
+---
+/**
+ * ArticleSection.astro
+ * ガイドページ内の1セクション（見出し + 本文）を描画する
+ */
+export interface Props {
+  heading: string;
+  body: string;
+}
+
+const { heading, body } = Astro.props;
+const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+---
+
+<section class="article-section">
+  <h2>{heading}</h2>
+  {paragraphs.map((paragraph) => (
+    <p>{paragraph}</p>
+  ))}
+</section>
+
+<style>
+.article-section {
+  margin-bottom: var(--space-8);
+}
+
+.article-section h2 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-4);
+}
+
+.article-section p {
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-4);
+}
+</style>

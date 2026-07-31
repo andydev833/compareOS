@@ -64,7 +64,7 @@ export function getBreadcrumbSchema(items: { name: string; href: string }[]) {
 /**
  * 市場トップのItemList構造化データ
  */
-export function getMarketItemListSchema(market: Market, companies: Company[]) {
+export function getMarketItemListSchema(market: Pick<Market, 'h1' | 'description' | 'slug'>, companies: Company[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -83,7 +83,7 @@ export function getMarketItemListSchema(market: Market, companies: Company[]) {
 /**
  * 企業詳細のOrganization構造化データ
  */
-export function getCompanySchema(company: Company, market: Market) {
+export function getCompanySchema(company: Company, _market?: unknown) {
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Organization',

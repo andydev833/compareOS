@@ -1,0 +1,21 @@
+{
+  "id": "marriage-agency-osaka",
+  "slug": "marriage-agency-osaka",
+  "name": "大阪の結婚相談所",
+  "shortName": "結婚相談所",
+  "category": "life",
+  "primaryArea": "大阪",
+  "secondaryArea": "関西",
+  "primaryKeyword": "大阪 結婚相談所 おすすめ",
+  "businessModel": "listing",
+  "status": "published",
+  "h1": "大阪の結婚相談所を比較",
+  "catchCopy": "大阪の結婚相談所を、料金・無料相談の有無・対応エリアで比較",
+  "subCopy": "公式サイト等の公開情報を基に整理しています。掲載企業は順次拡大予定です。",
+  "description": "大阪府内・梅田や心斎橋を中心に活動する結婚相談所の情報を、公式サイトに基づいて整理しています。",
+  "targetUser": ["婚活を始めたい方", "複数の結婚相談所を比較したい方", "大阪・関西エリアで通いやすい相談所を探したい方"],
+  "conversionGoal": "掲載企業の公式サイト・無料相談への送客",
+  "monetization": "掲載課金・PR掲載",
+  "createdAt": "2026-07-31",
+  "updatedAt": "2026-07-31"
+}

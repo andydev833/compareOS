@@ -1,0 +1,107 @@
+---
+/**
+ * ComparisonPage.astro
+ * JSON駆動市場の "comparison" ページ（例: 料金比較）
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import ComparisonTable from '../components/market/ComparisonTable.astro';
+import FAQAccordion from '../components/ui/FAQAccordion.astro';
+import RelatedPages from '../components/ui/RelatedPages.astro';
+import SourceList from '../components/ui/SourceList.astro';
+import UpdateNotice from '../components/ui/UpdateNotice.astro';
+import type { Company } from '../data/types.js';
+import type { SimpleMarket } from '../lib/loadMarkets.js';
+import type { PageJson } from '../lib/marketSchema.js';
+import { getArticleSchema, getFAQSchema } from '../utils/seo.js';
+import { pagePath } from '../lib/pagePath.js';
+
+export interface Props {
+  market: SimpleMarket;
+  companies: Company[];
+  pages: PageJson[];
+  page: Extract<PageJson, { type: 'comparison' }>;
+}
+
+const { market, companies, pages, page } = Astro.props;
+
+const targetCompanies =
+  page.companyIds.length > 0 ? companies.filter((c) => page.companyIds.includes(c.id)) : companies;
+
+const breadcrumbItems = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: page.h1, href: pagePath(market.slug, page.slug) },
+];
+
+const canonical = pagePath(market.slug, page.slug);
+const jsonLd = [
+  getArticleSchema({ title: page.title, description: page.description || market.description, url: canonical, dateModified: market.checkedDate }),
+  ...(page.faqs.length > 0 ? [getFAQSchema(page.faqs)] : []),
+];
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description || market.description}
+  canonical={canonical}
+  jsonLd={jsonLd}
+  noindex={!page.index}
+>
+  <SiteHeader slot="header" />
+
+  <div class="container">
+    <Breadcrumbs items={breadcrumbItems} />
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <h1>{page.h1}</h1>
+      {page.intro && <p class="section-subtitle">{page.intro}</p>}
+    </div>
+  </section>
+
+  {targetCompanies.length > 0 ? (
+    <section class="section section--muted">
+      <div class="container">
+        <ComparisonTable
+          companies={targetCompanies}
+          comparisonItems={market.comparisonItems}
+          marketSlug={market.slug}
+          caption={`${page.h1}（公開情報に基づく）`}
+        />
+      </div>
+    </section>
+  ) : (
+    <section class="section">
+      <div class="container">
+        <p class="section-subtitle">現在調査中です。比較対象企業が確定次第、順次追加します。</p>
+      </div>
+    </section>
+  )}
+
+  {page.faqs.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">よくある質問</h2>
+        <FAQAccordion faqs={page.faqs} />
+      </div>
+    </section>
+  )}
+
+  <section class="section section--muted">
+    <div class="container">
+      <UpdateNotice checkedDate={market.checkedDate} />
+      <div style="margin-top: var(--space-5)">
+        <SourceList companies={targetCompanies} />
+      </div>
+      <div style="margin-top: var(--space-5)">
+        <RelatedPages pages={pages} marketSlug={market.slug} currentSlug={page.slug} />
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
