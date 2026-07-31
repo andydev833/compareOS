@@ -1,0 +1,35 @@
+---
+/**
+ * JSON駆動市場（markets 配下の各ディレクトリ）の追加ページ（comparison / area / guide）
+ * pages.json の slug!=="/" のエントリのみを生成する。
+ * レガシー12市場は pages.json を持たないため、このルートには一切影響しない。
+ */
+import { loadJsonMarkets } from '../../lib/loadMarkets.js';
+import ComparisonPage from '../../templates/ComparisonPage.astro';
+import AreaPage from '../../templates/AreaPage.astro';
+import GuidePage from '../../templates/GuidePage.astro';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  const paths = [];
+  for (const jm of loadJsonMarkets()) {
+    for (const page of jm.pages) {
+      if (page.slug === '/') continue; // ranking(トップ)は [marketSlug]/index.astro が担当
+      const segments = page.slug.replace(/^\/|\/$/g, '');
+      paths.push({
+        params: { marketSlug: jm.market.slug, pageSlug: segments },
+        props: { market: jm.market, companies: jm.companies, pages: jm.pages, page },
+      });
+    }
+  }
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { market, companies, pages, page } = Astro.props;
+---
+
+{page.type === 'comparison' && (
+  <ComparisonPage market={market} companies={companies} pages={pages} page={page} />
+)}
+{page.type === 'area' && <AreaPage market={market} companies={companies} pages={pages} page={page} />}
+{page.type === 'guide' && <GuidePage market={market} companies={companies} pages={pages} page={page} />}

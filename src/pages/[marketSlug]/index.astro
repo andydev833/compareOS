@@ -20,31 +20,55 @@ import UpdateNotice from '../../components/ui/UpdateNotice.astro';
 import { markets, marketsBySlug } from '../../data/markets.js';
 import { companiesByMarket } from '../../data/companies/other-markets.js';
 import { getMarketItemListSchema, getFAQSchema } from '../../utils/seo.js';
-import type { GetStaticPaths } from 'astro';
+import { loadJsonMarkets } from '../../lib/loadMarkets.js';
+import RankingPage from '../../templates/RankingPage.astro';
 
+/**
+ * このルートはレガシー市場（src/data/markets.ts）と
+ * JSON駆動市場（markets 配下の各ディレクトリ）の両方をマージして生成する。
+ * JSON駆動市場は RankingPage テンプレートに委譲し、以下の既存マークアップには影響しない。
+ */
 export const getStaticPaths = (() => {
   const EXCLUDED_SLUGS = ['commercial-aircon'];
-  return markets
+  const legacyPaths = markets
     .filter((m) => !EXCLUDED_SLUGS.includes(m.slug))
     .map((market) => ({
       params: { marketSlug: market.slug },
-      props: { market },
+      props: { jsonDriven: false, market },
     }));
-}) satisfies GetStaticPaths;
 
-const { market } = Astro.props;
-const companies = companiesByMarket[market.id] || [];
+  const jsonPaths = loadJsonMarkets().map((jm) => ({
+    params: { marketSlug: jm.market.slug },
+    props: {
+      jsonDriven: true,
+      market: jm.market,
+      companies: jm.companies,
+      pages: jm.pages,
+      page: jm.pages.find((p) => p.slug === '/' && p.type === 'ranking'),
+    },
+  }));
+
+  return [...legacyPaths, ...jsonPaths];
+});
+
+const props = Astro.props as any;
+const jsonDriven = props.jsonDriven as boolean;
+const market = props.market;
+const companies = jsonDriven ? props.companies : (companiesByMarket[market.id] || []);
 
 const breadcrumbItems = [
   { name: 'ホーム', href: '/' },
   { name: market.shortName, href: `/${market.slug}/` },
 ];
 
-const jsonLd = [
-  getMarketItemListSchema(market, companies),
-  getFAQSchema(market.faqs),
-];
+const jsonLd = jsonDriven
+  ? []
+  : [getMarketItemListSchema(market, companies), getFAQSchema(market.faqs)];
 ---
+
+{jsonDriven ? (
+  <RankingPage market={market} companies={companies} pages={props.pages} page={props.page} />
+) : (
 
 <BaseLayout
   title={`${market.h1} | compareOS`}
@@ -168,6 +192,8 @@ const jsonLd = [
 
   <SiteFooter slot="footer" />
 </BaseLayout>
+
+)}
 
 <style>
 .market-hero {

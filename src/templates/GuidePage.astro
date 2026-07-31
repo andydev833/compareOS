@@ -1,0 +1,82 @@
+---
+/**
+ * GuidePage.astro
+ * JSON駆動市場の "guide" ページ（例: 選び方ガイド）
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import ArticleSection from '../components/ui/ArticleSection.astro';
+import FAQAccordion from '../components/ui/FAQAccordion.astro';
+import RelatedPages from '../components/ui/RelatedPages.astro';
+import UpdateNotice from '../components/ui/UpdateNotice.astro';
+import type { Company } from '../data/types.js';
+import type { SimpleMarket } from '../lib/loadMarkets.js';
+import type { PageJson } from '../lib/marketSchema.js';
+import { getArticleSchema, getFAQSchema } from '../utils/seo.js';
+import { pagePath } from '../lib/pagePath.js';
+
+export interface Props {
+  market: SimpleMarket;
+  companies: Company[];
+  pages: PageJson[];
+  page: Extract<PageJson, { type: 'guide' }>;
+}
+
+const { market, pages, page } = Astro.props;
+
+const breadcrumbItems = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: page.h1, href: pagePath(market.slug, page.slug) },
+];
+
+const canonical = pagePath(market.slug, page.slug);
+const jsonLd = [
+  getArticleSchema({ title: page.title, description: page.description || market.description, url: canonical, dateModified: market.checkedDate }),
+  ...(page.faqs.length > 0 ? [getFAQSchema(page.faqs)] : []),
+];
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description || market.description}
+  canonical={canonical}
+  jsonLd={jsonLd}
+  ogType="article"
+  noindex={!page.index}
+>
+  <SiteHeader slot="header" />
+
+  <div class="container">
+    <Breadcrumbs items={breadcrumbItems} />
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width: var(--content-width)">
+      <h1>{page.h1}</h1>
+      {page.intro && <p class="section-subtitle">{page.intro}</p>}
+
+      {page.sections.map((section) => (
+        <ArticleSection heading={section.heading} body={section.body} />
+      ))}
+
+      {page.faqs.length > 0 && (
+        <section class="section" style="padding-block: var(--space-8) 0;">
+          <h2 class="section-title">よくある質問</h2>
+          <FAQAccordion faqs={page.faqs} />
+        </section>
+      )}
+
+      <div style="margin-top: var(--space-10)">
+        <UpdateNotice checkedDate={market.checkedDate} />
+      </div>
+      <div style="margin-top: var(--space-5)">
+        <RelatedPages pages={pages} marketSlug={market.slug} currentSlug={page.slug} />
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>

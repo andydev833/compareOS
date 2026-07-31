@@ -4,10 +4,13 @@
  * サイト共通フッター
  */
 import { markets } from '../../data/markets.js';
+import { loadJsonMarkets } from '../../lib/loadMarkets.js';
 
-const equipmentMarkets = markets.filter((m) => m.category === 'equipment');
-const officeMarkets = markets.filter((m) => m.category === 'office');
-const hrMarkets = markets.filter((m) => m.category === 'hr-marketing');
+const allMarkets = [...markets, ...loadJsonMarkets().map((jm) => jm.market)];
+const equipmentMarkets = allMarkets.filter((m) => m.category === 'equipment');
+const officeMarkets = allMarkets.filter((m) => m.category === 'office');
+const hrMarkets = allMarkets.filter((m) => m.category === 'hr-marketing');
+const lifeMarkets = allMarkets.filter((m) => m.category === 'life');
 
 const currentYear = new Date().getFullYear();
 ---
@@ -66,6 +69,16 @@ const currentYear = new Date().getFullYear();
               <li><a href={`/${market.slug}/`}>{market.shortName}</a></li>
             ))}
           </ul>
+          {lifeMarkets.length > 0 && (
+            <>
+              <p class="site-footer__nav-title" style="margin-top: var(--space-5)">暮らし・パーソナル</p>
+              <ul role="list">
+                {lifeMarkets.map((market) => (
+                  <li><a href={`/${market.slug}/`}>{market.shortName}</a></li>
+                ))}
+              </ul>
+            </>
+          )}
         </nav>
 
         <!-- サイト情報 -->

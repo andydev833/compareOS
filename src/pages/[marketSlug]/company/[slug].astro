@@ -15,6 +15,7 @@ import { getInfoStatusClass } from '../../../utils/filters.js';
 import { getCompanySchema } from '../../../utils/seo.js';
 import { markets, marketsBySlug } from '../../../data/markets.js';
 import { companiesByMarket, allCompanies } from '../../../data/companies/other-markets.js';
+import { loadJsonMarkets } from '../../../lib/loadMarkets.js';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (() => {
@@ -27,6 +28,15 @@ export const getStaticPaths = (() => {
       paths.push({
         params: { marketSlug: market.slug, slug: company.slug },
         props: { company, market },
+      });
+    }
+  }
+  // JSON駆動市場（markets/*/）の企業も同じ企業詳細テンプレートで生成する
+  for (const jm of loadJsonMarkets()) {
+    for (const company of jm.companies) {
+      paths.push({
+        params: { marketSlug: jm.market.slug, slug: company.slug },
+        props: { company, market: jm.market },
       });
     }
   }

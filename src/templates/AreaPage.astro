@@ -1,0 +1,112 @@
+---
+/**
+ * AreaPage.astro
+ * JSON駆動市場の "area" ページ（例: 梅田 結婚相談所）
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import CompanyCard from '../components/company/CompanyCard.astro';
+import AreaLinks from '../components/market/AreaLinks.astro';
+import RelatedPages from '../components/ui/RelatedPages.astro';
+import SourceList from '../components/ui/SourceList.astro';
+import UpdateNotice from '../components/ui/UpdateNotice.astro';
+import type { Company } from '../data/types.js';
+import type { SimpleMarket } from '../lib/loadMarkets.js';
+import type { PageJson } from '../lib/marketSchema.js';
+import { getArticleSchema } from '../utils/seo.js';
+import { pagePath } from '../lib/pagePath.js';
+
+export interface Props {
+  market: SimpleMarket;
+  companies: Company[];
+  pages: PageJson[];
+  page: Extract<PageJson, { type: 'area' }>;
+}
+
+const { market, companies, pages, page } = Astro.props;
+
+const targetCompanies =
+  page.companyIds.length > 0
+    ? companies.filter((c) => page.companyIds.includes(c.id))
+    : companies.filter((c) => c.region.prefectures.includes(page.areaName));
+
+const breadcrumbItems = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: page.h1, href: pagePath(market.slug, page.slug) },
+];
+
+const canonical = pagePath(market.slug, page.slug);
+const jsonLd = getArticleSchema({
+  title: page.title,
+  description: page.description || market.description,
+  url: canonical,
+  dateModified: market.checkedDate,
+});
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description || market.description}
+  canonical={canonical}
+  jsonLd={jsonLd}
+  noindex={!page.index}
+>
+  <SiteHeader slot="header" />
+
+  <div class="container">
+    <Breadcrumbs items={breadcrumbItems} />
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <h1>{page.h1}</h1>
+      {page.intro && <p class="section-subtitle">{page.intro}</p>}
+      <div style="margin-top: var(--space-5)">
+        <AreaLinks pages={pages} marketSlug={market.slug} currentAreaName={page.areaName} />
+      </div>
+    </div>
+  </section>
+
+  {targetCompanies.length > 0 ? (
+    <section class="section section--muted">
+      <div class="container">
+        <div class="companies-list">
+          {targetCompanies.map((company) => (
+            <CompanyCard company={company} marketSlug={market.slug} showCompareCheckbox={false} />
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="section">
+      <div class="container">
+        <p class="section-subtitle">{page.areaName}エリアで公式情報上の対応が確認できる企業は現在調査中です。</p>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <UpdateNotice checkedDate={market.checkedDate} />
+      <div style="margin-top: var(--space-5)">
+        <SourceList companies={targetCompanies} />
+      </div>
+      <div style="margin-top: var(--space-5)">
+        <RelatedPages pages={pages} marketSlug={market.slug} currentSlug={page.slug} />
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.companies-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+</style>

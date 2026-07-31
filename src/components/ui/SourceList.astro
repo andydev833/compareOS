@@ -1,0 +1,57 @@
+---
+/**
+ * SourceList.astro
+ * ページ内で参照した企業の情報源を集約表示する（AEO: 情報源の明示）
+ */
+import type { Company } from '../../data/types.js';
+
+export interface Props {
+  companies: Company[];
+}
+
+const { companies } = Astro.props;
+
+const seen = new Set<string>();
+const sources = companies
+  .flatMap((c) => c.sources.map((s) => ({ ...s, companyName: c.name })))
+  .filter((s) => {
+    if (seen.has(s.url)) return false;
+    seen.add(s.url);
+    return true;
+  })
+  .sort((a, b) => (a.checkedDate < b.checkedDate ? 1 : -1));
+---
+
+{sources.length > 0 && (
+  <div class="source-list">
+    <p class="source-list__label">情報源</p>
+    <ul>
+      {sources.map((source) => (
+        <li>
+          <a href={source.url} target="_blank" rel="noopener noreferrer" class="link--external">
+            {source.companyName} - {source.label}
+          </a>
+          <span class="text-muted text-xs">（確認日：{source.checkedDate}）</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
+<style>
+.source-list {
+  font-size: var(--font-size-sm);
+}
+
+.source-list__label {
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.source-list ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+</style>
