@@ -1,0 +1,41 @@
+---
+/**
+ * ListingTypeBadge.astro
+ * 掲載区分バッジ（DEMO / PR / 通常掲載）
+ */
+import type { ListingType } from '../../data/types.js';
+
+export interface Props {
+  type: ListingType;
+  size?: 'sm' | 'md';
+}
+
+const { type, size = 'md' } = Astro.props;
+
+const labels: Record<ListingType, string> = {
+  demo: 'DEMO',
+  pr: 'PR',
+  standard: '通常掲載',
+};
+
+const ariaLabels: Record<ListingType, string> = {
+  demo: 'これはデモデータです。実在企業ではありません。',
+  pr: 'この企業は広告掲載（有料）です。',
+  standard: '通常掲載',
+};
+---
+
+<span
+  class={`badge badge--${type} ${size === 'sm' ? 'badge--sm' : ''}`}
+  aria-label={ariaLabels[type]}
+  title={ariaLabels[type]}
+>
+  {labels[type]}
+</span>
+
+<style>
+.badge--sm {
+  font-size: 10px;
+  padding: 1px 6px;
+}
+</style>

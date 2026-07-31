@@ -1,0 +1,123 @@
+---
+/**
+ * 404エラーページ
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import { markets } from '../data/markets.js';
+---
+
+<BaseLayout
+  title="ページが見つかりません | compareOS"
+  description="お探しのページは見つかりませんでした。"
+  canonical="/404/"
+  noindex={true}
+>
+  <SiteHeader slot="header" />
+
+  <div class="not-found">
+    <div class="container">
+      <div class="not-found__inner">
+        <div class="not-found__code" aria-hidden="true">404</div>
+        <h1 class="not-found__title">ページが見つかりません</h1>
+        <p class="not-found__desc">
+          お探しのページは削除、移動、またはURLが変更された可能性があります。
+        </p>
+
+        <div class="not-found__actions">
+          <a href="/" class="btn btn--primary btn--lg">トップページへ戻る</a>
+          <a href="/methodology/" class="btn btn--ghost">調査・比較方針</a>
+        </div>
+
+        <div class="not-found__markets">
+          <p class="not-found__markets-title">掲載している市場</p>
+          <ul class="not-found__markets-list">
+            {markets.map((market) => (
+              <li>
+                <a href={`/${market.slug}/`}>{market.shortName}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.not-found {
+  padding-block: var(--space-20);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.not-found__inner {
+  max-width: 600px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.not-found__code {
+  font-size: 96px;
+  font-weight: 700;
+  color: var(--color-bg-muted);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.05em;
+}
+
+.not-found__title {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-4);
+}
+
+.not-found__desc {
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--space-8);
+}
+
+.not-found__actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-12);
+}
+
+.not-found__markets-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-4);
+}
+
+.not-found__markets-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+.not-found__markets-list a {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-light);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  text-decoration: none;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.not-found__markets-list a:hover {
+  background-color: var(--color-primary-pale);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+</style>

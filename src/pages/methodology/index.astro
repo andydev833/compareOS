@@ -1,0 +1,130 @@
+---
+/**
+ * 調査・比較方針ページ
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: '調査・比較方針', href: '/methodology/' },
+];
+---
+
+<BaseLayout
+  title="調査・比較方針 | compareOS 大阪法人向けサービス比較"
+  description="compareOSの調査方針、掲載基準、情報収集方法、免責事項について説明します。"
+  canonical="/methodology/"
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container page-content" style="max-width: var(--content-width); padding-block: var(--space-10)">
+    <h1>調査・比較方針</h1>
+
+    <div class="info-notice" style="margin-bottom: var(--space-8)">
+      <strong>このページの目的：</strong>
+      掲載情報がどのように収集・整理され、どのような基準で掲載されているかを透明性をもって説明します。
+    </div>
+
+    <section class="page-section">
+      <h2>情報収集の方法</h2>
+      <p>このサイトが掲載する情報は、以下の公開情報のみを使用しています。</p>
+      <ul class="page-list">
+        <li>各社の公式ウェブサイト</li>
+        <li>公式のプレスリリース・ニュースリリース</li>
+        <li>公式SNSアカウント（法人公式のもの）</li>
+        <li>政府・自治体の公開データベース（登記情報等）</li>
+      </ul>
+      <p style="margin-top: var(--space-4)">
+        クチコミサイト・比較サイト・まとめ記事などの第三者が作成した情報は使用しません。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>情報の記載方針</h2>
+      <dl class="method-dl">
+        <div class="method-dl__item">
+          <dt>「対応」と記載する場合</dt>
+          <dd>公式サイト等に、その内容への対応が明記されていることを確認した場合</dd>
+        </div>
+        <div class="method-dl__item">
+          <dt>「公式サイトで確認できず」と記載する場合</dt>
+          <dd>公開情報での確認ができなかった場合。非対応を意味するわけではありません。最新情報は各社へお問い合わせください</dd>
+        </div>
+        <div class="method-dl__item">
+          <dt>「公開情報の範囲で記載」と記載する場合</dt>
+          <dd>情報が存在するが、一部のみ確認できた、または変動する可能性がある場合</dd>
+        </div>
+        <div class="method-dl__item">
+          <dt>「要問い合わせ」と記載する場合</dt>
+          <dd>公式サイトに「詳細はお問い合わせ」等の記載がある場合</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="page-section">
+      <h2>掲載基準</h2>
+      <ul class="page-list">
+        <li>大阪府または関西圏（兵庫・京都・奈良・滋賀・和歌山）への対応が公式サイトで確認できること</li>
+        <li>対象市場に関連するサービスを提供していることが公式サイトで確認できること</li>
+        <li>公式サイトが存在すること</li>
+        <li>上記を満たしていれば、掲載を拒否することはありません（PR掲載の有無に関わらず）</li>
+      </ul>
+    </section>
+
+    <section class="page-section">
+      <h2>行わないこと</h2>
+      <ul class="page-list">
+        <li>根拠のない「おすすめ」「No.1」「最安値」などの表現</li>
+        <li>PR掲載の有無に基づく掲載順の操作</li>
+        <li>架空のユーザーレビュー・口コミの掲載</li>
+        <li>根拠のない実績・受賞歴の記載</li>
+        <li>情報の推測・補完（確認できた情報のみを記載）</li>
+      </ul>
+    </section>
+
+    <section class="page-section">
+      <h2>情報の更新について</h2>
+      <p>
+        各ページには情報確認日を表示しています。確認日以降に各社の情報が変更されている場合があります。
+        最新の正確な情報は、必ず各社の公式サイトでご確認ください。
+      </p>
+      <p>
+        掲載情報に誤りを発見した場合は、<a href="/listing-correction/">掲載情報の修正依頼フォーム</a>からお知らせください。
+        確認の上、可能な限り迅速に対応します。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>DEMOデータについて</h2>
+      <p>
+        サイトの初期段階では、実際の企業データの代わりに「DEMOデータ」（架空の企業情報）を使用しています。
+        DEMOデータは実在する企業ではなく、サイトのUI・機能確認のために使用しています。
+        DEMOデータには「DEMO」バッジが表示されます。
+      </p>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.page-section { margin-bottom: var(--space-10); padding-bottom: var(--space-10); border-bottom: 1px solid var(--color-border); }
+.page-section:last-child { border-bottom: none; }
+.page-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+.page-section p { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
+.page-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.page-list li { font-size: var(--font-size-sm); color: var(--color-text-secondary); padding-left: var(--space-5); position: relative; line-height: 1.6; }
+.page-list li::before { content: '✓'; position: absolute; left: 0; color: var(--color-primary-light); }
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-8); }
+
+.method-dl { display: flex; flex-direction: column; gap: var(--space-4); }
+.method-dl__item { padding: var(--space-4) var(--space-5); background-color: var(--color-bg-subtle); border-radius: var(--border-radius); border-left: 3px solid var(--color-primary-light); }
+.method-dl__item dt { font-size: var(--font-size-sm); font-weight: 700; color: var(--color-primary); margin-bottom: var(--space-1); }
+.method-dl__item dd { font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.65; }
+</style>

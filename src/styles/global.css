@@ -1,0 +1,732 @@
+/*
+ * compareOS - グローバルスタイル
+ * 大阪法人向けサービス比較メディア
+ * 法人向け：信頼感・読みやすさ・比較しやすさを優先
+ */
+
+/* ============================
+   フォント読み込み
+   ============================ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+
+/* ============================
+   デザイントークン
+   ============================ */
+:root {
+  /* カラー：ダークネイビー系 */
+  --color-primary: hsl(220, 50%, 22%);
+  --color-primary-hover: hsl(220, 50%, 18%);
+  --color-primary-light: hsl(220, 40%, 40%);
+  --color-primary-pale: hsl(220, 50%, 95%);
+
+  /* 背景 */
+  --color-bg: hsl(0, 0%, 100%);
+  --color-bg-subtle: hsl(220, 20%, 97%);
+  --color-bg-muted: hsl(220, 15%, 93%);
+  --color-bg-section: hsl(220, 25%, 96%);
+
+  /* テキスト */
+  --color-text: hsl(220, 20%, 15%);
+  --color-text-secondary: hsl(220, 15%, 35%);
+  --color-text-muted: hsl(220, 10%, 55%);
+  --color-text-on-dark: hsl(0, 0%, 100%);
+
+  /* 境界線 */
+  --color-border: hsl(220, 15%, 88%);
+  --color-border-strong: hsl(220, 20%, 78%);
+
+  /* CTA */
+  --color-cta: hsl(220, 55%, 32%);
+  --color-cta-hover: hsl(220, 55%, 26%);
+  --color-cta-text: hsl(0, 0%, 100%);
+
+  /* 掲載区分バッジ */
+  --color-demo: hsl(200, 60%, 42%);
+  --color-demo-bg: hsl(200, 70%, 94%);
+  --color-pr: hsl(35, 85%, 45%);
+  --color-pr-bg: hsl(35, 90%, 93%);
+  --color-standard: hsl(145, 45%, 40%);
+  --color-standard-bg: hsl(145, 60%, 93%);
+
+  /* ステータス */
+  --color-status-ok: hsl(145, 50%, 38%);
+  --color-status-ok-bg: hsl(145, 60%, 93%);
+  --color-status-ng: hsl(0, 55%, 45%);
+  --color-status-ng-bg: hsl(0, 60%, 93%);
+  --color-status-unknown: hsl(220, 10%, 55%);
+  --color-status-unknown-bg: hsl(220, 15%, 93%);
+  --color-status-inquiry: hsl(35, 80%, 45%);
+  --color-status-inquiry-bg: hsl(35, 80%, 93%);
+
+  /* カテゴリーカラー */
+  --color-cat-equipment: hsl(210, 60%, 35%);
+  --color-cat-office: hsl(175, 50%, 32%);
+  --color-cat-hr: hsl(260, 45%, 40%);
+
+  /* タイポグラフィ */
+  --font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-md: 1.125rem;  /* 18px */
+  --font-size-lg: 1.25rem;   /* 20px */
+  --font-size-xl: 1.5rem;    /* 24px */
+  --font-size-2xl: 1.875rem; /* 30px */
+  --font-size-3xl: 2.25rem;  /* 36px */
+
+  /* スペーシング */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* レイアウト */
+  --max-width: 1140px;
+  --content-width: 760px;
+  --sidebar-width: 280px;
+  --border-radius: 6px;
+  --border-radius-lg: 10px;
+  --border-radius-xl: 16px;
+
+  /* シャドウ */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+
+  /* トランジション */
+  --transition: 150ms ease;
+}
+
+/* ============================
+   リセット
+   ============================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ============================
+   タイポグラフィ
+   ============================ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--font-size-2xl); }
+h2 { font-size: var(--font-size-xl); }
+h3 { font-size: var(--font-size-lg); }
+h4 { font-size: var(--font-size-md); }
+h5, h6 { font-size: var(--font-size-base); }
+
+@media (min-width: 768px) {
+  h1 { font-size: var(--font-size-3xl); }
+  h2 { font-size: var(--font-size-2xl); }
+}
+
+p {
+  line-height: 1.75;
+}
+
+/* ============================
+   レイアウト
+   ============================ */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--space-8);
+  }
+}
+
+.section {
+  padding-block: var(--space-12);
+}
+
+.section--muted {
+  background-color: var(--color-bg-section);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.section-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+  line-height: 1.6;
+}
+
+/* ============================
+   ボタン
+   ============================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background-color: var(--color-cta);
+  color: var(--color-cta-text);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-cta-hover);
+  color: var(--color-cta-text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-cta);
+  border: 1.5px solid var(--color-cta);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-primary-pale);
+  color: var(--color-cta-hover);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1.5px solid var(--color-border);
+}
+
+.btn--ghost:hover {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text);
+}
+
+.btn--sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-xs);
+}
+
+.btn--lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-size-base);
+}
+
+/* 外部リンク表示 */
+.btn--external::after,
+.link--external::after {
+  content: ' ↗';
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+/* ============================
+   バッジ
+   ============================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: 4px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+}
+
+.badge--demo {
+  background-color: var(--color-demo-bg);
+  color: var(--color-demo);
+  border: 1px solid hsl(200, 50%, 80%);
+}
+
+.badge--pr {
+  background-color: var(--color-pr-bg);
+  color: var(--color-pr);
+  border: 1px solid hsl(35, 70%, 80%);
+}
+
+.badge--standard {
+  background-color: var(--color-standard-bg);
+  color: var(--color-standard);
+  border: 1px solid hsl(145, 40%, 78%);
+}
+
+/* ============================
+   ステータス表示
+   ============================ */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-ok {
+  color: var(--color-status-ok);
+}
+.status-ok::before { background-color: var(--color-status-ok); }
+
+.status-ng {
+  color: var(--color-status-ng);
+}
+.status-ng::before { background-color: var(--color-status-ng); }
+
+.status-unknown, .status-text {
+  color: var(--color-status-unknown);
+}
+.status-unknown::before, .status-text::before { background-color: var(--color-status-unknown); }
+
+.status-inquiry {
+  color: var(--color-status-inquiry);
+}
+.status-inquiry::before { background-color: var(--color-status-inquiry); }
+
+/* ============================
+   カード
+   ============================ */
+.card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.card--highlighted {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 1px var(--color-primary-pale), var(--shadow-md);
+}
+
+/* ============================
+   テーブル
+   ============================ */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.comparison-table caption {
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+  caption-side: top;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.comparison-table thead th {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-dark);
+  font-weight: 600;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+
+.comparison-table thead th:first-child {
+  min-width: 120px;
+}
+
+.comparison-table tbody tr:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.comparison-table tbody th {
+  background-color: var(--color-bg-section);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+/* ============================
+   フォーム
+   ============================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: border-color var(--transition);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px var(--color-primary-pale);
+}
+
+/* ============================
+   パンくず
+   ============================ */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  padding-block: var(--space-4);
+}
+
+.breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.breadcrumbs__separator {
+  color: var(--color-border-strong);
+}
+
+.breadcrumbs__link {
+  color: var(--color-primary-light);
+}
+
+.breadcrumbs__link:hover {
+  color: var(--color-primary);
+}
+
+.breadcrumbs__current {
+  color: var(--color-text-secondary);
+}
+
+/* ============================
+   FAQ アコーディオン
+   ============================ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.faq-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-bg);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  width: 100%;
+  text-align: left;
+  border: none;
+  font-family: var(--font-family);
+  line-height: 1.5;
+  transition: background-color var(--transition);
+}
+
+.faq-question:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.faq-question:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: -3px;
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--color-primary-light);
+  transition: transform var(--transition);
+}
+
+.faq-question[aria-expanded="true"] .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-subtle);
+}
+
+.faq-answer--direct {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-base);
+}
+
+.faq-answer--detail {
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+}
+
+.faq-answer--conditions {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-primary-pale);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  border-left: 3px solid var(--color-primary-light);
+}
+
+/* ============================
+   免責・ソース表示
+   ============================ */
+.info-notice {
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-bg-section);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-primary-light);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.info-notice strong {
+  color: var(--color-text);
+}
+
+.checked-date {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ============================
+   グリッドレイアウト
+   ============================ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================
+   フォーカスアクセシビリティ
+   ============================ */
+:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ============================
+   スキップリンク
+   ============================ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  z-index: 9999;
+  transition: top var(--transition);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* ============================
+   ユーティリティ
+   ============================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.text-muted { color: var(--color-text-muted); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-xs { font-size: var(--font-size-xs); }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin-block: var(--space-8);
+}
+
+/* ============================
+   印刷スタイル
+   ============================ */
+@media print {
+  .site-header,
+  .site-footer,
+  .filter-panel,
+  .comparison-selector,
+  .cta-block {
+    display: none;
+  }
+
+  .comparison-table {
+    font-size: 10pt;
+  }
+}

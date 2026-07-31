@@ -1,0 +1,471 @@
+---
+/**
+ * 業務用エアコン - 企業詳細ページ（動的生成）
+ * /commercial-aircon/company/[slug]/
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteHeader from '../../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro';
+import ListingTypeBadge from '../../../components/ui/ListingTypeBadge.astro';
+import ExternalLinkButton from '../../../components/ui/ExternalLinkButton.astro';
+import CorrectionCTA from '../../../components/ui/CorrectionCTA.astro';
+import UpdateNotice from '../../../components/ui/UpdateNotice.astro';
+import { getInfoStatusClass } from '../../../utils/filters.js';
+import { getCompanySchema, getBreadcrumbSchema } from '../../../utils/seo.js';
+import { marketsBySlug } from '../../../data/markets.js';
+import { airconCompanies } from '../../../data/companies/commercial-aircon.js';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  return airconCompanies.map((company) => ({
+    params: { slug: company.slug },
+    props: { company },
+  }));
+}) satisfies GetStaticPaths;
+
+const { company } = Astro.props;
+const market = marketsBySlug['commercial-aircon'];
+
+const breadcrumbItems = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: company.name, href: `/${market.slug}/company/${company.slug}/` },
+];
+
+const jsonLd = getCompanySchema(company, market);
+---
+
+<BaseLayout
+  title={`${company.name} - 業務用エアコン工事｜公式情報に基づく整理 | compareOS`}
+  description={`${company.name}の業務用エアコン工事への対応内容を整理しています。対応地域：${company.region.prefectures.join('・')}。${company.overview.slice(0, 80)}`}
+  canonical={`/${market.slug}/company/${company.slug}/`}
+  jsonLd={jsonLd}
+>
+  <SiteHeader slot="header" />
+
+  <!-- パンくず -->
+  <div class="container">
+    <Breadcrumbs items={breadcrumbItems} />
+  </div>
+
+  <!-- 企業ヒーロー -->
+  <section class="company-hero" aria-labelledby="company-hero-heading">
+    <div class="container">
+      <div class="company-hero__header">
+        <div class="company-hero__badges">
+          <ListingTypeBadge type={company.listingType} />
+          {company.region.wideAreaKansai && (
+            <span class="badge badge--standard">関西広域</span>
+          )}
+        </div>
+        <h1 class="company-hero__name" id="company-hero-heading">{company.name}</h1>
+        <p class="company-hero__location">
+          所在地：{company.region.headquarters}
+        </p>
+        <p class="company-hero__overview">{company.overview}</p>
+
+        <div class="company-hero__cta">
+          <ExternalLinkButton
+            href={company.officialUrl}
+            marketId={market.id}
+            companyId={company.id}
+            companyName={company.name}
+            listingType={company.listingType}
+            pageType="company"
+            placement="hero"
+            label="公式サイトで詳細を確認する"
+            size="lg"
+          />
+        </div>
+
+        {company.listingType === 'pr' && (
+          <p class="company-hero__pr-notice">
+            ※ この企業は広告掲載（有料）です。掲載内容の比較情報への影響はありません。
+            <a href="/advertising-policy/">広告掲載ポリシーを確認する</a>
+          </p>
+        )}
+
+        {company.listingType === 'demo' && (
+          <p class="company-hero__demo-notice">
+            ⚠️ これはDEMOデータです。実在企業ではありません。
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- 詳細情報 -->
+  <div class="container" style="padding-block: var(--space-10);">
+    <div class="company-detail-layout">
+      <!-- メインコンテンツ -->
+      <main>
+        <!-- 対応サービス -->
+        <section aria-labelledby="services-heading" class="company-detail-section">
+          <h2 id="services-heading">対応サービス一覧</h2>
+          <p class="company-detail-section__note">
+            以下は公式サイト等の公開情報で確認できた内容の整理です。
+          </p>
+          <ul class="services-list">
+            {company.services.map((service) => (
+              <li class="services-list__item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="var(--color-primary-light)" stroke-width="2"/>
+                  <path d="M8 12l3 3 5-5" stroke="var(--color-primary-light)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                {service}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <!-- 比較データ詳細 -->
+        <section aria-labelledby="comparison-detail-heading" class="company-detail-section">
+          <h2 id="comparison-detail-heading">対応状況の詳細（公開情報に基づく）</h2>
+          <p class="company-detail-section__note">
+            「公式サイトで確認できず」は情報が見つからなかったことを示します。非対応であるとは限りません。
+          </p>
+          <dl class="comparison-detail-grid">
+            {Object.entries(company.comparisonData).map(([key, value]) => (
+              <>
+                <dt>{key}</dt>
+                <dd class={`status ${getInfoStatusClass(value)}`}>{value}</dd>
+              </>
+            ))}
+          </dl>
+        </section>
+
+        <!-- 特徴 -->
+        {company.features.length > 0 && (
+          <section aria-labelledby="features-heading" class="company-detail-section">
+            <h2 id="features-heading">公式情報で確認できた事項</h2>
+            <ul class="features-list">
+              {company.features.map((feature) => (
+                <li class="features-list__item">{feature}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <!-- 費用・保証情報 -->
+        <section aria-labelledby="pricing-heading" class="company-detail-section">
+          <h2 id="pricing-heading">費用・保証情報</h2>
+          <dl class="info-dl">
+            <dt>費用情報</dt>
+            <dd>{company.priceInfo}</dd>
+            <dt>保証情報</dt>
+            <dd>{company.warrantyInfo}</dd>
+            <dt>実績情報</dt>
+            <dd>{company.trackRecord}</dd>
+          </dl>
+        </section>
+
+        <!-- 情報源 -->
+        <section aria-labelledby="sources-heading" class="company-detail-section">
+          <h2 id="sources-heading">情報元</h2>
+          <ul class="sources-list">
+            {company.sources.map((source) => (
+              <li>
+                <a href={source.url} target="_blank" rel="noopener noreferrer" class="link--external">
+                  {source.label}
+                </a>
+                <span class="text-muted text-xs">（確認日：{source.checkedDate}）</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <!-- 免責・修正依頼 -->
+        <div style="margin-top: var(--space-8)">
+          <UpdateNotice checkedDate={company.sources[0]?.checkedDate} sources={company.sources} />
+          <div style="margin-top: var(--space-4)">
+            <CorrectionCTA companyName={company.name} />
+          </div>
+        </div>
+      </main>
+
+      <!-- サイドバー -->
+      <aside class="company-detail-sidebar">
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">公式サイトを確認する</h3>
+          <p class="sidebar-card__desc">詳細情報・現地調査依頼は公式サイトへ</p>
+          <ExternalLinkButton
+            href={company.officialUrl}
+            marketId={market.id}
+            companyId={company.id}
+            companyName={company.name}
+            listingType={company.listingType}
+            pageType="company"
+            placement="sidebar"
+            label="公式サイトへ"
+            size="md"
+          />
+        </div>
+
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">対応地域</h3>
+          <div class="sidebar-regions">
+            {company.region.prefectures.map((pref) => (
+              <span class="sidebar-region-tag">{pref}</span>
+            ))}
+          </div>
+          {company.region.travelFee && company.region.travelFee !== '公式サイトで確認できず' && (
+            <p class="sidebar-card__note">出張費：{company.region.travelFee}</p>
+          )}
+        </div>
+
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">この市場の他の会社</h3>
+          <a href={`/${market.slug}/`} class="btn btn--ghost" style="width: 100%">
+            企業一覧に戻る
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+/* 企業ヒーロー */
+.company-hero {
+  background-color: var(--color-bg-section);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-8) var(--space-10);
+}
+
+.company-hero__header {
+  max-width: var(--content-width);
+}
+
+.company-hero__badges {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.company-hero__name {
+  font-size: var(--font-size-2xl);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.company-hero__location {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.company-hero__overview {
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin-bottom: var(--space-6);
+}
+
+.company-hero__cta {
+  margin-bottom: var(--space-4);
+}
+
+.company-hero__pr-notice {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  padding: var(--space-2) var(--space-3);
+  background-color: hsl(35, 80%, 95%);
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--color-pr);
+}
+
+.company-hero__demo-notice {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-demo);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-demo-bg);
+  border-radius: var(--border-radius);
+}
+
+/* 詳細レイアウト */
+.company-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .company-detail-layout {
+    grid-template-columns: 1fr var(--sidebar-width);
+    align-items: start;
+  }
+}
+
+.company-detail-section {
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.company-detail-section:last-child {
+  border-bottom: none;
+}
+
+.company-detail-section h2 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-3);
+}
+
+.company-detail-section__note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg-subtle);
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--color-border-strong);
+}
+
+/* サービスリスト */
+.services-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .services-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+.services-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 比較データ */
+.comparison-detail-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3) var(--space-6);
+  align-items: center;
+}
+
+.comparison-detail-grid dt {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.comparison-detail-grid dd {
+  font-size: var(--font-size-sm);
+}
+
+/* 特徴リスト */
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.features-list__item {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-primary-pale);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  border-left: 3px solid var(--color-primary-light);
+  line-height: 1.6;
+}
+
+/* 情報DL */
+.info-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-5);
+}
+
+.info-dl dt {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.info-dl dd {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* ソース */
+.sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sources-list li {
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* サイドバーカード */
+.company-detail-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+@media (min-width: 1024px) {
+  .company-detail-sidebar {
+    position: sticky;
+    top: 80px;
+  }
+}
+
+.sidebar-card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-5);
+}
+
+.sidebar-card__title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.sidebar-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.sidebar-card__note {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+}
+
+.sidebar-regions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.sidebar-region-tag {
+  padding: 3px var(--space-3);
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+</style>

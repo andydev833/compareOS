@@ -1,0 +1,119 @@
+---
+/**
+ * ComparisonTable.astro
+ * 市場別主要比較表
+ * PC：テーブル形式、スマートフォン：横スクロール
+ */
+import type { Company } from '../../data/types.js';
+import { getInfoStatusClass } from '../../utils/filters.js';
+import ListingTypeBadge from '../ui/ListingTypeBadge.astro';
+
+export interface Props {
+  companies: Company[];
+  comparisonItems: string[];
+  marketSlug: string;
+  caption?: string;
+}
+
+const { companies, comparisonItems, marketSlug, caption } = Astro.props;
+---
+
+<div class="table-wrapper">
+  <table class="comparison-table" id="comparison-table">
+    {caption && <caption>{caption}</caption>}
+    <thead>
+      <tr>
+        <th scope="col">比較項目</th>
+        {companies.map((company) => (
+          <th scope="col">
+            <div class="comparison-table__company-header">
+              <ListingTypeBadge type={company.listingType} size="sm" />
+              <a href={`/${marketSlug}/company/${company.slug}/`} class="comparison-table__company-name">
+                {company.name}
+              </a>
+            </div>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {comparisonItems.map((item) => (
+        <tr>
+          <th scope="row">{item}</th>
+          {companies.map((company) => {
+            const value = company.comparisonData[item] || '公式サイトで確認できず';
+            return (
+              <td class={`comparison-table__cell ${getInfoStatusClass(value)}`}>
+                {value}
+              </td>
+            );
+          })}
+        </tr>
+      ))}
+      <tr class="comparison-table__row--action">
+        <th scope="row">詳細</th>
+        {companies.map((company) => (
+          <td>
+            <a
+              href={`/${marketSlug}/company/${company.slug}/`}
+              class="btn btn--secondary btn--sm"
+            >
+              詳細を見る
+            </a>
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+.comparison-table__company-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.comparison-table__company-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+}
+
+.comparison-table__company-name:hover {
+  text-decoration: underline;
+  color: var(--color-text-on-dark);
+}
+
+.comparison-table__cell {
+  white-space: nowrap;
+  font-size: var(--font-size-sm);
+}
+
+.comparison-table__row--action td {
+  padding-block: var(--space-4);
+}
+
+/* ステータスセルの色 */
+.comparison-table__cell.status-ok {
+  color: var(--color-status-ok);
+  font-weight: 600;
+}
+
+.comparison-table__cell.status-ng {
+  color: var(--color-status-ng);
+}
+
+.comparison-table__cell.status-unknown,
+.comparison-table__cell.status-text {
+  color: var(--color-status-unknown);
+  font-size: var(--font-size-xs);
+}
+
+.comparison-table__cell.status-inquiry {
+  color: var(--color-status-inquiry);
+}
+</style>

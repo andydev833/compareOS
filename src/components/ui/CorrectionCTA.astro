@@ -1,0 +1,66 @@
+---
+/**
+ * CorrectionCTA.astro
+ * 掲載情報修正依頼へのCTA
+ */
+
+export interface Props {
+  marketName?: string;
+  companyName?: string;
+}
+
+const { marketName, companyName } = Astro.props;
+---
+
+<div class="correction-cta">
+  <div class="correction-cta__icon" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="correction-cta__content">
+    <p class="correction-cta__text">
+      {companyName ? `${companyName}の` : ''}掲載情報に誤りや古い情報がある場合は、修正依頼をお送りください。
+    </p>
+    <a href="/listing-correction/" class="correction-cta__link">
+      掲載情報の修正を依頼する →
+    </a>
+  </div>
+</div>
+
+<style>
+.correction-cta {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  align-items: flex-start;
+}
+
+.correction-cta__icon {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.correction-cta__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-2);
+}
+
+.correction-cta__link {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-primary-light);
+  text-decoration: none;
+}
+
+.correction-cta__link:hover {
+  text-decoration: underline;
+  color: var(--color-primary);
+}
+</style>

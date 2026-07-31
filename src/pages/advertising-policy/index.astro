@@ -1,0 +1,76 @@
+---
+/**
+ * 広告掲載ポリシー
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: '広告掲載ポリシー', href: '/advertising-policy/' },
+];
+---
+
+<BaseLayout
+  title="広告掲載ポリシー | compareOS 大阪法人向けサービス比較"
+  description="compareOSの広告掲載（PR掲載）に関するポリシーを説明します。"
+  canonical="/advertising-policy/"
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container page-content" style="max-width: var(--content-width); padding-block: var(--space-10)">
+    <h1>広告掲載ポリシー</h1>
+
+    <section class="page-section">
+      <h2>PR掲載について</h2>
+      <p>
+        このサイトでは、掲載企業からPR掲載料を受け取ることがあります（有料掲載）。
+        PR掲載企業には「PR」バッジを表示し、通常掲載と明確に区別します。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>PR掲載が影響しないこと</h2>
+      <ul class="page-list">
+        <li>比較表の内容（公開情報に基づいて整理し、PR掲載企業でも同様の基準で記載）</li>
+        <li>比較表内の掲載順（PR掲載を理由に上位表示しません）</li>
+        <li>掲載情報の評価（PR掲載企業に有利な評価・表現を行いません）</li>
+        <li>「おすすめ」「No.1」などの根拠のない表現（PR掲載有無に関わらず使用しません）</li>
+      </ul>
+    </section>
+
+    <section class="page-section">
+      <h2>PR掲載企業の識別</h2>
+      <p>
+        PR掲載企業には企業名の隣に「PR」バッジを表示します。
+        これにより、閲覧者は常にどの企業がPR掲載かを確認できます。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>PR掲載のお申し込み</h2>
+      <p>
+        PR掲載をご希望の企業様は、<a href="/advertise/">PR掲載のご相談ページ</a>からお問い合わせください。
+        掲載基準を満たす企業様であれば、ご相談をお受けします。
+      </p>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.page-section { margin-bottom: var(--space-10); padding-bottom: var(--space-10); border-bottom: 1px solid var(--color-border); }
+.page-section:last-child { border-bottom: none; }
+.page-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+.page-section p { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
+.page-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.page-list li { font-size: var(--font-size-sm); color: var(--color-text-secondary); padding-left: var(--space-5); position: relative; line-height: 1.6; }
+.page-list li::before { content: '・'; position: absolute; left: 0; color: var(--color-primary-light); }
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-8); }
+</style>

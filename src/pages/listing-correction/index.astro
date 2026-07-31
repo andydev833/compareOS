@@ -1,0 +1,140 @@
+---
+/**
+ * 掲載情報の修正依頼ページ
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: '掲載情報の修正依頼', href: '/listing-correction/' },
+];
+---
+
+<BaseLayout
+  title="掲載情報の修正依頼 | compareOS 大阪法人向けサービス比較"
+  description="compareOSの掲載情報に誤りがある場合の修正依頼フォームです。"
+  canonical="/listing-correction/"
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container page-content" style="max-width: var(--content-width); padding-block: var(--space-10)">
+    <h1>掲載情報の修正依頼</h1>
+
+    <div class="info-notice" style="margin-bottom: var(--space-8)">
+      掲載情報に誤りや古い情報がある場合は、以下のフォームからお知らせください。
+      確認の上、可能な限り迅速に対応します。<br>
+      ただし、対応をお約束するものではありません。あらかじめご了承ください。
+    </div>
+
+    <section class="page-section">
+      <h2>修正依頼フォーム</h2>
+      <p class="text-muted text-sm" style="margin-bottom: var(--space-6)">
+        ※ このフォームは現在準備中です。修正依頼は以下の内容をお問い合わせフォームからお送りください。
+      </p>
+
+      <form class="correction-form" action="#" method="post" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="company-name">企業名 <span class="required">*</span></label>
+          <input type="text" id="company-name" name="company-name" class="form-input" required placeholder="例：○○株式会社" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="market">市場カテゴリー <span class="required">*</span></label>
+          <select id="market" name="market" class="form-select" required>
+            <option value="">選択してください</option>
+            <option value="commercial-aircon">業務用エアコン</option>
+            <option value="security-camera">防犯カメラ</option>
+            <option value="kitchen-equipment">厨房機器</option>
+            <option value="office-interior">オフィス内装</option>
+            <option value="office-relocation">オフィス移転</option>
+            <option value="soundproof-room">防音工事</option>
+            <option value="shop-signage">店舗看板</option>
+            <option value="corporate-solar">太陽光発電</option>
+            <option value="commercial-pest-control">害虫・害獣駆除</option>
+            <option value="commercial-cleaning">業務用清掃</option>
+            <option value="corporate-aed-training">AED研修</option>
+            <option value="web-marketing">Web集客・SEO</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="error-type">修正の種類 <span class="required">*</span></label>
+          <select id="error-type" name="error-type" class="form-select" required>
+            <option value="">選択してください</option>
+            <option value="outdated">情報が古い・変更されている</option>
+            <option value="incorrect">情報が誤っている</option>
+            <option value="missing">掲載されていない情報がある</option>
+            <option value="company-closed">企業が閉業・廃業している</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="correction-detail">修正内容の詳細 <span class="required">*</span></label>
+          <textarea
+            id="correction-detail"
+            name="correction-detail"
+            class="form-textarea"
+            rows="6"
+            required
+            placeholder="現在の掲載内容と、正しい情報をできるだけ具体的にお書きください。公式サイトのURLなどがあれば、併せてご記入ください。"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="contact-email">連絡先メールアドレス（任意）</label>
+          <input
+            type="email"
+            id="contact-email"
+            name="contact-email"
+            class="form-input"
+            placeholder="対応完了時にご連絡が必要な場合はご記入ください"
+          />
+        </div>
+
+        <div class="correction-form__submit">
+          <button type="submit" class="btn btn--primary btn--lg" disabled title="フォームは準備中です">
+            修正を依頼する（準備中）
+          </button>
+          <p class="text-xs text-muted" style="margin-top: var(--space-3)">
+            ※ フォームは現在準備中です。お急ぎの場合は<a href="/contact/">お問い合わせフォーム</a>からご連絡ください。
+          </p>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.page-section { margin-bottom: var(--space-10); }
+.page-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-8); }
+
+.correction-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.required {
+  color: var(--color-status-ng);
+  margin-left: var(--space-1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.correction-form__submit {
+  padding-top: var(--space-3);
+}
+</style>

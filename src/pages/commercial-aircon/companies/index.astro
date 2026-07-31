@@ -1,0 +1,214 @@
+---
+/**
+ * 業務用エアコン - 企業一覧（絞り込み）ページ
+ * /commercial-aircon/companies/
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteHeader from '../../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro';
+import CompanyCard from '../../../components/company/CompanyCard.astro';
+import FilterPanel from '../../../components/market/FilterPanel.astro';
+import UpdateNotice from '../../../components/ui/UpdateNotice.astro';
+import CorrectionCTA from '../../../components/ui/CorrectionCTA.astro';
+import { marketsBySlug } from '../../../data/markets.js';
+import { airconCompanies } from '../../../data/companies/commercial-aircon.js';
+import { getMarketItemListSchema } from '../../../utils/seo.js';
+
+const market = marketsBySlug['commercial-aircon'];
+const companies = airconCompanies;
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: '企業一覧', href: `/${market.slug}/companies/` },
+];
+---
+
+<BaseLayout
+  title={`大阪の業務用エアコン工事会社一覧・絞り込み | compareOS`}
+  description={`大阪の業務用エアコン工事会社${companies.length}社を、対応地域・緊急対応・保守契約などの条件で絞り込めます。`}
+  canonical={`/${market.slug}/companies/`}
+  jsonLd={getMarketItemListSchema(market, companies)}
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <section class="companies-header">
+    <div class="container">
+      <h1 class="companies-header__title">業務用エアコン工事会社 一覧</h1>
+      <p class="companies-header__desc">
+        大阪府を中心とした業務用エアコン工事会社の情報を整理しています。
+        左のフィルタから条件を絞り込んでください。
+      </p>
+      <div class="companies-header__meta">
+        <span>掲載 <strong>{companies.length}</strong> 社</span>
+        <span>情報確認日：{market.checkedDate}</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container" style="padding-block: var(--space-10)">
+    <!-- 掲載区分の説明 -->
+    <div class="listing-legend">
+      <span class="legend-item">
+        <span class="badge badge--demo">DEMO</span>
+        架空データ（実在企業ではありません）
+      </span>
+      <span class="legend-item">
+        <span class="badge badge--standard">通常掲載</span>
+        公開情報に基づく通常掲載
+      </span>
+      <span class="legend-item">
+        <span class="badge badge--pr">PR</span>
+        有料掲載（<a href="/advertising-policy/">ポリシー</a>）
+      </span>
+    </div>
+
+    <!-- メインレイアウト -->
+    <div class="companies-layout">
+      <aside aria-label="絞り込み条件">
+        <FilterPanel filterOptions={market.filterOptions} companyCount={companies.length} />
+        <div style="margin-top: var(--space-5)">
+          <a href={`/${market.slug}/`} class="btn btn--ghost" style="width: 100%">
+            市場トップに戻る
+          </a>
+        </div>
+      </aside>
+
+      <main>
+        <div class="companies-toolbar">
+          <p class="companies-toolbar__count">
+            <span id="companies-visible-count">{companies.length}</span>社表示中
+          </p>
+          <div class="companies-toolbar__sort">
+            <label for="sort-select" class="text-sm text-muted">並び替え：</label>
+            <select id="sort-select" class="form-select" style="width: auto; padding-block: var(--space-1)">
+              <option value="default">デフォルト</option>
+              <option value="name">名前順</option>
+              <option value="match">対応数順</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="companies-list" id="companies-list">
+          {companies.map((company) => (
+            <CompanyCard company={company} marketSlug={market.slug} />
+          ))}
+        </div>
+
+        <div style="margin-top: var(--space-8)">
+          <UpdateNotice checkedDate={market.checkedDate} />
+          <div style="margin-top: var(--space-4)">
+            <CorrectionCTA marketName={market.name} />
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.companies-header {
+  background-color: var(--color-bg-section);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-8);
+}
+
+.companies-header__title {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-3);
+}
+
+.companies-header__desc {
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin-bottom: var(--space-4);
+}
+
+.companies-header__meta {
+  display: flex;
+  gap: var(--space-6);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.companies-header__meta strong {
+  color: var(--color-primary);
+}
+
+/* 掲載区分説明 */
+.listing-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg-subtle);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* レイアウト */
+.companies-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .companies-layout {
+    grid-template-columns: var(--sidebar-width) 1fr;
+    align-items: start;
+  }
+
+  aside {
+    position: sticky;
+    top: 80px;
+  }
+}
+
+/* ツールバー */
+.companies-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.companies-toolbar__count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.companies-toolbar__count span {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.companies-toolbar__sort {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* 一覧 */
+.companies-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+</style>

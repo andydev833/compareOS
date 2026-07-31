@@ -1,0 +1,424 @@
+---
+/**
+ * SiteHeader.astro
+ * サイト共通ヘッダー
+ */
+import { markets } from '../../data/markets.js';
+
+const equipmentMarkets = markets.filter((m) => m.category === 'equipment');
+const officeMarkets = markets.filter((m) => m.category === 'office');
+const hrMarkets = markets.filter((m) => m.category === 'hr-marketing');
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="site-header__inner">
+      <!-- ロゴ -->
+      <a href="/" class="site-header__logo" aria-label="compareOS トップページへ">
+        <span class="site-header__logo-text">compareOS</span>
+        <span class="site-header__logo-sub">大阪法人向けサービス比較</span>
+      </a>
+
+      <!-- ナビゲーション（PC） -->
+      <nav class="site-header__nav" aria-label="メインナビゲーション">
+        <ul class="site-header__nav-list" role="list">
+          <li class="site-header__nav-item site-header__nav-item--dropdown">
+            <button
+              class="site-header__nav-trigger"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="dropdown-equipment"
+            >
+              設備・施工
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <div class="site-header__dropdown" id="dropdown-equipment" role="list">
+              {equipmentMarkets.map((market) => (
+                <a href={`/${market.slug}/`} class="site-header__dropdown-item" role="listitem">
+                  {market.shortName}
+                </a>
+              ))}
+            </div>
+          </li>
+
+          <li class="site-header__nav-item site-header__nav-item--dropdown">
+            <button
+              class="site-header__nav-trigger"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="dropdown-office"
+            >
+              オフィス・施設
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <div class="site-header__dropdown" id="dropdown-office" role="list">
+              {officeMarkets.map((market) => (
+                <a href={`/${market.slug}/`} class="site-header__dropdown-item" role="listitem">
+                  {market.shortName}
+                </a>
+              ))}
+            </div>
+          </li>
+
+          <li class="site-header__nav-item site-header__nav-item--dropdown">
+            <button
+              class="site-header__nav-trigger"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="dropdown-hr"
+            >
+              人材・集客
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <div class="site-header__dropdown" id="dropdown-hr" role="list">
+              {hrMarkets.map((market) => (
+                <a href={`/${market.slug}/`} class="site-header__dropdown-item" role="listitem">
+                  {market.shortName}
+                </a>
+              ))}
+            </div>
+          </li>
+
+          <li class="site-header__nav-item">
+            <a href="/about/" class="site-header__nav-link">運営について</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- モバイルメニューボタン -->
+      <button
+        class="site-header__mobile-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="メニューを開く"
+      >
+        <span class="site-header__hamburger" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- モバイルメニュー -->
+  <div class="site-header__mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="container">
+      <nav aria-label="モバイルナビゲーション">
+        <div class="site-header__mobile-section">
+          <p class="site-header__mobile-category">設備・施工</p>
+          <ul role="list">
+            {equipmentMarkets.map((market) => (
+              <li>
+                <a href={`/${market.slug}/`} class="site-header__mobile-link">
+                  {market.shortName}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="site-header__mobile-section">
+          <p class="site-header__mobile-category">オフィス・施設運営</p>
+          <ul role="list">
+            {officeMarkets.map((market) => (
+              <li>
+                <a href={`/${market.slug}/`} class="site-header__mobile-link">
+                  {market.shortName}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="site-header__mobile-section">
+          <p class="site-header__mobile-category">人材・集客</p>
+          <ul role="list">
+            {hrMarkets.map((market) => (
+              <li>
+                <a href={`/${market.slug}/`} class="site-header__mobile-link">
+                  {market.shortName}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="site-header__mobile-section">
+          <ul role="list">
+            <li><a href="/about/" class="site-header__mobile-link">運営について</a></li>
+            <li><a href="/methodology/" class="site-header__mobile-link">調査・比較方針</a></li>
+            <li><a href="/listing-correction/" class="site-header__mobile-link">掲載情報の修正依頼</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: 64px;
+}
+
+/* ロゴ */
+.site-header__logo {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.site-header__logo:hover {
+  text-decoration: none;
+}
+
+.site-header__logo-text {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: white;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.site-header__logo-sub {
+  font-size: 10px;
+  color: hsl(220, 50%, 80%);
+  line-height: 1;
+  font-weight: 400;
+}
+
+/* PC ナビ */
+.site-header__nav {
+  display: none;
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .site-header__nav {
+    display: flex;
+  }
+}
+
+.site-header__nav-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.site-header__nav-item {
+  position: relative;
+}
+
+.site-header__nav-trigger,
+.site-header__nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  color: hsl(220, 50%, 85%);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  border-radius: var(--border-radius);
+  transition: color var(--transition), background-color var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header__nav-trigger:hover,
+.site-header__nav-link:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+/* ドロップダウン */
+.site-header__dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  min-width: 180px;
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+  z-index: 200;
+}
+
+.site-header__nav-item--dropdown:hover .site-header__dropdown,
+.site-header__nav-item--dropdown:focus-within .site-header__dropdown {
+  display: block;
+}
+
+.site-header__nav-trigger[aria-expanded="true"] + .site-header__dropdown {
+  display: block;
+}
+
+.site-header__dropdown-item {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition), color var(--transition);
+  text-decoration: none;
+}
+
+.site-header__dropdown-item:hover {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* モバイルトグル */
+.site-header__mobile-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition);
+}
+
+.site-header__mobile-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 1024px) {
+  .site-header__mobile-toggle {
+    display: none;
+  }
+}
+
+.site-header__hamburger,
+.site-header__hamburger::before,
+.site-header__hamburger::after {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: white;
+  border-radius: 2px;
+  transition: transform var(--transition);
+}
+
+.site-header__hamburger {
+  position: relative;
+}
+
+.site-header__hamburger::before,
+.site-header__hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.site-header__hamburger::before { top: -6px; }
+.site-header__hamburger::after { top: 6px; }
+
+/* モバイルメニュー */
+.site-header__mobile-menu {
+  display: none;
+  background-color: var(--color-bg);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-block: var(--space-4);
+}
+
+.site-header__mobile-menu[aria-hidden="false"] {
+  display: block;
+}
+
+.site-header__mobile-section {
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__mobile-section:last-child {
+  border-bottom: none;
+}
+
+.site-header__mobile-category {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.site-header__mobile-link {
+  display: block;
+  padding: var(--space-3) var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.site-header__mobile-link:hover {
+  background-color: var(--color-bg-muted);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+</style>
+
+<script>
+// モバイルメニューのトグル
+const toggle = document.querySelector('.site-header__mobile-toggle');
+const menu = document.getElementById('mobile-menu');
+
+if (toggle && menu) {
+  toggle.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    menu.setAttribute('aria-hidden', String(expanded));
+    toggle.setAttribute('aria-label', expanded ? 'メニューを開く' : 'メニューを閉じる');
+  });
+}
+
+// PCドロップダウン（キーボード対応）
+document.querySelectorAll('.site-header__nav-trigger').forEach((trigger) => {
+  trigger.addEventListener('click', () => {
+    const expanded = trigger.getAttribute('aria-expanded') === 'true';
+    // 他のドロップダウンを閉じる
+    document.querySelectorAll('.site-header__nav-trigger').forEach((t) => {
+      if (t !== trigger) t.setAttribute('aria-expanded', 'false');
+    });
+    trigger.setAttribute('aria-expanded', String(!expanded));
+  });
+});
+
+// ドロップダウン外クリックで閉じる
+document.addEventListener('click', (e) => {
+  if (!(e.target as Element)?.closest('.site-header__nav-item--dropdown')) {
+    document.querySelectorAll('.site-header__nav-trigger').forEach((t) => {
+      t.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+</script>

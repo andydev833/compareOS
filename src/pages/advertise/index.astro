@@ -1,0 +1,129 @@
+---
+/**
+ * PR掲載のご相談ページ
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: 'PR掲載のご相談', href: '/advertise/' },
+];
+---
+
+<BaseLayout
+  title="PR掲載のご相談 | compareOS 大阪法人向けサービス比較"
+  description="compareOSへのPR掲載（有料掲載）のご相談ページです。"
+  canonical="/advertise/"
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container page-content" style="max-width: var(--content-width); padding-block: var(--space-10)">
+    <h1>PR掲載のご相談</h1>
+
+    <div class="info-notice" style="margin-bottom: var(--space-8)">
+      <strong>ご確認ください：</strong>
+      PR掲載（有料）は、比較表の内容・掲載順には影響しません。
+      PR掲載企業には「PR」バッジを表示し、通常掲載と明確に区別します。
+      詳しくは<a href="/advertising-policy/">広告掲載ポリシー</a>をご覧ください。
+    </div>
+
+    <section class="page-section">
+      <h2>PR掲載とは</h2>
+      <p>
+        compareOSのPR掲載とは、ページ内に貴社情報を掲載するための有料サービスです。
+        通常掲載との違いは「PR」バッジが表示されることのみです。
+      </p>
+      <ul class="page-list">
+        <li>比較表の内容は公開情報に基づいて整理（PR掲載でも同様の基準）</li>
+        <li>掲載順はPR掲載の有無で操作しません</li>
+        <li>「おすすめ」などの根拠のない表現は使用しません</li>
+        <li>PR掲載企業には「PR」バッジを表示</li>
+      </ul>
+    </section>
+
+    <section class="page-section">
+      <h2>掲載対象市場</h2>
+      <p>現在、以下の12市場でPR掲載を受け付けています。</p>
+      <ul class="market-list">
+        {[
+          '業務用エアコン・空調工事', '防犯カメラ設置', '厨房機器販売・設置',
+          'オフィス内装・リノベーション', 'オフィス移転支援', '防音工事・防音室施工',
+          '店舗看板制作・設置', '法人向け太陽光発電', '害虫・害獣駆除',
+          '業務用清掃サービス', 'AED・救命研修', 'Web集客・SEO支援'
+        ].map(name => (
+          <li>{name}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="page-section">
+      <h2>お申し込みの流れ</h2>
+      <ol class="steps-list">
+        <li>
+          <span class="steps-list__num">1</span>
+          <div>
+            <p class="steps-list__title">お問い合わせ</p>
+            <p class="steps-list__desc">下記フォームからご連絡ください（準備中）</p>
+          </div>
+        </li>
+        <li>
+          <span class="steps-list__num">2</span>
+          <div>
+            <p class="steps-list__title">掲載内容の確認</p>
+            <p class="steps-list__desc">掲載基準を満たすか確認します</p>
+          </div>
+        </li>
+        <li>
+          <span class="steps-list__num">3</span>
+          <div>
+            <p class="steps-list__title">料金・条件のご提案</p>
+            <p class="steps-list__desc">掲載内容・期間・料金をご提案します</p>
+          </div>
+        </li>
+        <li>
+          <span class="steps-list__num">4</span>
+          <div>
+            <p class="steps-list__title">掲載開始</p>
+            <p class="steps-list__desc">ご契約後、PR掲載を開始します</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="page-section">
+      <h2>お問い合わせ</h2>
+      <p class="text-muted text-sm">PR掲載に関するお問い合わせは<a href="/contact/">お問い合わせフォーム</a>からご連絡ください。</p>
+      <div style="margin-top: var(--space-4)">
+        <a href="/contact/" class="btn btn--primary">お問い合わせフォームへ</a>
+      </div>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.page-section { margin-bottom: var(--space-10); padding-bottom: var(--space-10); border-bottom: 1px solid var(--color-border); }
+.page-section:last-child { border-bottom: none; }
+.page-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+.page-section p { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
+.page-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.page-list li { font-size: var(--font-size-sm); color: var(--color-text-secondary); padding-left: var(--space-5); position: relative; line-height: 1.6; }
+.page-list li::before { content: '・'; position: absolute; left: 0; color: var(--color-primary-light); }
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-8); }
+
+.market-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-2); }
+.market-list li { font-size: var(--font-size-sm); color: var(--color-text-secondary); padding: var(--space-2) var(--space-3); background-color: var(--color-bg-subtle); border-radius: var(--border-radius); border-left: 2px solid var(--color-primary-light); }
+
+.steps-list { display: flex; flex-direction: column; gap: var(--space-4); }
+.steps-list li { display: flex; gap: var(--space-4); align-items: flex-start; }
+.steps-list__num { flex-shrink: 0; width: 32px; height: 32px; background-color: var(--color-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: var(--font-size-sm); }
+.steps-list__title { font-weight: 700; font-size: var(--font-size-base); color: var(--color-text); margin-bottom: 2px; }
+.steps-list__desc { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+</style>

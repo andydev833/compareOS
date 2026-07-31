@@ -1,0 +1,117 @@
+---
+/**
+ * 業務用エアコン - 会社選び方ガイドページ
+ * /commercial-aircon/guide/
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteHeader from '../../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro';
+import DirectAnswerBlock from '../../../components/market/DirectAnswerBlock.astro';
+import ProcessSteps from '../../../components/ui/ProcessSteps.astro';
+import { marketsBySlug } from '../../../data/markets.js';
+import { getArticleSchema } from '../../../utils/seo.js';
+
+const market = marketsBySlug['commercial-aircon'];
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: '会社の選び方', href: `/${market.slug}/guide/` },
+];
+---
+
+<BaseLayout
+  title={`業務用エアコン会社の選び方｜大阪 | compareOS`}
+  description={`大阪で業務用エアコン工事会社を選ぶ際のポイントを解説。緊急対応・保守体制・対応メーカーなど比較すべき項目を整理します。`}
+  canonical={`/${market.slug}/guide/`}
+  jsonLd={getArticleSchema({
+    title: '業務用エアコン会社の選び方',
+    description: '会社選びの判断基準と確認すべき比較項目',
+    url: `/${market.slug}/guide/`,
+    dateModified: market.checkedDate,
+  })}
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container" style="padding-block: var(--space-10); max-width: 860px">
+    <h1>業務用エアコン会社の選び方</h1>
+    <p class="page-desc">
+      このページでは、業務用エアコン工事会社を選ぶ際の判断基準を整理します。
+      「おすすめ」や「ランキング」ではなく、御社の状況に応じた比較ポイントをまとめています。
+    </p>
+
+    <div class="info-notice" style="margin-bottom: var(--space-8)">
+      以下の内容は一般的な判断基準です。
+      実際の選定は、現地調査・見積もりを通じて各社の対応内容を確認したうえで行ってください。
+    </div>
+
+    <section style="margin-bottom: var(--space-10)">
+      <h2>まず確認すべきこと</h2>
+      <DirectAnswerBlock
+        summary={market.selectionConclusion.summary}
+        reasons={market.selectionConclusion.reasons}
+        checkItems={market.selectionConclusion.checkItems}
+        cautions={market.selectionConclusion.cautions}
+      />
+    </section>
+
+    <section style="margin-bottom: var(--space-10)">
+      <h2>状況別の判断ポイント</h2>
+      <div class="situation-cards">
+        {market.problems.map((problem) => (
+          <div class="situation-card">
+            <h3 class="situation-card__title">{problem.title}</h3>
+            <p class="situation-card__desc">{problem.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: var(--space-10)">
+      <h2>依頼の流れ</h2>
+      <ProcessSteps steps={market.processSteps} />
+    </section>
+
+    <section style="margin-bottom: var(--space-10)">
+      <h2>比較できる項目一覧</h2>
+      <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4)">
+        以下の項目を基準に会社を比較してください。詳細は各社の企業詳細ページで確認できます。
+      </p>
+      <ul class="comparison-items-grid">
+        {market.comparisonItems.map((item) => (
+          <li>
+            <span class="comparison-item__check">□</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div style="padding-top: var(--space-6); border-top: 1px solid var(--color-border); display: flex; gap: var(--space-4); flex-wrap: wrap">
+      <a href={`/${market.slug}/`} class="btn btn--primary">会社を比較する</a>
+      <a href={`/${market.slug}/faq/`} class="btn btn--secondary">よくある質問を見る</a>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-4); }
+h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-5); }
+.page-desc { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-5); }
+
+.situation-cards { display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
+@media (min-width: 640px) { .situation-cards { grid-template-columns: repeat(2, 1fr); } }
+
+.situation-card { padding: var(--space-5); background-color: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: var(--border-radius-lg); border-left: 4px solid var(--color-primary-light); }
+.situation-card__title { font-size: var(--font-size-base); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-2); }
+.situation-card__desc { font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.65; }
+
+.comparison-items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-3); }
+.comparison-items-grid li { display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); color: var(--color-text-secondary); padding: var(--space-3) var(--space-4); background-color: var(--color-bg-subtle); border-radius: var(--border-radius); }
+.comparison-item__check { color: var(--color-primary-light); font-weight: 700; flex-shrink: 0; }
+</style>

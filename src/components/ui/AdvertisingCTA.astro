@@ -1,0 +1,49 @@
+---
+/**
+ * AdvertisingCTA.astro
+ * PR掲載相談へのCTA
+ */
+---
+
+<div class="advertising-cta">
+  <div class="advertising-cta__body">
+    <p class="advertising-cta__title">PR掲載について</p>
+    <p class="advertising-cta__text">
+      このサイトへのPR掲載（有料）をご検討の方は、掲載ポリシーをご確認のうえ、お問い合わせください。
+      PR掲載の有無は比較情報・掲載順に影響しません。
+    </p>
+    <div class="advertising-cta__links">
+      <a href="/advertise/" class="btn btn--secondary btn--sm">PR掲載のご相談</a>
+      <a href="/advertising-policy/" class="btn btn--ghost btn--sm">広告掲載ポリシー</a>
+    </div>
+  </div>
+</div>
+
+<style>
+.advertising-cta {
+  padding: var(--space-5) var(--space-6);
+  background-color: hsl(220, 30%, 97%);
+  border: 1px solid hsl(220, 25%, 88%);
+  border-radius: var(--border-radius-lg);
+}
+
+.advertising-cta__title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.advertising-cta__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  margin-bottom: var(--space-4);
+}
+
+.advertising-cta__links {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+</style>

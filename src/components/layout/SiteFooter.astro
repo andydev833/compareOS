@@ -1,0 +1,234 @@
+---
+/**
+ * SiteFooter.astro
+ * サイト共通フッター
+ */
+import { markets } from '../../data/markets.js';
+
+const equipmentMarkets = markets.filter((m) => m.category === 'equipment');
+const officeMarkets = markets.filter((m) => m.category === 'office');
+const hrMarkets = markets.filter((m) => m.category === 'hr-marketing');
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <!-- 信頼性バナー -->
+  <div class="site-footer__trust">
+    <div class="container">
+      <p class="site-footer__trust-text">
+        このサイトは、公式サイト等の公開情報を基に法人向けサービス会社の情報を整理しています。
+        掲載情報の正確性は保証できません。最新情報は各社の公式サイトでご確認ください。
+      </p>
+    </div>
+  </div>
+
+  <!-- メインフッター -->
+  <div class="site-footer__main">
+    <div class="container">
+      <div class="site-footer__grid">
+        <!-- ブランド -->
+        <div class="site-footer__brand">
+          <a href="/" class="site-footer__logo">
+            <span class="site-footer__logo-text">compareOS</span>
+            <span class="site-footer__logo-sub">大阪法人向けサービス比較</span>
+          </a>
+          <p class="site-footer__tagline">
+            大阪府を中心に、兵庫県・京都府・奈良県など関西圏に対応する法人向けサービス会社を条件から比較できます。
+          </p>
+          <div class="site-footer__policy-links">
+            <a href="/methodology/">調査・比較方針</a>
+            <a href="/advertising-policy/">広告掲載ポリシー</a>
+          </div>
+        </div>
+
+        <!-- 設備・施工 -->
+        <nav class="site-footer__nav-group" aria-label="設備・施工カテゴリー">
+          <p class="site-footer__nav-title">設備・施工</p>
+          <ul role="list">
+            {equipmentMarkets.map((market) => (
+              <li><a href={`/${market.slug}/`}>{market.shortName}</a></li>
+            ))}
+          </ul>
+        </nav>
+
+        <!-- オフィス・施設 -->
+        <nav class="site-footer__nav-group" aria-label="オフィス・施設カテゴリー">
+          <p class="site-footer__nav-title">オフィス・施設運営</p>
+          <ul role="list">
+            {officeMarkets.map((market) => (
+              <li><a href={`/${market.slug}/`}>{market.shortName}</a></li>
+            ))}
+          </ul>
+          <p class="site-footer__nav-title" style="margin-top: var(--space-5)">人材・集客</p>
+          <ul role="list">
+            {hrMarkets.map((market) => (
+              <li><a href={`/${market.slug}/`}>{market.shortName}</a></li>
+            ))}
+          </ul>
+        </nav>
+
+        <!-- サイト情報 -->
+        <nav class="site-footer__nav-group" aria-label="サイト情報">
+          <p class="site-footer__nav-title">サイト情報</p>
+          <ul role="list">
+            <li><a href="/about/">運営者情報</a></li>
+            <li><a href="/methodology/">調査・比較方針</a></li>
+            <li><a href="/advertise/">PR掲載のご相談</a></li>
+            <li><a href="/listing-correction/">掲載情報の修正依頼</a></li>
+            <li><a href="/contact/">お問い合わせ</a></li>
+          </ul>
+          <p class="site-footer__nav-title" style="margin-top: var(--space-5)">規約・ポリシー</p>
+          <ul role="list">
+            <li><a href="/advertising-policy/">広告掲載ポリシー</a></li>
+            <li><a href="/disclaimer/">免責事項</a></li>
+            <li><a href="/privacy/">プライバシーポリシー</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- コピーライト -->
+  <div class="site-footer__bottom">
+    <div class="container">
+      <p class="site-footer__copyright">
+        &copy; {currentYear} compareOS — 掲載内容は公開情報を基に整理しており、情報の正確性・完全性を保証するものではありません。
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  background-color: var(--color-text);
+  color: hsl(220, 15%, 70%);
+}
+
+/* 信頼性バナー */
+.site-footer__trust {
+  background-color: hsl(220, 30%, 18%);
+  padding-block: var(--space-4);
+}
+
+.site-footer__trust-text {
+  font-size: var(--font-size-xs);
+  color: hsl(220, 15%, 65%);
+  line-height: 1.7;
+  max-width: var(--content-width);
+}
+
+/* メインフッター */
+.site-footer__main {
+  padding-block: var(--space-12);
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 640px) {
+  .site-footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-footer__grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+}
+
+/* ブランド */
+.site-footer__logo {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  margin-bottom: var(--space-4);
+}
+
+.site-footer__logo:hover {
+  text-decoration: none;
+}
+
+.site-footer__logo-text {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: white;
+  line-height: 1.2;
+}
+
+.site-footer__logo-sub {
+  font-size: 10px;
+  color: hsl(220, 30%, 60%);
+  line-height: 1;
+}
+
+.site-footer__tagline {
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: hsl(220, 15%, 62%);
+  margin-bottom: var(--space-4);
+}
+
+.site-footer__policy-links {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.site-footer__policy-links a {
+  font-size: var(--font-size-xs);
+  color: hsl(220, 40%, 60%);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.site-footer__policy-links a:hover {
+  color: white;
+  border-color: hsl(220, 40%, 60%);
+  text-decoration: none;
+}
+
+/* ナビグループ */
+.site-footer__nav-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: hsl(220, 20%, 80%);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+}
+
+.site-footer__nav-group ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.site-footer__nav-group a {
+  font-size: var(--font-size-sm);
+  color: hsl(220, 15%, 65%);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.site-footer__nav-group a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+/* コピーライト */
+.site-footer__bottom {
+  border-top: 1px solid hsl(220, 20%, 22%);
+  padding-block: var(--space-4);
+}
+
+.site-footer__copyright {
+  font-size: var(--font-size-xs);
+  color: hsl(220, 10%, 50%);
+}
+</style>

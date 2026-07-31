@@ -1,0 +1,104 @@
+---
+/**
+ * FAQAccordion.astro
+ * FAQアコーディオン
+ * 重要: 閉じた状態でも回答内容はHTMLに含まれる（SEO・AEO対応）
+ */
+import type { FAQ } from '../../data/types.js';
+
+export interface Props {
+  faqs: FAQ[];
+  headingLevel?: 2 | 3;
+}
+
+const { faqs, headingLevel = 3 } = Astro.props;
+const HeadingTag = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+<div class="faq-list">
+  {faqs.map((faq, index) => (
+    <div class="faq-item">
+      <HeadingTag>
+        <button
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls={`faq-answer-${index}`}
+          id={`faq-question-${index}`}
+        >
+          <span>{faq.question}</span>
+          <svg class="faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </HeadingTag>
+
+      {/* 回答内容はHTMLに含める（閉じた状態でも読み取り可能） */}
+      <div
+        class="faq-answer"
+        id={`faq-answer-${index}`}
+        role="region"
+        aria-labelledby={`faq-question-${index}`}
+        hidden
+      >
+        <p class="faq-answer--direct">{faq.directAnswer}</p>
+        <p class="faq-answer--detail">{faq.detail}</p>
+        {faq.conditions && (
+          <p class="faq-answer--conditions">{faq.conditions}</p>
+        )}
+        {faq.relatedLinks && faq.relatedLinks.length > 0 && (
+          <div class="faq-answer--links">
+            <p class="text-xs text-muted" style="margin-top: var(--space-3)">関連ページ：</p>
+            <ul>
+              {faq.relatedLinks.map((link) => (
+                <li><a href={link.href}>{link.text}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+.faq-answer--links ul {
+  margin-top: var(--space-2);
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.faq-answer--links a {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-light);
+}
+</style>
+
+<script>
+// FAQアコーディオン
+document.querySelectorAll('.faq-question').forEach((button) => {
+  button.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    const answerId = button.getAttribute('aria-controls');
+    const answer = answerId ? document.getElementById(answerId) : null;
+
+    // 同一リスト内の他のFAQを閉じる（オプション）
+    const faqList = button.closest('.faq-list');
+    if (faqList) {
+      faqList.querySelectorAll('.faq-question').forEach((b) => {
+        if (b !== button) {
+          b.setAttribute('aria-expanded', 'false');
+          const otherId = b.getAttribute('aria-controls');
+          const other = otherId ? document.getElementById(otherId) : null;
+          if (other) other.hidden = true;
+        }
+      });
+    }
+
+    button.setAttribute('aria-expanded', String(!expanded));
+    if (answer) {
+      answer.hidden = expanded;
+    }
+  });
+});
+</script>

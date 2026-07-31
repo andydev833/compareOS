@@ -1,0 +1,154 @@
+---
+/**
+ * DirectAnswerBlock.astro
+ * 会社選びの結論（直接回答ブロック）
+ * AEO対応：結論を最初に明示する
+ */
+
+export interface Props {
+  summary: string;
+  reasons: string[];
+  checkItems: string[];
+  cautions: string[];
+}
+
+const { summary, reasons, checkItems, cautions } = Astro.props;
+---
+
+<div class="direct-answer">
+  <div class="direct-answer__icon" aria-hidden="true">✓</div>
+  <div class="direct-answer__content">
+    <p class="direct-answer__summary">{summary}</p>
+
+    {reasons.length > 0 && (
+      <div class="direct-answer__section">
+        <p class="direct-answer__section-title">判断理由</p>
+        <ul class="direct-answer__list">
+          {reasons.map((reason) => (
+            <li>{reason}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {checkItems.length > 0 && (
+      <div class="direct-answer__section">
+        <p class="direct-answer__section-title">確認すべき比較項目</p>
+        <ul class="direct-answer__list direct-answer__list--check">
+          {checkItems.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {cautions.length > 0 && (
+      <div class="direct-answer__section direct-answer__section--caution">
+        <p class="direct-answer__section-title">注意点</p>
+        <ul class="direct-answer__list">
+          {cautions.map((caution) => (
+            <li>{caution}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+.direct-answer {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--color-primary-pale);
+  border: 1.5px solid hsl(220, 40%, 82%);
+  border-radius: var(--border-radius-lg);
+  border-left: 5px solid var(--color-primary);
+}
+
+.direct-answer__icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.direct-answer__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.direct-answer__summary {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+}
+
+.direct-answer__section {
+  margin-bottom: var(--space-4);
+}
+
+.direct-answer__section:last-child {
+  margin-bottom: 0;
+}
+
+.direct-answer__section-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: var(--space-2);
+  opacity: 0.8;
+}
+
+.direct-answer__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.direct-answer__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.direct-answer__list li::before {
+  content: '・';
+  color: var(--color-primary-light);
+  flex-shrink: 0;
+}
+
+.direct-answer__list--check li::before {
+  content: '□';
+}
+
+.direct-answer__section--caution {
+  padding: var(--space-3) var(--space-4);
+  background-color: hsl(35, 80%, 94%);
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--color-pr);
+}
+
+.direct-answer__section--caution .direct-answer__section-title {
+  color: var(--color-pr);
+}
+
+.direct-answer__section--caution li {
+  color: hsl(35, 30%, 30%);
+}
+</style>

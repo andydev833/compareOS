@@ -1,0 +1,61 @@
+---
+/**
+ * UpdateNotice.astro
+ * 情報更新・免責事項の表示
+ */
+
+export interface Props {
+  checkedDate: string;
+  sources?: { label: string; url: string; checkedDate: string }[];
+}
+
+const { checkedDate, sources = [] } = Astro.props;
+---
+
+<div class="update-notice info-notice">
+  <p>
+    <strong>掲載情報について：</strong>
+    このページの情報は、公式サイト等の公開情報を基に整理しています（最終確認：{checkedDate}）。
+    最新情報・正確な詳細は、各社の公式サイトでご確認ください。
+    掲載内容の完全性・正確性は保証できません。
+  </p>
+  {sources.length > 0 && (
+    <div class="update-notice__sources">
+      <p class="update-notice__sources-title">情報元：</p>
+      <ul>
+        {sources.map((source) => (
+          <li>
+            <a href={source.url} target="_blank" rel="noopener noreferrer" class="link--external">
+              {source.label}
+            </a>
+            <span class="text-muted">（確認日：{source.checkedDate}）</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
+
+<style>
+.update-notice__sources {
+  margin-top: var(--space-3);
+}
+
+.update-notice__sources-title {
+  font-weight: 600;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.update-notice__sources ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.update-notice__sources li {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+</style>

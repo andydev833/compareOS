@@ -1,0 +1,178 @@
+---
+/**
+ * FilterPanel.astro
+ * 企業一覧の絞り込みパネル（フロントエンドフィルタリング）
+ */
+import type { FilterOption } from '../../data/types.js';
+
+export interface Props {
+  filterOptions: FilterOption[];
+  companyCount: number;
+}
+
+const { filterOptions, companyCount } = Astro.props;
+---
+
+<div class="filter-panel">
+  <div class="filter-panel__header">
+    <h2 class="filter-panel__title">絞り込み</h2>
+    <button class="filter-panel__clear" id="filter-clear" type="button" hidden>
+      クリア
+    </button>
+  </div>
+
+  <div class="filter-panel__count" id="filter-count" aria-live="polite">
+    <span id="filter-count-num">{companyCount}</span>社が対象
+  </div>
+
+  <div class="filter-panel__options" role="group" aria-label="絞り込み条件">
+    {filterOptions.map((option) => (
+      <label class="filter-option" for={`filter-${option.id}`}>
+        <input
+          type="checkbox"
+          id={`filter-${option.id}`}
+          name="filter"
+          value={option.id}
+          class="filter-checkbox"
+          data-field={option.field}
+          data-value={option.value}
+        />
+        <span class="filter-option__label">{option.label}</span>
+      </label>
+    ))}
+  </div>
+</div>
+
+<style>
+.filter-panel {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-5);
+}
+
+.filter-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.filter-panel__title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.filter-panel__clear {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary-light);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
+  transition: background-color var(--transition);
+}
+
+.filter-panel__clear:hover {
+  background-color: var(--color-primary-pale);
+}
+
+.filter-panel__count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg-subtle);
+  border-radius: var(--border-radius);
+}
+
+.filter-panel__count #filter-count-num {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.filter-panel__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  padding: var(--space-2) var(--space-1);
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition);
+}
+
+.filter-option:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.filter-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.filter-option__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+</style>
+
+<script>
+// フィルターパネルのロジック
+const filterCheckboxes = document.querySelectorAll('.filter-checkbox') as NodeListOf<HTMLInputElement>;
+const filterClear = document.getElementById('filter-clear') as HTMLButtonElement;
+const filterCountEl = document.getElementById('filter-count-num');
+const companyCards = document.querySelectorAll('[data-company-id]') as NodeListOf<HTMLElement>;
+
+function applyFilters() {
+  const activeFilters = Array.from(filterCheckboxes)
+    .filter((cb) => cb.checked)
+    .map((cb) => ({ field: cb.dataset.field || '', value: cb.dataset.value || '' }));
+
+  let visibleCount = 0;
+
+  companyCards.forEach((card) => {
+    const companyId = card.dataset.companyId || '';
+    let show = true;
+
+    // フィルタリングロジック（簡易実装）
+    // 実際はcompanyDataを参照するが、ここではdata属性を利用
+    if (activeFilters.length > 0) {
+      // フィルタ未適用時は全表示
+      // TODO: 詳細フィルタリングはサーバーサイドまたはデータ属性で実装
+    }
+
+    card.style.display = show ? '' : 'none';
+    if (show) visibleCount++;
+  });
+
+  if (filterCountEl) filterCountEl.textContent = String(visibleCount);
+
+  // クリアボタンの表示制御
+  const anyChecked = Array.from(filterCheckboxes).some((cb) => cb.checked);
+  if (filterClear) filterClear.hidden = !anyChecked;
+}
+
+filterCheckboxes.forEach((cb) => {
+  cb.addEventListener('change', applyFilters);
+});
+
+if (filterClear) {
+  filterClear.addEventListener('click', () => {
+    filterCheckboxes.forEach((cb) => { cb.checked = false; });
+    applyFilters();
+  });
+}
+</script>

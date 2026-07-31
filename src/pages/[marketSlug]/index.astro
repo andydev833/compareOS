@@ -1,0 +1,249 @@
+---
+/**
+ * 汎用市場トップページ（業務用エアコン以外の11市場）
+ * /[marketSlug]/
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+import DirectAnswerBlock from '../../components/market/DirectAnswerBlock.astro';
+import ComparisonTable from '../../components/market/ComparisonTable.astro';
+import CompanyCard from '../../components/company/CompanyCard.astro';
+import FilterPanel from '../../components/market/FilterPanel.astro';
+import ProcessSteps from '../../components/ui/ProcessSteps.astro';
+import CostSummary from '../../components/ui/CostSummary.astro';
+import FAQAccordion from '../../components/ui/FAQAccordion.astro';
+import CorrectionCTA from '../../components/ui/CorrectionCTA.astro';
+import AdvertisingCTA from '../../components/ui/AdvertisingCTA.astro';
+import UpdateNotice from '../../components/ui/UpdateNotice.astro';
+import { markets, marketsBySlug } from '../../data/markets.js';
+import { companiesByMarket } from '../../data/companies/other-markets.js';
+import { getMarketItemListSchema, getFAQSchema } from '../../utils/seo.js';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  const EXCLUDED_SLUGS = ['commercial-aircon'];
+  return markets
+    .filter((m) => !EXCLUDED_SLUGS.includes(m.slug))
+    .map((market) => ({
+      params: { marketSlug: market.slug },
+      props: { market },
+    }));
+}) satisfies GetStaticPaths;
+
+const { market } = Astro.props;
+const companies = companiesByMarket[market.id] || [];
+
+const breadcrumbItems = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+];
+
+const jsonLd = [
+  getMarketItemListSchema(market, companies),
+  getFAQSchema(market.faqs),
+];
+---
+
+<BaseLayout
+  title={`${market.h1} | compareOS`}
+  description={`${market.description}掲載${companies.length}社。大阪府内で${market.shortName}に対応する会社を比較できます。`}
+  canonical={`/${market.slug}/`}
+  jsonLd={jsonLd}
+>
+  <SiteHeader slot="header" />
+
+  <!-- パンくず -->
+  <div class="container">
+    <Breadcrumbs items={breadcrumbItems} />
+  </div>
+
+  <!-- ヒーロー -->
+  <section class="market-hero">
+    <div class="container">
+      <div class="market-hero__meta">
+        <span class="market-hero__category">
+          {market.category === 'equipment' ? '設備・施工' : market.category === 'office' ? 'オフィス・施設' : '人材・集客'}
+        </span>
+        <span class="market-hero__count">掲載 {companies.length} 社</span>
+      </div>
+      <h1 class="market-hero__heading">{market.h1}</h1>
+      <p class="market-hero__catch">{market.catchCopy}</p>
+      <p class="market-hero__sub">{market.subCopy}</p>
+      <div class="market-hero__cta">
+        <a href="#comparison-table" class="btn btn--primary">比較表を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 会社選びの結論 -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">会社の選び方</h2>
+      <DirectAnswerBlock
+        summary={market.selectionConclusion.summary}
+        reasons={market.selectionConclusion.reasons}
+        checkItems={market.selectionConclusion.checkItems}
+        cautions={market.selectionConclusion.cautions}
+      />
+    </div>
+  </section>
+
+  <!-- 主要比較表 -->
+  {companies.length > 0 && (
+    <section class="section section--muted" id="comparison-table">
+      <div class="container">
+        <h2 class="section-title">主要比較表</h2>
+        <p class="section-subtitle">
+          公式サイト等の公開情報を基に整理しています。
+        </p>
+        <ComparisonTable
+          companies={companies}
+          comparisonItems={market.comparisonItems}
+          marketSlug={market.slug}
+          caption={`大阪の${market.shortName}会社 主要比較表（公開情報に基づく）`}
+        />
+      </div>
+    </section>
+  )}
+
+  <!-- 掲載企業一覧 -->
+  {companies.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">掲載企業一覧</h2>
+        <div class="companies-layout">
+          <aside aria-label="絞り込み">
+            <FilterPanel filterOptions={market.filterOptions} companyCount={companies.length} />
+          </aside>
+          <div>
+            <div class="companies-list">
+              {companies.map((company) => (
+                <CompanyCard company={company} marketSlug={market.slug} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 費用概要 -->
+  <section class="section section--muted">
+    <div class="container">
+      <h2 class="section-title">費用について</h2>
+      <CostSummary costInfo={market.costInfo} marketName={market.name} />
+    </div>
+  </section>
+
+  <!-- 依頼の流れ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">依頼の流れ</h2>
+      <ProcessSteps steps={market.processSteps} />
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--muted">
+    <div class="container">
+      <h2 class="section-title">よくある質問</h2>
+      <FAQAccordion faqs={market.faqs} />
+    </div>
+  </section>
+
+  <!-- 免責・修正依頼 -->
+  <section class="section">
+    <div class="container">
+      <UpdateNotice checkedDate={market.checkedDate} />
+      <div style="margin-top: var(--space-5)">
+        <CorrectionCTA marketName={market.name} />
+      </div>
+      <div style="margin-top: var(--space-4)">
+        <AdvertisingCTA />
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.market-hero {
+  background: linear-gradient(160deg, hsl(215, 55%, 20%) 0%, hsl(215, 40%, 30%) 100%);
+  color: white;
+  padding-block: var(--space-10) var(--space-12);
+}
+
+.market-hero__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.market-hero__category {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: hsl(215, 80%, 75%);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.market-hero__count {
+  font-size: var(--font-size-xs);
+  color: hsl(215, 40%, 70%);
+  background-color: rgba(255,255,255,0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.market-hero__heading {
+  font-size: var(--font-size-2xl);
+  color: white;
+  margin-bottom: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .market-hero__heading { font-size: var(--font-size-3xl); }
+}
+
+.market-hero__catch {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: hsl(215, 80%, 85%);
+  margin-bottom: var(--space-3);
+}
+
+.market-hero__sub {
+  color: hsl(215, 40%, 75%);
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+}
+
+.market-hero__cta {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.companies-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .companies-layout {
+    grid-template-columns: var(--sidebar-width) 1fr;
+    align-items: start;
+  }
+}
+
+.companies-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+</style>

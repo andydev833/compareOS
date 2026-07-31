@@ -1,0 +1,66 @@
+---
+/**
+ * ExternalLinkButton.astro
+ * 公式サイトリンクボタン（クリック計測付き）
+ */
+
+export interface Props {
+  href: string;
+  marketId: string;
+  companyId: string;
+  companyName: string;
+  listingType: 'demo' | 'standard' | 'pr';
+  pageType?: string;
+  placement?: string;
+  label?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const {
+  href,
+  marketId,
+  companyId,
+  companyName,
+  listingType,
+  pageType = 'company',
+  placement = 'detail',
+  label = '公式サイトで詳細を確認する',
+  size = 'md',
+} = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class={`btn btn--primary btn--${size} external-link-btn`}
+  data-market-id={marketId}
+  data-company-id={companyId}
+  data-listing-type={listingType}
+  data-page-type={pageType}
+  data-placement={placement}
+  aria-label={`${companyName}の公式サイトへ（外部サイトへ移動します）`}
+>
+  {label}
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+
+<script>
+// クリック計測
+document.querySelectorAll('.external-link-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const data = {
+      marketId: (btn as HTMLElement).dataset.marketId,
+      companyId: (btn as HTMLElement).dataset.companyId,
+      listingType: (btn as HTMLElement).dataset.listingType,
+      pageType: (btn as HTMLElement).dataset.pageType,
+      placement: (btn as HTMLElement).dataset.placement,
+      timestamp: new Date().toISOString(),
+    };
+    console.log('[compareOS] trackOutboundClick:', data);
+    // TODO: GA4 gtag('event', 'outbound_click', data);
+  });
+});
+</script>

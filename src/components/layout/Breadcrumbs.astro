@@ -1,0 +1,70 @@
+---
+/**
+ * Breadcrumbs.astro
+ * パンくずリスト（JSON-LD対応）
+ */
+import { getBreadcrumbSchema } from '../../utils/seo.js';
+
+export interface Props {
+  items: { name: string; href: string }[];
+}
+
+const { items } = Astro.props;
+const schema = getBreadcrumbSchema(items);
+---
+
+<nav aria-label="パンくずリスト" class="breadcrumbs">
+  <ol role="list" class="breadcrumbs__list">
+    {items.map((item, index) => (
+      <li class="breadcrumbs__item">
+        {index < items.length - 1 ? (
+          <>
+            <a href={item.href} class="breadcrumbs__link">{item.name}</a>
+            <span class="breadcrumbs__separator" aria-hidden="true">›</span>
+          </>
+        ) : (
+          <span class="breadcrumbs__current" aria-current="page">{item.name}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<style>
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.breadcrumbs__link {
+  color: var(--color-primary-light);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.breadcrumbs__link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.breadcrumbs__separator {
+  color: var(--color-border-strong);
+  user-select: none;
+}
+
+.breadcrumbs__current {
+  color: var(--color-text-secondary);
+}
+</style>

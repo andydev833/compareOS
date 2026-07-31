@@ -1,0 +1,409 @@
+---
+/**
+ * トップページ
+ * compareOS - 大阪法人向けサービス比較メディア
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import MarketCard from '../components/market/MarketCard.astro';
+import { markets } from '../data/markets.js';
+import { getWebSiteSchema } from '../utils/seo.js';
+
+const equipmentMarkets = markets.filter((m) => m.category === 'equipment');
+const officeMarkets = markets.filter((m) => m.category === 'office');
+const hrMarkets = markets.filter((m) => m.category === 'hr-marketing');
+
+const seoTitle = '大阪の法人向けサービス会社を、条件から比較｜compareOS';
+const seoDescription = '大阪府を中心とした法人向けサービス会社の比較メディア。業務用エアコン、防犯カメラ、オフィス内装、移転、清掃、AED研修、SEOなど12市場の会社情報を公開情報に基づいて整理しています。';
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  canonical="/"
+>
+  <SiteHeader slot="header" />
+
+  <!-- ヒーローセクション -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero__inner">
+        <div class="hero__content">
+          <h1 class="hero__heading" id="hero-heading">
+            大阪の法人向けサービス会社を、<br>条件から比較。
+          </h1>
+          <p class="hero__description">
+            設備工事、オフィス、店舗運営、研修、Web集客など、法人向けサービス会社の情報を公式サイトに基づいて整理しています。
+            大阪府を中心に、兵庫・京都・奈良など関西圏に対応する会社も掲載します。
+          </p>
+
+          <!-- 市場検索（初稿：デザインのみ） -->
+          <div class="hero__search" role="search" aria-label="市場を検索">
+            <input
+              type="search"
+              placeholder="市場名や業種を入力（例：業務用エアコン、防犯カメラ）"
+              class="hero__search-input"
+              aria-label="市場を検索"
+              disabled
+              title="この機能は準備中です"
+            />
+            <button class="hero__search-btn btn btn--primary" disabled>
+              検索
+            </button>
+          </div>
+          <p class="hero__search-note text-xs text-muted">※ 検索機能は準備中です。以下の12市場から選択してください。</p>
+
+          <!-- クイックリンク -->
+          <div class="hero__quick-links">
+            <a href="/methodology/" class="hero__quick-link">調査・比較方針</a>
+            <a href="/listing-correction/" class="hero__quick-link">掲載情報の修正依頼</a>
+            <a href="/advertise/" class="hero__quick-link">PR掲載のご相談</a>
+          </div>
+        </div>
+
+        <!-- サイドの信頼指標 -->
+        <div class="hero__trust" aria-label="サイトの特徴">
+          <div class="hero__trust-item">
+            <div class="hero__trust-icon" aria-hidden="true">✓</div>
+            <div>
+              <p class="hero__trust-title">公式情報に基づく整理</p>
+              <p class="hero__trust-desc">公式サイト等の公開情報のみを使用</p>
+            </div>
+          </div>
+          <div class="hero__trust-item">
+            <div class="hero__trust-icon" aria-hidden="true">≠</div>
+            <div>
+              <p class="hero__trust-title">根拠のないランキングなし</p>
+              <p class="hero__trust-desc">順位販売や恣意的な評価を行いません</p>
+            </div>
+          </div>
+          <div class="hero__trust-item">
+            <div class="hero__trust-icon" aria-hidden="true">◈</div>
+            <div>
+              <p class="hero__trust-title">PR掲載を明示</p>
+              <p class="hero__trust-desc">広告掲載と通常掲載を明確に区別</p>
+            </div>
+          </div>
+          <div class="hero__trust-item">
+            <div class="hero__trust-icon" aria-hidden="true">📍</div>
+            <div>
+              <p class="hero__trust-title">大阪・関西に特化</p>
+              <p class="hero__trust-desc">大阪府メイン、関西圏対応も掲載</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 設備・施工 -->
+  <section class="section section--muted" aria-labelledby="equipment-heading">
+    <div class="container">
+      <h2 class="section-title" id="equipment-heading">設備・施工</h2>
+      <p class="section-subtitle">
+        業務用エアコン・防犯カメラ・厨房機器・防音工事・看板・太陽光発電の設置・工事会社を比較できます。
+      </p>
+      <div class="grid-3">
+        {equipmentMarkets.map((market) => (
+          <MarketCard market={market} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- オフィス・施設運営 -->
+  <section class="section" aria-labelledby="office-heading">
+    <div class="container">
+      <h2 class="section-title" id="office-heading">オフィス・施設運営</h2>
+      <p class="section-subtitle">
+        オフィス内装・移転・害虫駆除・清掃など、施設管理に関するサービス会社を比較できます。
+      </p>
+      <div class="grid-3">
+        {officeMarkets.map((market) => (
+          <MarketCard market={market} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 人材・集客 -->
+  <section class="section section--muted" aria-labelledby="hr-heading">
+    <div class="container">
+      <h2 class="section-title" id="hr-heading">人材・集客</h2>
+      <p class="section-subtitle">
+        救命・AED研修とWeb集客・SEO支援の会社を比較できます。
+      </p>
+      <div class="grid-2">
+        {hrMarkets.map((market) => (
+          <MarketCard market={market} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- サイトの方針 -->
+  <section class="section" aria-labelledby="policy-heading">
+    <div class="container">
+      <div class="policy-section">
+        <div class="policy-section__text">
+          <h2 class="section-title" id="policy-heading">掲載情報について</h2>
+          <p class="policy-section__desc">
+            このサイトに掲載する情報は、各社の公式サイト等の公開情報を基に整理しています。
+            掲載内容の正確性・完全性は保証できません。最新情報は各社の公式サイトでご確認ください。
+          </p>
+          <ul class="policy-section__list">
+            <li>確認できた情報のみを掲載（推測・補完は行いません）</li>
+            <li>確認できなかった情報は「公式サイトで確認できず」と表示</li>
+            <li>掲載順はPR掲載の有無によって操作しません</li>
+            <li>根拠のないランキング・評価・受賞歴は掲載しません</li>
+            <li>DEMOデータは架空の企業です。実在企業ではありません</li>
+          </ul>
+          <div class="policy-section__links">
+            <a href="/methodology/" class="btn btn--secondary">調査・比較方針を読む</a>
+            <a href="/about/" class="btn btn--ghost">運営者情報</a>
+          </div>
+        </div>
+
+        <div class="policy-section__region">
+          <h3 class="policy-section__region-title">対象地域について</h3>
+          <p>大阪府を中心に、兵庫県・京都府・奈良県・滋賀県・和歌山県など関西圏に対応する会社も掲載しています。</p>
+          <div class="policy-section__region-tags">
+            {['大阪府（メイン）', '兵庫県', '京都府', '奈良県', '滋賀県', '和歌山県'].map((pref) => (
+              <span class="policy-section__region-tag">{pref}</span>
+            ))}
+          </div>
+          <p class="text-sm text-muted" style="margin-top: var(--space-3)">
+            地域別ページは、掲載企業数や地域固有の情報が揃った段階で追加予定です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+/* ヒーロー */
+.hero {
+  background: linear-gradient(160deg, var(--color-primary) 0%, hsl(220, 45%, 30%) 100%);
+  padding-block: var(--space-16) var(--space-12);
+  color: white;
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+}
+
+@media (min-width: 1024px) {
+  .hero__inner {
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+  }
+}
+
+.hero__heading {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: white;
+  line-height: 1.35;
+  margin-bottom: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .hero__heading {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.hero__description {
+  color: hsl(220, 50%, 85%);
+  line-height: 1.75;
+  margin-bottom: var(--space-6);
+  font-size: var(--font-size-base);
+}
+
+.hero__search {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.hero__search-input {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  background-color: rgba(255,255,255,0.15);
+  color: white;
+  cursor: not-allowed;
+}
+
+.hero__search-input::placeholder {
+  color: hsl(220, 40%, 72%);
+}
+
+.hero__search-btn {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.hero__search-note {
+  margin-bottom: var(--space-6);
+  color: hsl(220, 40%, 72%);
+}
+
+.hero__quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.hero__quick-link {
+  font-size: var(--font-size-sm);
+  color: hsl(220, 50%, 80%);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.hero__quick-link:hover {
+  color: white;
+  border-color: rgba(255,255,255,0.5);
+  text-decoration: none;
+}
+
+/* 信頼指標 */
+.hero__trust {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background-color: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-6);
+}
+
+.hero__trust-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.hero__trust-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background-color: rgba(255,255,255,0.15);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  color: hsl(220, 80%, 80%);
+}
+
+.hero__trust-title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.hero__trust-desc {
+  font-size: var(--font-size-xs);
+  color: hsl(220, 40%, 72%);
+  line-height: 1.5;
+}
+
+/* 掲載情報ポリシー */
+.policy-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+}
+
+@media (min-width: 1024px) {
+  .policy-section {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+.policy-section__desc {
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin-bottom: var(--space-5);
+}
+
+.policy-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.policy-section__list li {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  padding-left: var(--space-5);
+  position: relative;
+  line-height: 1.6;
+}
+
+.policy-section__list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-status-ok);
+  font-weight: 700;
+}
+
+.policy-section__links {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* 地域情報 */
+.policy-section__region {
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+}
+
+.policy-section__region-title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.policy-section__region p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin-bottom: var(--space-4);
+}
+
+.policy-section__region-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.policy-section__region-tag {
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-primary-pale);
+  color: var(--color-primary);
+  border-radius: 100px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  border: 1px solid hsl(220, 40%, 82%);
+}
+</style>

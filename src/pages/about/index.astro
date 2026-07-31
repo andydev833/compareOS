@@ -1,0 +1,95 @@
+---
+/**
+ * 運営者情報ページ
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: '運営者情報', href: '/about/' },
+];
+---
+
+<BaseLayout
+  title="運営者情報 | compareOS 大阪法人向けサービス比較"
+  description="compareOS（大阪法人向けサービス比較）の運営者情報です。"
+  canonical="/about/"
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="page-content container" style="padding-block: var(--space-10); max-width: var(--content-width)">
+    <h1>運営者情報</h1>
+
+    <section class="page-section">
+      <h2>サイト概要</h2>
+      <dl class="info-dl">
+        <dt>サイト名</dt>
+        <dd>compareOS（大阪法人向けサービス比較）</dd>
+        <dt>URL</dt>
+        <dd>https://compare-os.example.com</dd>
+        <dt>目的</dt>
+        <dd>大阪府を中心とした法人向けサービス会社の情報を、公開情報に基づいて整理し、法人担当者が会社を比較・選定しやすくすること</dd>
+        <dt>対象地域</dt>
+        <dd>大阪府（メイン）、兵庫県・京都府・奈良県・滋賀県・和歌山県（関西圏）</dd>
+        <dt>対象市場</dt>
+        <dd>業務用エアコン、防犯カメラ、厨房機器、オフィス内装、オフィス移転、防音工事、店舗看板、太陽光発電、害虫・害獣駆除、業務用清掃、AED研修、Web集客・SEO</dd>
+      </dl>
+    </section>
+
+    <section class="page-section">
+      <h2>掲載情報について</h2>
+      <p>このサイトは、各社の公式サイト等の公開情報を基に情報を整理しています。</p>
+      <ul class="page-list">
+        <li>掲載情報の正確性・完全性は保証できません</li>
+        <li>最新情報は各社の公式サイトでご確認ください</li>
+        <li>公開情報で確認できなかった項目は「公式サイトで確認できず」と表示します</li>
+        <li>根拠のないランキング・評価は行いません</li>
+        <li>DEMOデータは架空の企業です（実在企業ではありません）</li>
+      </ul>
+    </section>
+
+    <section class="page-section">
+      <h2>広告・PR掲載について</h2>
+      <p>
+        このサイトではPR掲載（有料）を受け付けています。PR掲載の有無は比較表の内容や掲載順に影響しません。
+        PR掲載企業は「PR」バッジで明示します。
+      </p>
+      <p>詳しくは<a href="/advertising-policy/">広告掲載ポリシー</a>をご覧ください。</p>
+    </section>
+
+    <section class="page-section">
+      <h2>お問い合わせ</h2>
+      <ul class="page-list">
+        <li>掲載情報の修正依頼：<a href="/listing-correction/">掲載情報の修正依頼フォーム</a></li>
+        <li>PR掲載のご相談：<a href="/advertise/">PR掲載のご相談</a></li>
+        <li>その他のお問い合わせ：<a href="/contact/">お問い合わせフォーム</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.page-section {
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-border);
+}
+.page-section:last-child { border-bottom: none; }
+.page-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+.page-section p { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
+.info-dl { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3) var(--space-6); }
+.info-dl dt { font-weight: 700; color: var(--color-text-secondary); font-size: var(--font-size-sm); white-space: nowrap; }
+.info-dl dd { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.page-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.page-list li { font-size: var(--font-size-sm); color: var(--color-text-secondary); padding-left: var(--space-5); position: relative; line-height: 1.6; }
+.page-list li::before { content: '・'; position: absolute; left: 0; color: var(--color-primary-light); }
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-8); }
+</style>

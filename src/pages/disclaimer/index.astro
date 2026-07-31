@@ -1,0 +1,85 @@
+---
+/**
+ * 免責事項ページ
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: '免責事項', href: '/disclaimer/' },
+];
+---
+
+<BaseLayout
+  title="免責事項 | compareOS 大阪法人向けサービス比較"
+  description="compareOSの免責事項です。掲載情報の利用にあたってご確認ください。"
+  canonical="/disclaimer/"
+  noindex={false}
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container page-content" style="max-width: var(--content-width); padding-block: var(--space-10)">
+    <h1>免責事項</h1>
+
+    <section class="page-section">
+      <h2>情報の正確性について</h2>
+      <p>
+        このサイトに掲載する情報は、各社の公式サイト等の公開情報を基に整理していますが、
+        掲載情報の正確性・完全性・最新性を保証するものではありません。
+      </p>
+      <p>
+        掲載情報は情報確認日時点のものです。その後に情報が変更されている場合があります。
+        最新の正確な情報は、必ず各社の公式サイトまたは直接の問い合わせでご確認ください。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>損害賠償の免責</h2>
+      <p>
+        このサイトの情報を利用したことによって生じた損害について、
+        運営者は一切の責任を負いません。
+        サービスの利用・発注・契約は、ご自身の判断と責任において行ってください。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>外部リンクについて</h2>
+      <p>
+        このサイトには各社の公式サイトへのリンクを掲載しています。
+        リンク先のコンテンツ・サービスについて、運営者は責任を負いません。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>DEMOデータについて</h2>
+      <p>
+        「DEMO」バッジが表示されている企業は架空の企業です。
+        実在する企業・団体ではありません。DEMOデータはサイト機能の確認のために使用しています。
+      </p>
+    </section>
+
+    <section class="page-section">
+      <h2>著作権</h2>
+      <p>
+        このサイトのコンテンツ（文章・構成・デザイン等）の著作権は運営者に帰属します。
+        無断転載・複製を禁じます。
+      </p>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.page-section { margin-bottom: var(--space-10); padding-bottom: var(--space-10); border-bottom: 1px solid var(--color-border); }
+.page-section:last-child { border-bottom: none; }
+.page-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+.page-section p { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-8); }
+</style>

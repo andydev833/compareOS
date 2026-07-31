@@ -1,0 +1,54 @@
+---
+/**
+ * 業務用エアコン - FAQ専用ページ
+ * /commercial-aircon/faq/
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteHeader from '../../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro';
+import FAQAccordion from '../../../components/ui/FAQAccordion.astro';
+import { marketsBySlug } from '../../../data/markets.js';
+import { getFAQSchema } from '../../../utils/seo.js';
+
+const market = marketsBySlug['commercial-aircon'];
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: 'よくある質問', href: `/${market.slug}/faq/` },
+];
+---
+
+<BaseLayout
+  title={`業務用エアコンのよくある質問｜大阪 | compareOS`}
+  description={`大阪の業務用エアコン工事に関するよくある質問。費用・工期・緊急対応・保守契約など${market.faqs.length}件のQ&Aを掲載。`}
+  canonical={`/${market.slug}/faq/`}
+  jsonLd={getFAQSchema(market.faqs)}
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container" style="padding-block: var(--space-10); max-width: 840px">
+    <h1>業務用エアコンのよくある質問</h1>
+    <p class="page-desc">
+      最初の1〜2文が直接回答です。「条件による」場合はその条件を、「例外」がある場合は例外を合わせて説明します。
+    </p>
+    <div class="info-notice" style="margin-bottom: var(--space-6)">
+      このページは公開情報・一般的な業界知識に基づいています。
+      個別の状況については、必ず会社に直接確認してください。
+    </div>
+    <FAQAccordion faqs={market.faqs} headingLevel={2} />
+    <div style="margin-top: var(--space-10); padding-top: var(--space-6); border-top: 1px solid var(--color-border)">
+      <a href={`/${market.slug}/`} class="btn btn--secondary">← {market.shortName}の比較ページに戻る</a>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-4); }
+.page-desc { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-5); }
+</style>

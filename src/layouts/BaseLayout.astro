@@ -1,0 +1,89 @@
+---
+/**
+ * BaseLayout.astro
+ * 全ページ共通レイアウト。SEO・JSON-LD・OGPを統合。
+ */
+import '../styles/global.css';
+import { getWebSiteSchema, getOrganizationSchema } from '../utils/seo.js';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  jsonLd?: object | object[];
+  breadcrumbs?: { name: string; href: string }[];
+}
+
+const {
+  title,
+  description,
+  canonical = Astro.url.pathname,
+  ogType = 'website',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const SITE_URL = 'https://compare-os.example.com'; // 本番URLに変更
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+const canonicalUrl = canonical.startsWith('http') ? canonical : `${SITE_URL}${canonical}`;
+
+// JSON-LDのまとめ
+const schemaItems = [
+  getWebSiteSchema(),
+  getOrganizationSchema(),
+  ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
+];
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- プライマリSEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- robots -->
+    {noindex
+      ? <meta name="robots" content="noindex,nofollow" />
+      : <meta name="robots" content="index,follow" />
+    }
+
+    <!-- OGP -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:image" content={OG_IMAGE} />
+    <meta property="og:site_name" content="compareOS 大阪法人向けサービス比較" />
+    <meta property="og:locale" content="ja_JP" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={OG_IMAGE} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD 構造化データ -->
+    {schemaItems.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
+    <slot name="header" />
+    <main id="main-content">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

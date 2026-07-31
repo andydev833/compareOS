@@ -1,0 +1,123 @@
+---
+/**
+ * CostSummary.astro
+ * 費用概要コンポーネント
+ */
+import type { CostInfo } from '../../data/types.js';
+
+export interface Props {
+  costInfo: CostInfo;
+  marketName: string;
+}
+
+const { costInfo, marketName } = Astro.props;
+---
+
+<div class="cost-summary">
+  <p class="cost-summary__notice">
+    <strong>重要：</strong>以下は費用を構成する要素の整理です。具体的な費用は会社・状況によって異なります。必ず現地調査・見積もりを取得してください。
+  </p>
+
+  <div class="cost-summary__grid">
+    <div class="cost-summary__section">
+      <h4 class="cost-summary__section-title">費用を左右する条件</h4>
+      <ul class="cost-summary__list cost-summary__list--factors">
+        {costInfo.factors.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="cost-summary__section">
+      <h4 class="cost-summary__section-title">基本料金に含まれやすい項目</h4>
+      <ul class="cost-summary__list cost-summary__list--included">
+        {costInfo.included.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="cost-summary__section">
+      <h4 class="cost-summary__section-title">追加費用が発生しやすい条件</h4>
+      <ul class="cost-summary__list cost-summary__list--extra">
+        {costInfo.extra.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="cost-summary__section">
+      <h4 class="cost-summary__section-title">見積もり時に確認する項目</h4>
+      <ul class="cost-summary__list cost-summary__list--check">
+        {costInfo.checkItems.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+.cost-summary {
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+}
+
+.cost-summary__notice {
+  font-size: var(--font-size-sm);
+  color: hsl(35, 40%, 35%);
+  background-color: hsl(35, 80%, 94%);
+  border: 1px solid hsl(35, 60%, 80%);
+  border-radius: var(--border-radius);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  line-height: 1.65;
+}
+
+.cost-summary__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .cost-summary__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cost-summary__section-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cost-summary__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cost-summary__list li {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  padding-left: var(--space-4);
+  position: relative;
+  line-height: 1.55;
+}
+
+.cost-summary__list li::before {
+  position: absolute;
+  left: 0;
+}
+
+.cost-summary__list--factors li::before { content: '▸'; color: var(--color-primary-light); }
+.cost-summary__list--included li::before { content: '✓'; color: var(--color-status-ok); }
+.cost-summary__list--extra li::before { content: '!'; color: var(--color-pr); font-weight: 700; }
+.cost-summary__list--check li::before { content: '□'; color: var(--color-primary-light); }
+</style>
