@@ -4,4 +4,4 @@ Allow: /
 # DEMOデータのページはインデックス対象外（本番では企業データが入ったら削除）
 Disallow: /*/company/demo-*
 
-Sitemap: https://compare-os.example.com/sitemap-index.xml
+Sitemap: https://uto-inc.jp/sitemap-index.xml

@@ -1,0 +1,68 @@
+---
+/**
+ * お問い合わせページ
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: 'お問い合わせ', href: '/contact/' },
+];
+---
+
+<BaseLayout
+  title="お問い合わせ | compareOS 大阪法人向けサービス比較"
+  description="compareOS（大阪法人向けサービス比較）へのお問い合わせページです。"
+  canonical="/contact/"
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container page-content" style="max-width: var(--content-width); padding-block: var(--space-10)">
+    <h1>お問い合わせ</h1>
+
+    <div class="info-notice" style="margin-bottom: var(--space-8)">
+      <strong>お問い合わせの前にご確認ください：</strong>
+      掲載情報の修正依頼は<a href="/listing-correction/">掲載情報の修正依頼フォーム</a>、
+      PR掲載のご相談は<a href="/advertise/">PR掲載のご相談ページ</a>をご利用いただくと、より早くご対応できます。
+      それ以外のお問い合わせは、以下のメールアドレスまでご連絡ください。
+    </div>
+
+    <section class="page-section">
+      <h2>メールでのお問い合わせ</h2>
+      <p>
+        掲載情報の修正依頼・PR掲載のご相談以外のお問い合わせは、以下のメールアドレスまでご連絡ください。
+        内容を確認の上、可能な限り対応いたします。
+      </p>
+      <div style="margin-top: var(--space-4)">
+        <a href="mailto:eisuke@uto-inc.jp" class="btn btn--primary">eisuke@uto-inc.jp へメールする</a>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <h2>その他のお問い合わせ窓口</h2>
+      <ul class="page-list">
+        <li>掲載情報の修正依頼：<a href="/listing-correction/">掲載情報の修正依頼フォーム</a></li>
+        <li>PR掲載のご相談：<a href="/advertise/">PR掲載のご相談</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.page-section { margin-bottom: var(--space-10); padding-bottom: var(--space-10); border-bottom: 1px solid var(--color-border); }
+.page-section:last-child { border-bottom: none; }
+.page-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+.page-section p { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
+.page-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.page-list li { font-size: var(--font-size-sm); color: var(--color-text-secondary); padding-left: var(--space-5); position: relative; line-height: 1.6; }
+.page-list li::before { content: '・'; position: absolute; left: 0; color: var(--color-primary-light); }
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-8); }
+</style>

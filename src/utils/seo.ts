@@ -5,7 +5,7 @@
 import type { Market, Company, SEOConfig } from '../data/types.js';
 
 const SITE_NAME = 'compareOS 大阪法人向けサービス比較';
-const SITE_URL = 'https://compare-os.example.com'; // 本番URLに変更
+const SITE_URL = 'https://uto-inc.jp'; // 本番URLに変更
 
 /**
  * ページのSEO設定を生成する
