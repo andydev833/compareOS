@@ -96,7 +96,7 @@ export const markets: Market[] = [
     ],
     status: 'published',
     checkedDate: '2025-01-01',
-    companyCount: 3,
+    companyCount: 8,
   },
 
   // ==========================================
