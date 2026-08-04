@@ -10,9 +10,12 @@ import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro';
 import CostSummary from '../../../components/ui/CostSummary.astro';
 import FAQAccordion from '../../../components/ui/FAQAccordion.astro';
 import { marketsBySlug } from '../../../data/markets.js';
+import { airconCompanies } from '../../../data/companies/commercial-aircon.js';
 import { getArticleSchema } from '../../../utils/seo.js';
+import { getLatestCheckedDate } from '../../../utils/dates.js';
 
 const market = marketsBySlug['commercial-aircon'];
+const checkedDate = getLatestCheckedDate(airconCompanies, market.checkedDate);
 const costFaqs = market.faqs.filter((f) =>
   f.question.includes('費用') || f.question.includes('相場') || f.question.includes('安く')
 );
@@ -32,7 +35,7 @@ const breadcrumbs = [
     title: '業務用エアコン工事の費用について',
     description: '費用を左右する条件、追加費用の発生ポイント、見積もり時の確認事項を整理',
     url: `/${market.slug}/cost/`,
-    dateModified: market.checkedDate,
+    dateModified: checkedDate,
   })}
 >
   <SiteHeader slot="header" />

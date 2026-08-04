@@ -93,10 +93,12 @@ export function getCompanySchema(company: Company, _market?: unknown) {
     areaServed: company.region.prefectures,
   };
 
-  if (company.region.headquarters) {
+  const hasKnownAddress = company.region.headquarters && !company.region.headquarters.includes('確認できず');
+  if (hasKnownAddress || company.region.prefectures[0]) {
     schema.address = {
       '@type': 'PostalAddress',
-      addressRegion: company.region.headquarters,
+      ...(company.region.prefectures[0] ? { addressRegion: company.region.prefectures[0] } : {}),
+      ...(hasKnownAddress ? { streetAddress: company.region.headquarters } : {}),
       addressCountry: 'JP',
     };
   }

@@ -20,6 +20,7 @@ import UpdateNotice from '../../components/ui/UpdateNotice.astro';
 import { markets, marketsBySlug } from '../../data/markets.js';
 import { companiesByMarket } from '../../data/companies/other-markets.js';
 import { getMarketItemListSchema, getFAQSchema } from '../../utils/seo.js';
+import { getLatestCheckedDate } from '../../utils/dates.js';
 import { loadJsonMarkets } from '../../lib/loadMarkets.js';
 import RankingPage from '../../templates/RankingPage.astro';
 
@@ -55,6 +56,7 @@ const props = Astro.props as any;
 const jsonDriven = props.jsonDriven as boolean;
 const market = props.market;
 const companies = jsonDriven ? props.companies : (companiesByMarket[market.id] || []);
+const checkedDate = jsonDriven ? market.checkedDate : getLatestCheckedDate(companies, market.checkedDate);
 
 const breadcrumbItems = [
   { name: 'ホーム', href: '/' },
@@ -72,7 +74,7 @@ const jsonLd = jsonDriven
 
 <BaseLayout
   title={`${market.h1} | compareOS`}
-  description={`${market.description}掲載${companies.length}社。大阪府内で${market.shortName}に対応する会社を比較できます。`}
+  description={`${market.description}掲載企業${companies.length}社（公式情報に基づき比較）。`}
   canonical={`/${market.slug}/`}
   jsonLd={jsonLd}
 >
@@ -180,7 +182,7 @@ const jsonLd = jsonDriven
   <!-- 免責・修正依頼 -->
   <section class="section">
     <div class="container">
-      <UpdateNotice checkedDate={market.checkedDate} />
+      <UpdateNotice checkedDate={checkedDate} />
       <div style="margin-top: var(--space-5)">
         <CorrectionCTA marketName={market.name} />
       </div>
