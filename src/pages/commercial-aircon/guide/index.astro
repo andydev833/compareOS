@@ -10,9 +10,12 @@ import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro';
 import DirectAnswerBlock from '../../../components/market/DirectAnswerBlock.astro';
 import ProcessSteps from '../../../components/ui/ProcessSteps.astro';
 import { marketsBySlug } from '../../../data/markets.js';
+import { airconCompanies } from '../../../data/companies/commercial-aircon.js';
 import { getArticleSchema } from '../../../utils/seo.js';
+import { getLatestCheckedDate } from '../../../utils/dates.js';
 
 const market = marketsBySlug['commercial-aircon'];
+const checkedDate = getLatestCheckedDate(airconCompanies, market.checkedDate);
 const breadcrumbs = [
   { name: 'ホーム', href: '/' },
   { name: market.shortName, href: `/${market.slug}/` },
@@ -28,7 +31,7 @@ const breadcrumbs = [
     title: '業務用エアコン会社の選び方',
     description: '会社選びの判断基準と確認すべき比較項目',
     url: `/${market.slug}/guide/`,
-    dateModified: market.checkedDate,
+    dateModified: checkedDate,
   })}
 >
   <SiteHeader slot="header" />

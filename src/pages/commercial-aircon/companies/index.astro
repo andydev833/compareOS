@@ -14,9 +14,11 @@ import CorrectionCTA from '../../../components/ui/CorrectionCTA.astro';
 import { marketsBySlug } from '../../../data/markets.js';
 import { airconCompanies } from '../../../data/companies/commercial-aircon.js';
 import { getMarketItemListSchema } from '../../../utils/seo.js';
+import { getLatestCheckedDate } from '../../../utils/dates.js';
 
 const market = marketsBySlug['commercial-aircon'];
 const companies = airconCompanies;
+const checkedDate = getLatestCheckedDate(companies, market.checkedDate);
 
 const breadcrumbs = [
   { name: 'ホーム', href: '/' },
@@ -45,7 +47,7 @@ const breadcrumbs = [
       </p>
       <div class="companies-header__meta">
         <span>掲載 <strong>{companies.length}</strong> 社</span>
-        <span>情報確認日：{market.checkedDate}</span>
+        <span>情報確認日：{checkedDate}</span>
       </div>
     </div>
   </section>
@@ -96,7 +98,7 @@ const breadcrumbs = [
         </div>
 
         <div style="margin-top: var(--space-8)">
-          <UpdateNotice checkedDate={market.checkedDate} />
+          <UpdateNotice checkedDate={checkedDate} />
           <div style="margin-top: var(--space-4)">
             <CorrectionCTA marketName={market.name} />
           </div>

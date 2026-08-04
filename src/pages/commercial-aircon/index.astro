@@ -20,9 +20,11 @@ import UpdateNotice from '../../components/ui/UpdateNotice.astro';
 import { marketsBySlug } from '../../data/markets.js';
 import { airconCompanies } from '../../data/companies/commercial-aircon.js';
 import { getMarketItemListSchema, getBreadcrumbSchema, getFAQSchema } from '../../utils/seo.js';
+import { getLatestCheckedDate } from '../../utils/dates.js';
 
 const market = marketsBySlug['commercial-aircon'];
 const companies = airconCompanies;
+const checkedDate = getLatestCheckedDate(companies, market.checkedDate);
 
 const breadcrumbItems = [
   { name: 'ホーム', href: '/' },
@@ -38,7 +40,7 @@ const jsonLd = [
 
 <BaseLayout
   title={`${market.h1}｜修理・交換・保守 | compareOS`}
-  description={`${market.description}掲載${companies.length}社。大阪府内で業務用エアコン工事に対応する会社を対応速度・工事内容・保守体制から比較できます。`}
+  description={`${market.description}掲載企業${companies.length}社（対応速度・工事内容・保守体制で比較）。`}
   canonical={`/${market.slug}/`}
   jsonLd={jsonLd}
 >
@@ -70,7 +72,7 @@ const jsonLd = [
             <div>
               <dt>情報確認日</dt>
               <dd>
-                <time datetime={market.checkedDate}>{market.checkedDate}</time>
+                <time datetime={checkedDate}>{checkedDate}</time>
               </dd>
             </div>
           </dl>
@@ -258,7 +260,7 @@ const jsonLd = [
   <section class="section section--muted" aria-labelledby="methodology-heading">
     <div class="container">
       <h2 class="section-title" id="methodology-heading">調査方法と掲載基準</h2>
-      <UpdateNotice checkedDate={market.checkedDate} />
+      <UpdateNotice checkedDate={checkedDate} />
       <div class="methodology-links">
         <a href="/methodology/">調査・比較方針を読む</a>
         <span class="text-muted">｜</span>
