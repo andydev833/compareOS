@@ -113,6 +113,9 @@ const jsonLd = jsonDriven
         checkItems={market.selectionConclusion.checkItems}
         cautions={market.selectionConclusion.cautions}
       />
+      <p style="margin-top: var(--space-5)">
+        <a href={`/${market.slug}/guide/`} class="btn btn--secondary">会社選びの詳しいガイドを見る</a>
+      </p>
     </div>
   </section>
 
@@ -160,6 +163,9 @@ const jsonLd = jsonDriven
     <div class="container">
       <h2 class="section-title">費用について</h2>
       <CostSummary costInfo={market.costInfo} marketName={market.name} />
+      <p style="margin-top: var(--space-5)">
+        <a href={`/${market.slug}/cost/`} class="btn btn--secondary">費用の詳細を確認する</a>
+      </p>
     </div>
   </section>
 

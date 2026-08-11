@@ -12,6 +12,7 @@ import type { Company } from '../data/types.js';
 
 const AIRCON_SLUG = 'commercial-aircon';
 const AIRCON_SUB_PATHS = ['/companies/', '/cost/', '/faq/', '/guide/'];
+const GENERIC_SUB_PATHS = ['/cost/', '/guide/'];
 
 function companyLastmod(company: Company, fallback: string): string {
   return getLatestCheckedDate([company], fallback);
@@ -25,6 +26,9 @@ function buildLastmodMap(): Map<string, string> {
     const companies = companiesByMarket[market.id] || [];
     const marketLastmod = getLatestCheckedDate(companies, market.checkedDate);
     map.set(`/${market.slug}/`, marketLastmod);
+    for (const subPath of GENERIC_SUB_PATHS) {
+      map.set(`/${market.slug}${subPath}`, marketLastmod);
+    }
     for (const company of companies) {
       map.set(`/${market.slug}/company/${company.slug}/`, companyLastmod(company, marketLastmod));
     }
