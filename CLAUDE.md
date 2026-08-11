@@ -29,6 +29,8 @@
 
 ## 新市場作成のワークフロー（`/create-market`）
 
+市場名がまだ決まっていない場合は、**Phase 0（市場選定）を必ず先に実行する**（一次スクリーニング→市場単価・KW一覧化→ユーザーによるボリューム確認→スコアリング→ユーザーの意思決定）。市場が決まっている場合は以下から開始してよい。
+
 1. `market.json` 作成（市場定義）
 2. SERP調査・競合分析・掲載候補企業調査（WebSearch/WebFetchで実施し、事実ベースで記録）
 3. `research.md` 作成（調査結果 = 事実のみ）
@@ -42,8 +44,9 @@
 11. `npm run build`
 12. エラーがあれば原因を特定し修正 → 再実行（build成功まで繰り返す）
 13. 最終レポート出力
+14. 公開後：sitemap確認（自動）、Googleへのインデックス登録依頼（ユーザー手動）、営業候補リスト更新、初回アプローチメール下書き作成（送信はユーザー手動）
 
-詳細な手順は [.claude/commands/create-market.md](.claude/commands/create-market.md) を参照。
+詳細な手順（Phase 0〜Fの全ステップ）は [.claude/commands/create-market.md](.claude/commands/create-market.md) を参照。
 
 ## Data Quality Rules（最重要・妥協禁止）
 
