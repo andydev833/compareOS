@@ -73,7 +73,9 @@ const jsonLd = [getMarketItemListSchema(market, companies), ...(page.faqs.length
       <section class="section" id="comparison-table">
         <div class="container">
           <h2 class="section-title">主要比較表</h2>
-          <p class="section-subtitle">公式サイト等の公開情報を基に整理しています。</p>
+          <p class="section-subtitle">
+            公式サイト等の公開情報を基に整理しています。詳しい調査方法は<a href="/methodology/">調査・比較方針</a>をご覧ください。
+          </p>
           <ComparisonTable
             companies={companies}
             comparisonItems={market.comparisonItems}

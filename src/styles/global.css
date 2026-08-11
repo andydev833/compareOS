@@ -390,8 +390,33 @@ p {
    テーブル
    ============================ */
 .table-wrapper {
+  position: relative;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 767px) {
+  .table-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 28px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.12));
+    pointer-events: none;
+  }
+
+  .comparison-table thead th:first-child,
+  .comparison-table tbody th[scope='row'] {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+  }
+
+  .comparison-table tbody th[scope='row'] {
+    background-color: var(--color-bg-section);
+  }
 }
 
 .comparison-table {
