@@ -1,0 +1,98 @@
+---
+/**
+ * 汎用市場 - 費用ページ（業務用エアコン以外の11市場）
+ * /[marketSlug]/cost/
+ * commercial-aircon/cost/ と同じ構成を、既存のmarket.costInfo/market.faqsのみで
+ * 市場非依存に展開する（新規リサーチは行わない）。
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteHeader from '../../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro';
+import CostSummary from '../../../components/ui/CostSummary.astro';
+import FAQAccordion from '../../../components/ui/FAQAccordion.astro';
+import { markets } from '../../../data/markets.js';
+import { companiesByMarket } from '../../../data/companies/other-markets.js';
+import { getArticleSchema } from '../../../utils/seo.js';
+import { getLatestCheckedDate } from '../../../utils/dates.js';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  const EXCLUDED_SLUGS = ['commercial-aircon'];
+  return markets
+    .filter((m) => !EXCLUDED_SLUGS.includes(m.slug))
+    .map((market) => ({
+      params: { marketSlug: market.slug },
+      props: { market },
+    }));
+}) satisfies GetStaticPaths;
+
+const { market } = Astro.props;
+const companies = companiesByMarket[market.id] || [];
+const checkedDate = getLatestCheckedDate(companies, market.checkedDate);
+const costFaqs = market.faqs.filter((f: { question: string }) =>
+  f.question.includes('費用') || f.question.includes('相場') || f.question.includes('安く')
+);
+
+const breadcrumbs = [
+  { name: 'ホーム', href: '/' },
+  { name: market.shortName, href: `/${market.slug}/` },
+  { name: '費用について', href: `/${market.slug}/cost/` },
+];
+---
+
+<BaseLayout
+  title={`${market.shortName}の費用について｜大阪 | compareOS`}
+  description={`大阪の${market.shortName}の費用構成・見積もり時の確認ポイントを解説。具体的な金額は現地調査・見積もりが必要です。`}
+  canonical={`/${market.slug}/cost/`}
+  jsonLd={getArticleSchema({
+    title: `${market.shortName}の費用について`,
+    description: '費用を左右する条件、追加費用の発生ポイント、見積もり時の確認事項を整理',
+    url: `/${market.slug}/cost/`,
+    dateModified: checkedDate,
+  })}
+>
+  <SiteHeader slot="header" />
+  <div class="container" style="padding-block: var(--space-4)">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <div class="container" style="padding-block: var(--space-10); max-width: 860px">
+    <h1>{market.shortName}の費用について</h1>
+    <p class="page-desc">
+      {market.shortName}の費用は、内容・状況・対応地域・会社によって大きく異なります。
+      このページでは費用を構成する要素と、見積もり時の確認ポイントを整理します。
+      具体的な費用は、必ず現地調査・見積もりを取得してください。
+    </p>
+
+    <div class="info-notice" style="margin-bottom: var(--space-8)">
+      <strong>重要：</strong>このページに具体的な金額は掲載しません。
+      掲載企業の公式サイトで価格情報が確認できず、根拠のある価格帯を提示できないためです。
+      現地調査・見積もりを複数社から取得して比較することを推奨します。
+    </div>
+
+    <section style="margin-bottom: var(--space-10)">
+      <h2>費用の構成要素</h2>
+      <CostSummary costInfo={market.costInfo} marketName={market.name} />
+    </section>
+
+    {costFaqs.length > 0 && (
+      <section style="margin-bottom: var(--space-10)">
+        <h2>費用に関するよくある質問</h2>
+        <FAQAccordion faqs={costFaqs} />
+      </section>
+    )}
+
+    <div style="padding-top: var(--space-6); border-top: 1px solid var(--color-border)">
+      <a href={`/${market.slug}/`} class="btn btn--secondary">← {market.shortName}の比較ページに戻る</a>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-4); }
+h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
+.page-desc { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-5); }
+</style>
