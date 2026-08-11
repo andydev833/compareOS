@@ -1,4 +1,4 @@
-# compareOS
+# Oppick
 
 ## Project Goal
 

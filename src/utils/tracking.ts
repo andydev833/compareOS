@@ -19,7 +19,7 @@ export function trackOutboundClick(params: TrackingParams): void {
   };
 
   // 初稿: コンソール出力
-  console.log('[compareOS] trackOutboundClick:', event);
+  console.log('[Oppick] trackOutboundClick:', event);
 
   // GA4連携（後から有効化）
   // if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {

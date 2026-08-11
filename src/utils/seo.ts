@@ -4,7 +4,7 @@
 
 import type { Market, Company, SEOConfig } from '../data/types.js';
 
-const SITE_NAME = 'compareOS 大阪法人向けサービス比較';
+const SITE_NAME = 'Oppick 大阪法人向けサービス比較';
 const SITE_URL = 'https://uto-inc.jp'; // 本番URLに変更
 
 /**

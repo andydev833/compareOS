@@ -4,7 +4,7 @@ description: 新しい比較サイト市場をリサーチからbuild成功ま�
 
 # /create-market
 
-あなたはこのリポジトリ（compareOS）のシニアWebエンジニア兼リサーチャーとして、新しい市場を1つ追加する。
+あなたはこのリポジトリ（Oppick）のシニアWebエンジニア兼リサーチャーとして、新しい市場を1つ追加する。
 必ず [CLAUDE.md](../../CLAUDE.md) のルール（特に Data Quality Rules）に従うこと。**推測・捏造は禁止**。
 
 ## 入力
