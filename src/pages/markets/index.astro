@@ -1,0 +1,176 @@
+---
+/**
+ * 市場一覧ページ（ハブページ）
+ * /markets/
+ * 全市場をカテゴリー別に一覧できる、クロール可能な専用インデックス。
+ * commercial-aircon側のパンくず（法人向けサービス → /markets/）が参照している。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/layout/SiteHeader.astro';
+import SiteFooter from '../../components/layout/SiteFooter.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+import MarketCard from '../../components/market/MarketCard.astro';
+import { markets } from '../../data/markets.js';
+import { loadJsonMarkets } from '../../lib/loadMarkets.js';
+
+const equipmentMarkets = markets.filter((m) => m.category === 'equipment');
+const officeMarkets = markets.filter((m) => m.category === 'office');
+const hrMarkets = markets.filter((m) => m.category === 'hr-marketing');
+const lifeMarkets = loadJsonMarkets()
+  .map((jm) => jm.market)
+  .filter((m) => m.category === 'life');
+
+const totalMarketCount = markets.length + loadJsonMarkets().length;
+
+const breadcrumbItems = [
+  { name: 'ホーム', href: '/' },
+  { name: '法人向けサービス一覧', href: '/markets/' },
+];
+---
+
+<BaseLayout
+  title={`法人向けサービス比較 ${totalMarketCount}市場一覧 | compareOS`}
+  description={`compareOSで比較できる${totalMarketCount}市場の一覧です。業務用エアコン・防犯カメラなどの設備工事、オフィス内装・移転などの施設運営、AED研修・Web集客などの人材・集客関連サービスを、公開情報に基づいて整理しています。`}
+  canonical="/markets/"
+>
+  <SiteHeader slot="header" />
+
+  <div class="container">
+    <Breadcrumbs items={breadcrumbItems} />
+  </div>
+
+  <section class="markets-hero">
+    <div class="container">
+      <h1 class="markets-hero__heading">法人向けサービス比較 {totalMarketCount}市場一覧</h1>
+      <p class="markets-hero__sub">
+        大阪府を中心に、兵庫・京都・奈良など関西圏に対応する法人向けサービス会社を、市場ごとに比較できます。
+        掲載企業の情報はすべて公式サイト等の公開情報に基づいて整理しています。
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--muted" aria-labelledby="equipment-heading">
+    <div class="container">
+      <h2 class="section-title" id="equipment-heading">設備・施工</h2>
+      <p class="section-subtitle">
+        業務用エアコン・防犯カメラ・厨房機器・防音工事・看板・太陽光発電の設置・工事会社を比較できます。
+      </p>
+      <div class="grid-3">
+        {equipmentMarkets.map((market) => (
+          <MarketCard market={market} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="office-heading">
+    <div class="container">
+      <h2 class="section-title" id="office-heading">オフィス・施設運営</h2>
+      <p class="section-subtitle">
+        オフィス内装・移転・害虫駆除・清掃など、施設管理に関するサービス会社を比較できます。
+      </p>
+      <div class="grid-3">
+        {officeMarkets.map((market) => (
+          <MarketCard market={market} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--muted" aria-labelledby="hr-heading">
+    <div class="container">
+      <h2 class="section-title" id="hr-heading">人材・集客</h2>
+      <p class="section-subtitle">
+        救命・AED研修とWeb集客・SEO支援の会社を比較できます。
+      </p>
+      <div class="grid-2">
+        {hrMarkets.map((market) => (
+          <MarketCard market={market} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {lifeMarkets.length > 0 && (
+    <section class="section" aria-labelledby="life-heading">
+      <div class="container">
+        <h2 class="section-title" id="life-heading">暮らし・パーソナル</h2>
+        <p class="section-subtitle">
+          結婚相談所など、法人向けに限らない生活関連サービスの会社を比較できます。
+        </p>
+        <ul class="life-markets-list">
+          {lifeMarkets.map((market) => (
+            <li>
+              <a href={`/${market.slug}/`} class="life-markets-list__link">
+                <span class="life-markets-list__name">{market.shortName}</span>
+                <span class="life-markets-list__desc">{market.description.slice(0, 60)}…</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+.markets-hero {
+  background: linear-gradient(160deg, var(--color-primary) 0%, hsl(220, 45%, 30%) 100%);
+  padding-block: var(--space-10) var(--space-10);
+  color: white;
+}
+
+.markets-hero__heading {
+  font-size: var(--font-size-2xl);
+  color: white;
+  margin-bottom: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .markets-hero__heading {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.markets-hero__sub {
+  color: hsl(215, 40%, 80%);
+  line-height: 1.7;
+  max-width: 720px;
+}
+
+.life-markets-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.life-markets-list__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary-light);
+  border-radius: var(--border-radius-lg);
+  text-decoration: none;
+  transition: box-shadow var(--transition);
+}
+
+.life-markets-list__link:hover {
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+
+.life-markets-list__name {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.life-markets-list__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+</style>

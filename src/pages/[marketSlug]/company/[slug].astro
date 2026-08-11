@@ -55,7 +55,7 @@ const jsonLd = getCompanySchema(company, market);
 ---
 
 <BaseLayout
-  title={`${company.name} - ${market.shortName}｜公式情報に基づく整理 | compareOS`}
+  title={`${company.name}｜${market.shortName} | compareOS`}
   description={`${company.name}の${market.shortName}への対応内容を整理しています。対応地域：${company.region.prefectures.join('・')}。`}
   canonical={`/${market.slug}/company/${company.slug}/`}
   jsonLd={jsonLd}

@@ -8,14 +8,20 @@ import SiteHeader from '../components/layout/SiteHeader.astro';
 import SiteFooter from '../components/layout/SiteFooter.astro';
 import MarketCard from '../components/market/MarketCard.astro';
 import { markets } from '../data/markets.js';
+import { loadJsonMarkets } from '../lib/loadMarkets.js';
 import { getWebSiteSchema } from '../utils/seo.js';
 
 const equipmentMarkets = markets.filter((m) => m.category === 'equipment');
 const officeMarkets = markets.filter((m) => m.category === 'office');
 const hrMarkets = markets.filter((m) => m.category === 'hr-marketing');
+const lifeMarkets = loadJsonMarkets()
+  .map((jm) => jm.market)
+  .filter((m) => m.category === 'life');
+
+const totalMarketCount = markets.length + loadJsonMarkets().length;
 
 const seoTitle = '大阪の法人向けサービス会社を、条件から比較｜compareOS';
-const seoDescription = '大阪府を中心とした法人向けサービス会社の比較メディア。業務用エアコン、防犯カメラ、オフィス内装、移転、清掃、AED研修、SEOなど12市場の会社情報を公開情報に基づいて整理しています。';
+const seoDescription = `大阪府を中心とした法人向けサービス会社の比較メディア。業務用エアコン、防犯カメラ、オフィス内装、移転、清掃、AED研修、SEOなど${totalMarketCount}市場の会社情報を公開情報に基づいて整理しています。`;
 ---
 
 <BaseLayout
@@ -38,8 +44,9 @@ const seoDescription = '大阪府を中心とした法人向けサービス会�
             大阪府を中心に、兵庫・京都・奈良など関西圏に対応する会社も掲載します。
           </p>
 
-          <!-- 市場検索（初稿：デザインのみ） -->
-          <div class="hero__search" role="search" aria-label="市場を検索">
+          <!-- 市場検索（準備中） -->
+          <div class="hero__search" role="search" aria-label="市場を検索（準備中）">
+            <span class="hero__search-badge">準備中</span>
             <input
               type="search"
               placeholder="市場名や業種を入力（例：業務用エアコン、防犯カメラ）"
@@ -52,10 +59,11 @@ const seoDescription = '大阪府を中心とした法人向けサービス会�
               検索
             </button>
           </div>
-          <p class="hero__search-note text-xs text-muted">※ 検索機能は準備中です。以下の12市場から選択してください。</p>
+          <p class="hero__search-note text-xs text-muted">※ 検索機能は準備中です。下記のカテゴリーから{totalMarketCount}市場をご覧いただけます。</p>
 
           <!-- クイックリンク -->
           <div class="hero__quick-links">
+            <a href="/markets/" class="hero__quick-link">市場一覧を見る</a>
             <a href="/methodology/" class="hero__quick-link">調査・比較方針</a>
             <a href="/listing-correction/" class="hero__quick-link">掲載情報の修正依頼</a>
             <a href="/advertise/" class="hero__quick-link">PR掲載のご相談</a>
@@ -142,6 +150,28 @@ const seoDescription = '大阪府を中心とした法人向けサービス会�
     </div>
   </section>
 
+  {/* 暮らし・パーソナル */}
+  {lifeMarkets.length > 0 && (
+    <section class="section" aria-labelledby="life-heading">
+      <div class="container">
+        <h2 class="section-title" id="life-heading">暮らし・パーソナル</h2>
+        <p class="section-subtitle">
+          結婚相談所など、法人向けに限らない生活関連サービスの会社を比較できます。
+        </p>
+        <ul class="life-markets-list">
+          {lifeMarkets.map((market) => (
+            <li>
+              <a href={`/${market.slug}/`} class="life-markets-list__link">
+                <span class="life-markets-list__name">{market.shortName}</span>
+                <span class="life-markets-list__desc">{market.description.slice(0, 60)}…</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
   <!-- サイトの方針 -->
   <section class="section" aria-labelledby="policy-heading">
     <div class="container">
@@ -157,7 +187,6 @@ const seoDescription = '大阪府を中心とした法人向けサービス会�
             <li>確認できなかった情報は「公式サイトで確認できず」と表示</li>
             <li>掲載順はPR掲載の有無によって操作しません</li>
             <li>根拠のないランキング・評価・受賞歴は掲載しません</li>
-            <li>DEMOデータは架空の企業です。実在企業ではありません</li>
           </ul>
           <div class="policy-section__links">
             <a href="/methodology/" class="btn btn--secondary">調査・比較方針を読む</a>
@@ -227,9 +256,24 @@ const seoDescription = '大阪府を中心とした法人向けサービス会�
 }
 
 .hero__search {
+  position: relative;
   display: flex;
   gap: var(--space-2);
   margin-bottom: var(--space-2);
+}
+
+.hero__search-badge {
+  position: absolute;
+  top: -12px;
+  left: var(--space-3);
+  background-color: hsl(38, 90%, 55%);
+  color: hsl(30, 60%, 15%);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.04em;
+  z-index: 1;
 }
 
 .hero__search-input {
@@ -242,6 +286,7 @@ const seoDescription = '大阪府を中心とした法人向けサービス会�
   background-color: rgba(255,255,255,0.15);
   color: white;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .hero__search-input::placeholder {
@@ -405,5 +450,40 @@ const seoDescription = '大阪府を中心とした法人向けサービス会�
   font-size: var(--font-size-xs);
   font-weight: 600;
   border: 1px solid hsl(220, 40%, 82%);
+}
+
+/* 暮らし・パーソナル */
+.life-markets-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.life-markets-list__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary-light);
+  border-radius: var(--border-radius-lg);
+  text-decoration: none;
+  transition: box-shadow var(--transition);
+}
+
+.life-markets-list__link:hover {
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+
+.life-markets-list__name {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.life-markets-list__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
 }
 </style>
