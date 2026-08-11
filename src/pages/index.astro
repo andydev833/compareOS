@@ -1,7 +1,7 @@
 ---
 /**
  * トップページ
- * compareOS - 大阪法人向けサービス比較メディア
+ * Oppick - 大阪法人向けサービス比較メディア
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/layout/SiteHeader.astro';
@@ -20,7 +20,7 @@ const lifeMarkets = loadJsonMarkets()
 
 const totalMarketCount = markets.length + loadJsonMarkets().length;
 
-const seoTitle = '大阪の法人向けサービス会社を、条件から比較｜compareOS';
+const seoTitle = '大阪の法人向けサービス会社を、条件から比較｜Oppick';
 const seoDescription = `大阪府を中心とした法人向けサービス会社の比較メディア。業務用エアコン、防犯カメラ、オフィス内装、移転、清掃、AED研修、SEOなど${totalMarketCount}市場の会社情報を公開情報に基づいて整理しています。`;
 ---
 

@@ -1,6 +1,6 @@
 /**
  * 12市場データ定義
- * compareOS - 大阪法人向けサービス比較メディア
+ * Oppick - 大阪法人向けサービス比較メディア
  */
 
 import type { Market } from './types.js';

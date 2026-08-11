@@ -59,7 +59,7 @@ document.querySelectorAll('.external-link-btn').forEach((btn) => {
       placement: (btn as HTMLElement).dataset.placement,
       timestamp: new Date().toISOString(),
     };
-    console.log('[compareOS] trackOutboundClick:', data);
+    console.log('[Oppick] trackOutboundClick:', data);
     // TODO: GA4 gtag('event', 'outbound_click', data);
   });
 });

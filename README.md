@@ -1,4 +1,4 @@
-# compareOS
+# Oppick
 
 大阪を中心に、必要に応じて関西まで対象を広げた地域特化型・比較サイト型Web集客サイト。
 Astro 7 + TypeScript（静的出力）で構築している。
