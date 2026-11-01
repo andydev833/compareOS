@@ -1,7 +1,7 @@
 ---
 /**
  * トップページ
- * Oppick - 大阪法人向けサービス比較メディア
+ * Oppick - 大阪の比較メディア
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/layout/SiteHeader.astro';
@@ -20,8 +20,8 @@ const lifeMarkets = loadJsonMarkets()
 
 const totalMarketCount = markets.length + loadJsonMarkets().length;
 
-const seoTitle = '大阪の法人向けサービス会社を、条件から比較｜Oppick';
-const seoDescription = `大阪府を中心とした法人向けサービス会社の比較メディア。業務用エアコン、防犯カメラ、オフィス内装、移転、清掃、AED研修、SEOなど${totalMarketCount}市場の会社情報を公開情報に基づいて整理しています。`;
+const seoTitle = '大阪のサービス会社を、条件から比較｜Oppick';
+const seoDescription = `大阪府を中心としたサービス会社の比較メディア。業務用エアコン、防犯カメラ、オフィス内装、移転、清掃、AED研修、SEO、結婚相談所など${totalMarketCount}市場の会社情報を公開情報に基づいて整理しています。`;
 ---
 
 <BaseLayout
@@ -37,10 +37,10 @@ const seoDescription = `大阪府を中心とした法人向けサービス会�
       <div class="hero__inner">
         <div class="hero__content">
           <h1 class="hero__heading" id="hero-heading">
-            大阪の法人向けサービス会社を、<br>条件から比較。
+            大都市大阪のサービスを、<br>条件から比較。
           </h1>
           <p class="hero__description">
-            設備工事、オフィス、店舗運営、研修、Web集客など、法人向けサービス会社の情報を公式サイトに基づいて整理しています。
+            設備工事、オフィス、店舗運営、研修、Web集客、結婚相談所など、サービス会社の情報を公式サイトに基づいて整理しています。
             大阪府を中心に、兵庫・京都・奈良など関西圏に対応する会社も掲載します。
           </p>
 
@@ -156,7 +156,7 @@ const seoDescription = `大阪府を中心とした法人向けサービス会�
       <div class="container">
         <h2 class="section-title" id="life-heading">暮らし・パーソナル</h2>
         <p class="section-subtitle">
-          結婚相談所など、法人向けに限らない生活関連サービスの会社を比較できます。
+          結婚相談所など、暮らしに関わるサービスの会社を比較できます。
         </p>
         <ul class="life-markets-list">
           {lifeMarkets.map((market) => (

@@ -3,7 +3,7 @@
  * 市場一覧ページ（ハブページ）
  * /markets/
  * 全市場をカテゴリー別に一覧できる、クロール可能な専用インデックス。
- * commercial-aircon側のパンくず（法人向けサービス → /markets/）が参照している。
+ * commercial-aircon側のパンくず（市場一覧 → /markets/）が参照している。
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/layout/SiteHeader.astro';
@@ -24,12 +24,12 @@ const totalMarketCount = markets.length + loadJsonMarkets().length;
 
 const breadcrumbItems = [
   { name: 'ホーム', href: '/' },
-  { name: '法人向けサービス一覧', href: '/markets/' },
+  { name: '市場一覧', href: '/markets/' },
 ];
 ---
 
 <BaseLayout
-  title={`法人向けサービス比較 ${totalMarketCount}市場一覧 | Oppick`}
+  title={`大阪の比較 ${totalMarketCount}市場一覧 | Oppick`}
   description={`Oppickで比較できる${totalMarketCount}市場の一覧です。業務用エアコン・防犯カメラなどの設備工事、オフィス内装・移転などの施設運営、AED研修・Web集客などの人材・集客関連サービスを、公開情報に基づいて整理しています。`}
   canonical="/markets/"
 >
@@ -41,9 +41,9 @@ const breadcrumbItems = [
 
   <section class="markets-hero">
     <div class="container">
-      <h1 class="markets-hero__heading">法人向けサービス比較 {totalMarketCount}市場一覧</h1>
+      <h1 class="markets-hero__heading">大阪の比較 {totalMarketCount}市場一覧</h1>
       <p class="markets-hero__sub">
-        大阪府を中心に、兵庫・京都・奈良など関西圏に対応する法人向けサービス会社を、市場ごとに比較できます。
+        大阪府を中心に、兵庫・京都・奈良など関西圏に対応するサービス会社を、市場ごとに比較できます。
         掲載企業の情報はすべて公式サイト等の公開情報に基づいて整理しています。
       </p>
     </div>
@@ -96,7 +96,7 @@ const breadcrumbItems = [
       <div class="container">
         <h2 class="section-title" id="life-heading">暮らし・パーソナル</h2>
         <p class="section-subtitle">
-          結婚相談所など、法人向けに限らない生活関連サービスの会社を比較できます。
+          結婚相談所など、暮らしに関わるサービスの会社を比較できます。
         </p>
         <ul class="life-markets-list">
           {lifeMarkets.map((market) => (

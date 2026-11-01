@@ -4,7 +4,7 @@
 
 import type { Market, Company, SEOConfig } from '../data/types.js';
 
-const SITE_NAME = 'Oppick 大阪法人向けサービス比較';
+const SITE_NAME = 'Oppick 大阪の比較メディア';
 const SITE_URL = 'https://uto-inc.jp'; // 本番URLに変更
 
 /**
@@ -28,7 +28,7 @@ export function getWebSiteSchema() {
     '@type': 'WebSite',
     name: SITE_NAME,
     url: SITE_URL,
-    description: '大阪府を中心とした法人向けサービス会社の比較メディア。設備工事、オフィス、研修、Web集客などのサービス会社を条件から比較できます。',
+    description: '大阪府を中心としたサービス会社の比較メディア。設備工事、オフィス、研修、Web集客、結婚相談所などのサービス会社を条件から比較できます。',
   };
 }
 
@@ -41,7 +41,7 @@ export function getOrganizationSchema() {
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
-    description: '大阪を中心とした法人向けサービス比較メディア',
+    description: '大阪を中心とした比較メディア',
   };
 }
 
