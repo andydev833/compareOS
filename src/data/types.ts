@@ -101,6 +101,8 @@ export interface Market {
   status: PublishStatus;
   checkedDate: string;
   companyCount: number;
+  /** 掲載企業の並び順。'completeness'＝公式サイトで確認できた比較項目の数が多い順（同数は社名のよみ順）。未指定は定義順 */
+  companyOrder?: 'completeness';
 }
 
 // ------------------------------------
@@ -126,6 +128,18 @@ export interface Source {
 }
 
 // ------------------------------------
+// 公式サイトに掲載されている参考価格
+// ------------------------------------
+export interface PriceReference {
+  label: string;        // プラン・用途・事例名
+  price: string;        // 公式サイトの記載どおりの金額表記
+  condition?: string;   // 広さ・遮音性能・想定用途など
+  note?: string;        // 税込／税別・含まれない費用などの注記
+  sourceUrl: string;    // 金額を確認した公式サイトのURL
+  checkedDate: string;  // 確認日（YYYY-MM-DD）
+}
+
+// ------------------------------------
 // 企業定義
 // ------------------------------------
 export interface Company {
@@ -133,6 +147,7 @@ export interface Company {
   slug: string;
   marketId: string;
   name: string;
+  nameKana?: string;            // 並び順の同点処理に使う社名のよみ（株式会社等を除く、ひらがな）
   listingType: ListingType;
   status: PublishStatus;
   region: RegionInfo;
@@ -141,6 +156,7 @@ export interface Company {
   comparisonData: Record<string, InfoStatus | string>;
   services: string[];
   priceInfo?: string;
+  priceReferences?: PriceReference[];
   warrantyInfo?: string;
   trackRecord?: string;
   officialUrl: string;

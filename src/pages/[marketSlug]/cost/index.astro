@@ -15,6 +15,7 @@ import { markets } from '../../../data/markets.js';
 import { companiesByMarket } from '../../../data/companies/other-markets.js';
 import { getArticleSchema } from '../../../utils/seo.js';
 import { getLatestCheckedDate } from '../../../utils/dates.js';
+import { sortByCompleteness } from '../../../utils/companyOrder.js';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (() => {
@@ -30,6 +31,14 @@ export const getStaticPaths = (() => {
 const { market } = Astro.props;
 const companies = companiesByMarket[market.id] || [];
 const checkedDate = getLatestCheckedDate(companies, market.checkedDate);
+
+// 公式サイトに参考価格が載っている会社（一覧ページと同じ並び順）
+const orderedCompanies = market.companyOrder === 'completeness'
+  ? sortByCompleteness(companies, market.comparisonItems)
+  : companies;
+const priceCompanies = orderedCompanies.filter((c) => (c.priceReferences?.length ?? 0) > 0);
+const hasPrices = priceCompanies.length > 0;
+
 const costFaqs = market.faqs.filter((f: { question: string }) =>
   f.question.includes('費用') || f.question.includes('相場') || f.question.includes('安く')
 );
@@ -42,8 +51,12 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title={`${market.shortName}の費用について｜大阪 | Oppick`}
-  description={`大阪の${market.shortName}の費用構成・見積もり時の確認ポイントを解説。具体的な金額は現地調査・見積もりが必要です。`}
+  title={hasPrices
+    ? `${market.shortName}の費用・参考価格を比較｜大阪 | Oppick`
+    : `${market.shortName}の費用について｜大阪 | Oppick`}
+  description={hasPrices
+    ? `大阪の${market.shortName}会社${priceCompanies.length}社が公式サイトに掲載している参考価格を、出典・確認日つきで一覧。広さ・遮音性能・税込／税別などの条件の違いと、見積もり時の確認ポイントも整理します。`
+    : `大阪の${market.shortName}の費用構成・見積もり時の確認ポイントを解説。具体的な金額は現地調査・見積もりが必要です。`}
   canonical={`/${market.slug}/cost/`}
   jsonLd={getArticleSchema({
     title: `${market.shortName}の費用について`,
@@ -65,11 +78,71 @@ const breadcrumbs = [
       具体的な費用は、必ず現地調査・見積もりを取得してください。
     </p>
 
-    <div class="info-notice" style="margin-bottom: var(--space-8)">
-      <strong>重要：</strong>このページに具体的な金額は掲載しません。
-      掲載企業の公式サイトで価格情報が確認できず、根拠のある価格帯を提示できないためです。
-      現地調査・見積もりを複数社から取得して比較することを推奨します。
-    </div>
+    {hasPrices ? (
+      <div class="info-notice" style="margin-bottom: var(--space-8)">
+        <strong>重要：</strong>下表の金額は、各社の公式サイトに掲載されている参考価格・施工事例の費用を、そのまま転記したものです。
+        広さ・遮音性能・想定用途・税込／税別・含まれる工事が会社ごとに異なるため、同じ条件での比較ではありません。
+        実際の費用は、現地調査・見積もりを複数社から取得して確認してください。
+      </div>
+    ) : (
+      <div class="info-notice" style="margin-bottom: var(--space-8)">
+        <strong>重要：</strong>このページに具体的な金額は掲載しません。
+        掲載企業の公式サイトで価格情報が確認できず、根拠のある価格帯を提示できないためです。
+        現地調査・見積もりを複数社から取得して比較することを推奨します。
+      </div>
+    )}
+
+    {hasPrices && (
+      <section style="margin-bottom: var(--space-10)">
+        <h2>公式サイトに掲載されている参考価格</h2>
+        <p class="price-lead">
+          掲載{priceCompanies.length}社の公式サイトで確認した金額です。各行の出典リンクから、掲載元のページを確認できます。
+          並び順は<a href={`/${market.slug}/`}>比較ページ</a>と同じです。
+        </p>
+        <p class="scroll-hint" aria-hidden="true">→ 横にスクロールして確認できます</p>
+        <div class="table-wrapper">
+          <table class="comparison-table price-table">
+            <caption>{market.shortName}の参考価格（公式サイトの記載）</caption>
+            <thead>
+              <tr>
+                <th scope="col">会社</th>
+                <th scope="col">プラン・用途</th>
+                <th scope="col">参考価格</th>
+                <th scope="col">条件</th>
+                <th scope="col">出典（確認日）</th>
+              </tr>
+            </thead>
+            <tbody>
+              {priceCompanies.map((company) =>
+                (company.priceReferences ?? []).map((ref, i) => (
+                  <tr>
+                    {i === 0 && (
+                      <th scope="rowgroup" rowspan={company.priceReferences?.length}>
+                        <a href={`/${market.slug}/company/${company.slug}/`}>{company.name}</a>
+                      </th>
+                    )}
+                    <td>{ref.label}</td>
+                    <td class="price-table__price">{ref.price}</td>
+                    <td>
+                      {ref.condition}
+                      {ref.note && <span class="price-table__note">{ref.note}</span>}
+                    </td>
+                    <td class="price-table__source">
+                      <a href={ref.sourceUrl} target="_blank" rel="noopener">公式サイト</a>
+                      <span>{ref.checkedDate}</span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        <p class="price-footnote">
+          公式サイトに標準の価格表がない会社は、施工事例などに載っている費用を記載しています（事例は個別案件の実績金額で、標準価格ではありません）。
+          価格は変更される場合があるため、依頼前に各社の公式サイトで最新の内容を確認してください。
+        </p>
+      </section>
+    )}
 
     <section style="margin-bottom: var(--space-10)">
       <h2>費用の構成要素</h2>
@@ -95,4 +168,17 @@ const breadcrumbs = [
 h1 { font-size: var(--font-size-2xl); margin-bottom: var(--space-4); }
 h2 { font-size: var(--font-size-xl); margin-bottom: var(--space-4); }
 .page-desc { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-5); }
+
+.price-lead { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: var(--space-4); }
+.scroll-hint { display: none; font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+@media (max-width: 767px) { .scroll-hint { display: block; } }
+
+.price-table { min-width: 720px; }
+.price-table tbody th { background-color: var(--color-bg-section); font-weight: 600; font-size: var(--font-size-sm); vertical-align: top; min-width: 140px; }
+.price-table td { font-size: var(--font-size-sm); vertical-align: top; }
+.price-table__price { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.price-table__note { display: block; margin-top: var(--space-1); color: var(--color-text-muted); font-size: var(--font-size-xs); line-height: 1.5; }
+.price-table__source { white-space: nowrap; font-size: var(--font-size-xs); }
+.price-table__source span { display: block; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.price-footnote { margin-top: var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-sm); line-height: 1.65; }
 </style>

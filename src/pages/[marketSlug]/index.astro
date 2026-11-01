@@ -21,6 +21,7 @@ import { markets, marketsBySlug } from '../../data/markets.js';
 import { companiesByMarket } from '../../data/companies/other-markets.js';
 import { getMarketItemListSchema, getFAQSchema } from '../../utils/seo.js';
 import { getLatestCheckedDate } from '../../utils/dates.js';
+import { sortByCompleteness } from '../../utils/companyOrder.js';
 import { loadJsonMarkets } from '../../lib/loadMarkets.js';
 import RankingPage from '../../templates/RankingPage.astro';
 
@@ -55,7 +56,11 @@ export const getStaticPaths = (() => {
 const props = Astro.props as any;
 const jsonDriven = props.jsonDriven as boolean;
 const market = props.market;
-const companies = jsonDriven ? props.companies : (companiesByMarket[market.id] || []);
+const baseCompanies = jsonDriven ? props.companies : (companiesByMarket[market.id] || []);
+// 並び順は市場データの companyOrder で決まる（報酬・提携の有無は使わない）
+const companies = !jsonDriven && market.companyOrder === 'completeness'
+  ? sortByCompleteness(baseCompanies, market.comparisonItems)
+  : baseCompanies;
 const checkedDate = jsonDriven ? market.checkedDate : getLatestCheckedDate(companies, market.checkedDate);
 
 const breadcrumbItems = [
@@ -127,6 +132,11 @@ const jsonLd = jsonDriven
         <p class="section-subtitle">
           公式サイト等の公開情報を基に整理しています。詳しい調査方法は<a href="/methodology/">調査・比較方針</a>をご覧ください。
         </p>
+        {market.companyOrder === 'completeness' && (
+          <p class="section-subtitle">
+            並び順は、公式サイトで確認できた比較項目の数が多い順です（同数の場合は社名のよみ順）。PR掲載の有無や報酬は並び順に影響しません。
+          </p>
+        )}
         <ComparisonTable
           companies={companies}
           comparisonItems={market.comparisonItems}
