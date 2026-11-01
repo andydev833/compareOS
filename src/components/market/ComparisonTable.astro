@@ -43,8 +43,10 @@ const { companies, comparisonItems, marketSlug, caption } = Astro.props;
           <th scope="row">{item}</th>
           {companies.map((company) => {
             const value = company.comparisonData[item] || '公式サイトで確認できず';
+            // 長い値（金額・数値など）は折り返し、表が横に伸びすぎないようにする
+            const isLong = value.length > 14;
             return (
-              <td class={`comparison-table__cell ${getInfoStatusClass(value)}`}>
+              <td class:list={['comparison-table__cell', getInfoStatusClass(value), { 'comparison-table__cell--long': isLong }]}>
                 {value}
               </td>
             );
@@ -88,6 +90,8 @@ const { companies, comparisonItems, marketSlug, caption } = Astro.props;
   align-items: flex-start;
   gap: 4px;
   min-width: 140px;
+  max-width: 230px;
+  white-space: normal;
 }
 
 .comparison-table__company-name {
@@ -105,6 +109,13 @@ const { companies, comparisonItems, marketSlug, caption } = Astro.props;
 .comparison-table__cell {
   white-space: nowrap;
   font-size: var(--font-size-sm);
+}
+
+.comparison-table__cell--long {
+  white-space: normal;
+  min-width: 150px;
+  max-width: 230px;
+  line-height: 1.55;
 }
 
 .comparison-table__row--action td {

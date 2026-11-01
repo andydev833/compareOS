@@ -1991,6 +1991,8 @@ export const officeRelocationCompanies: Company[] = [
 // 確認日: 2026-08-06
 // ------------------------------------------------------------------
 const SOUNDPROOF_CHECKED = '2026-08-06';
+// 2026-11-01に公式サイトの価格・性能の記載を再確認した出典に使う確認日
+const SOUNDPROOF_RECHECKED = '2026-11-01';
 
 export const soundproofRoomCompanies: Company[] = [
   // --------------------------------------------------------
@@ -2001,6 +2003,7 @@ export const soundproofRoomCompanies: Company[] = [
     slug: 'hanshin-bouon',
     marketId: 'soundproof-room',
     name: '阪神防音株式会社',
+    nameKana: 'はんしんぼうおん',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -2020,7 +2023,8 @@ export const soundproofRoomCompanies: Company[] = [
     comparisonData: {
       '対応用途': '対応（ピアノ・ドラム・配信・スタジオ）',
       '対応建物': '対応',
-      '遮音性能': '対応（Dr値を公開）',
+      '参考価格（公式記載）': '6畳 180万円〜（昼間〜夕方の演奏想定）／200万円〜（夕方〜夜の演奏想定）',
+      '遮音性能': 'Dr60〜65（ピアノ室）／Dr70〜80（ドラム室）',
       '防振対策': '対応（完全浮き構造）',
       '音響設計': '対応',
       'ショールーム': '対応',
@@ -2038,7 +2042,33 @@ export const soundproofRoomCompanies: Company[] = [
       '防音体験ショールームの案内',
     ],
     priceInfo:
-      '公式サイトのピアノ防音室ページに「6畳・昼間演奏想定で180万円〜、夕方・夜間演奏想定で200万円〜」と参考価格の記載あり（地域の物価水準により異なる場合があるとの注記付き）',
+      '公式サイトのピアノ防音室ページに「6畳・昼間演奏想定で180万円〜、夕方・夜間演奏想定で200万円〜」と参考価格の記載あり（地域の物価水準により異なる場合があるとの注記付き）。ドラム室ページにも参考価格の記載あり',
+    priceReferences: [
+      {
+        label: 'ピアノ防音室（昼間〜夕方の演奏想定）',
+        price: '180万円〜',
+        condition: '6畳／戸建て／工期7〜10日',
+        note: '価格は地域の物価水準により異なる場合があります（公式の注記）',
+        sourceUrl: 'https://www.hanshinbouon.com/quality/piano-room/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'ピアノ防音室（夕方〜夜までの演奏想定）',
+        price: '200万円〜',
+        condition: '6畳／戸建て／工期7〜14日',
+        note: '価格は地域の物価水準により異なる場合があります（公式の注記）',
+        sourceUrl: 'https://www.hanshinbouon.com/quality/piano-room/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'ドラム・バンド用防音室（プライベートスタジオの事例）',
+        price: '220万円〜',
+        condition: '事例は4畳／防音性能Dr55〜80／工期14日以上',
+        note: '同ページ本文には「6〜8畳で250〜300万円」との記載もあり。価格は地域の物価水準により異なる場合があります',
+        sourceUrl: 'https://www.hanshinbouon.com/quality/drums-room/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+    ],
     warrantyInfo:
       '公式サイトに「竣工後に実際に使用して近隣から音漏れのクレームが出た場合は、無償で追加の防音工事に対応」と記載（夜22時までの使用に限定との条件付き）',
     trackRecord: '公式サイトに「年間100件以上の防音工事、30年で累計2,500件以上」と記載',
@@ -2047,7 +2077,7 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト トップページ',
         url: 'https://www.hanshinbouon.com/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
       {
         label: '公式サイト 会社概要',
@@ -2057,12 +2087,12 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト ピアノ防音室',
         url: 'https://www.hanshinbouon.com/quality/piano-room/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
       {
         label: '公式サイト バンド・ドラム室',
         url: 'https://www.hanshinbouon.com/quality/drums-room/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
     ],
   },
@@ -2075,6 +2105,7 @@ export const soundproofRoomCompanies: Company[] = [
     slug: 'sowa-bouon',
     marketId: 'soundproof-room',
     name: '株式会社創和設計（創和防音）',
+    nameKana: 'そうわぼうおん',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -2094,6 +2125,7 @@ export const soundproofRoomCompanies: Company[] = [
     comparisonData: {
       '対応用途': '対応（ピアノ・ドラム・配信・ジム）',
       '対応建物': '対応',
+      '参考価格（公式記載）': '標準価格表の記載なし（トップの施工事例に費用を掲載）',
       '遮音性能': '公開情報の範囲で記載',
       '防振対策': '対応（特許防振床）',
       '音響設計': '対応',
@@ -2112,7 +2144,33 @@ export const soundproofRoomCompanies: Company[] = [
       '一般建築設計・一般建築工事',
     ],
     priceInfo:
-      '公式サイトに標準価格表の記載なし。施工事例ページに事例ごとの工事内容が掲載されている。見積もり・現地調査は無料と記載',
+      '公式サイトのトップページで確認した範囲では標準価格表の記載なし。施工事例に費用と工期の記載あり（例：配信用防音室 約250万円、ドラムスタジオの防振工事 約120万円、窓の騒音対策 約110万円）。見積もり・現地調査は無料と記載',
+    priceReferences: [
+      {
+        label: '施工事例：配信用防音室',
+        price: '約250万円',
+        condition: '工期約15日',
+        note: '個別案件の実績金額（標準価格ではありません）',
+        sourceUrl: 'https://www.sowa-bouon.com/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: '施工事例：ドラムスタジオの防振工事',
+        price: '約120万円',
+        condition: '工期約2日',
+        note: '個別案件の実績金額（標準価格ではありません）',
+        sourceUrl: 'https://www.sowa-bouon.com/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: '施工事例：ダンススタジオの防振工事',
+        price: '約200万円',
+        condition: '工期約3日',
+        note: '個別案件の実績金額（標準価格ではありません）',
+        sourceUrl: 'https://www.sowa-bouon.com/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+    ],
     warrantyInfo: '公式サイトに「JIS A 1419に準じた性能保証」と記載',
     trackRecord:
       '公式サイトに「20年以上の防音案件の実績」と記載（施工件数の数値は公式サイトで確認できず）',
@@ -2121,7 +2179,7 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト トップページ',
         url: 'https://www.sowa-bouon.com/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
       {
         label: '公式サイト 会社概要',
@@ -2144,6 +2202,7 @@ export const soundproofRoomCompanies: Company[] = [
     slug: 'bouon-takumi',
     marketId: 'soundproof-room',
     name: '八十八建設株式会社（防音工事の匠）',
+    nameKana: 'はちじゅうはちけんせつ',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -2162,12 +2221,13 @@ export const soundproofRoomCompanies: Company[] = [
     features: [
       '木造の古民家を購入してショールームにしており、戸建て住宅に近い条件で防音性能を体験できると公式サイトに記載',
       '松屋町・ドラム・南大阪の3か所のショールームを公開し、楽器持ち込みでの確認と概算見積もりまで対応すると記載',
-      'JIS規格検定機器での計測による性能保証を掲げ、用途別の目標遮音性能をDr60〜Dr75の数値で提示している',
+      'JIS規格検定機器での計測による性能保証を掲げ、費用ページで6畳の価格目安をグレード別の遮音性能（D-60／D-45〜D-70以上／D-55以上）とあわせて公開している',
     ],
     comparisonData: {
       '対応用途': '対応（ピアノ・ドラム・スタジオ・ライブハウス）',
       '対応建物': '対応',
-      '遮音性能': '対応（Dr値を公開）',
+      '参考価格（公式記載）': '6畳 170万円〜（ベーシック）／265万円〜（ハイグレード）／320万円〜（スーパー）',
+      '遮音性能': 'D-60〜D-70以上（グレード別）',
       '防振対策': '対応（打楽器の振動対策）',
       '音響設計': '対応',
       'ショールーム': '対応',
@@ -2184,7 +2244,42 @@ export const soundproofRoomCompanies: Company[] = [
       '騒音対策・公害対策工事',
       'ショールームでの防音体験・概算見積もり',
     ],
-    priceInfo: '公式サイトに標準価格表の記載なし。ショールーム来訪時に概算見積もりを提示すると記載',
+    priceInfo:
+      '公式サイトの費用ページ（/price/）に「防音工事の費用」として6畳あたりの価格目安を掲載（遮音補強80万円〜／ベーシック170万円〜／ハイグレード265万円〜／スーパーグレード320万円〜）。解体工事・照明器具・サッシ・空調は含まれずオプション。遮音補強は同ページ本文で「お問い合わせください」ともされており、表と扱いが異なる',
+    priceReferences: [
+      {
+        label: 'ベーシック',
+        price: '170万円〜',
+        condition: '6畳／遮音性能 D-60（外壁・界壁）・D-45（室内）／想定：ピアノ・バイオリン・木管楽器・オーディオ等',
+        note: '解体工事・照明器具・サッシ・空調は含まれない（オプション）。RC/SRC造と木造・鉄骨造で同額の表記',
+        sourceUrl: 'https://soundproof.site/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'ハイグレード',
+        price: '265万円〜',
+        condition: '6畳／遮音性能 D-65（外壁・界壁）・D-50（室内）／想定：ピアノ・サックス・金管楽器等',
+        note: '解体工事・照明器具・サッシ・空調は含まれない（オプション）',
+        sourceUrl: 'https://soundproof.site/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'スーパーグレード',
+        price: '320万円〜',
+        condition: '6畳／遮音性能 D-70以上（外壁・界壁）・D-55以上（室内）／想定：ピアノ（24時間演奏対応）',
+        note: '解体工事・照明器具・サッシ・空調は含まれない（オプション）',
+        sourceUrl: 'https://soundproof.site/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: '遮音補強',
+        price: '80万円〜',
+        condition: '6畳／想定：仕事部屋・外部騒音対策・オーディオ／シアタールーム等',
+        note: '同ページ本文では「お問い合わせください」とされており、表と扱いが異なる',
+        sourceUrl: 'https://soundproof.site/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+    ],
     warrantyInfo: '公式サイトに「JIS A 1419に準じた性能保証」「JIS規格検定機器での計測」と記載',
     trackRecord:
       '公式サイトに「防音工事20年」と記載。施工実績ページで用途別の事例を公開（累計施工件数の数値は公式サイトで確認できず）',
@@ -2193,7 +2288,7 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト トップページ',
         url: 'https://soundproof.site/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
       {
         label: '公式サイト 会社概要',
@@ -2204,6 +2299,11 @@ export const soundproofRoomCompanies: Company[] = [
         label: '公式サイト ショールーム',
         url: 'https://soundproof.site/showroom/',
         checkedDate: SOUNDPROOF_CHECKED,
+      },
+      {
+        label: '公式サイト 防音工事の費用',
+        url: 'https://soundproof.site/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
     ],
   },
@@ -2216,6 +2316,7 @@ export const soundproofRoomCompanies: Company[] = [
     slug: 'calmo-bouon',
     marketId: 'soundproof-room',
     name: '株式会社CALMO防音',
+    nameKana: 'かるもぼうおん',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -2235,7 +2336,8 @@ export const soundproofRoomCompanies: Company[] = [
     comparisonData: {
       '対応用途': '対応（ピアノ・ドラム・DTM・配信）',
       '対応建物': '対応',
-      '遮音性能': '対応（D等級の保証値を公開）',
+      '参考価格（公式記載）': '6帖一部屋 180万円（ライトプラン）。公式サイトの費用ページに施工事例の費用あり',
+      '遮音性能': 'マンションD-70／戸建てD-55（保証値）',
       '防振対策': '対応（防振浮床）',
       '音響設計': '対応',
       'ショールーム': '対応',
@@ -2251,7 +2353,41 @@ export const soundproofRoomCompanies: Company[] = [
       'マンション・テナント・ビルの防音工事',
       '新築戸建てへの防音室組み込み',
     ],
-    priceInfo: '公式サイトに「ライトプラン 6帖1部屋180万円」と記載',
+    priceInfo:
+      '公式サイトに「ライトプラン 6帖1部屋180万円」と記載（6帖一部屋に限る）。費用ページ（hiyou.html）に施工事例ごとの広さ・遮音性能・費用（例：5帖・D-70以上で180〜210万円、6畳・D-75で225〜255万円）を掲載。税込／税別や含まれない費用の記載は確認できず',
+    priceReferences: [
+      {
+        label: 'ライトプラン',
+        price: '180万円',
+        condition: '6帖一部屋に限る',
+        sourceUrl: 'https://calmobouon.com/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: '施工事例：ピアノレッスン室（兵庫県神戸市・マンションRC造）',
+        price: '180〜210万円',
+        condition: '5帖／直上階・隣戸・直下階 D-70以上／工期2週間',
+        note: '施工事例の費用。税込／税別・含まれない費用の記載は確認できず',
+        sourceUrl: 'https://calmobouon.com/hiyou.html',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: '施工事例：ギターレッスン室（大阪府茨木市・マンションRC造）',
+        price: '225〜255万円',
+        condition: '6畳／直上階・隣戸・直下階 D-75／工期2週間',
+        note: '施工事例の費用。税込／税別・含まれない費用の記載は確認できず',
+        sourceUrl: 'https://calmobouon.com/hiyou.html',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: '施工事例：ピアノ教室（奈良県奈良市・戸建て木造）',
+        price: '185〜215万円',
+        condition: '6.5帖／外壁前 D-55／工期2週間',
+        note: '施工事例の費用。税込／税別・含まれない費用の記載は確認できず',
+        sourceUrl: 'https://calmobouon.com/hiyou.html',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+    ],
     warrantyInfo:
       '公式サイトに「JIS A 1419に準じ、125Hz・250Hz・500Hz・1k・2k・4kの全周波数で性能保証」「マンション保証D-70等級／戸建て保証D-55等級」と記載',
     trackRecord: '公式サイトで確認できず（施工件数の記載なし）',
@@ -2260,12 +2396,17 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト トップページ',
         url: 'https://calmobouon.com/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
       {
         label: '公式サイト 会社概要',
         url: 'https://calmobouon.com/company/',
         checkedDate: SOUNDPROOF_CHECKED,
+      },
+      {
+        label: '公式サイト 防音工事費用',
+        url: 'https://calmobouon.com/hiyou.html',
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
     ],
   },
@@ -2278,6 +2419,7 @@ export const soundproofRoomCompanies: Company[] = [
     slug: 'shinkyo-sound-kobo',
     marketId: 'soundproof-room',
     name: '新響株式会社サウンド工房（新響楽器サウンド工房）',
+    nameKana: 'しんきょうさうんどこうぼう',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -2297,7 +2439,8 @@ export const soundproofRoomCompanies: Company[] = [
     comparisonData: {
       '対応用途': '対応（ピアノ・管弦楽器・配信）',
       '対応建物': '対応',
-      '遮音性能': '公開情報の範囲で記載',
+      '参考価格（公式記載）': 'ユニット型防音室を商品として価格掲載（例：0.8畳 本体価格77万円。施工費・運送料別）',
+      '遮音性能': 'Dr-30〜40（ユニット型の商品別）',
       '防振対策': '対応（浮床構造）',
       '音響設計': '対応',
       'ショールーム': '対応',
@@ -2314,7 +2457,26 @@ export const soundproofRoomCompanies: Company[] = [
       'ユニット型防音室（ヤマハ アビテックス セフィーネNS）の販売・設置',
       '自由設計オリジナル「KJシリーズ」',
     ],
-    priceInfo: '公式サイトに複数プランの参考価格（税込）の記載あり',
+    priceInfo:
+      '公式サイトの大阪府対応エリアページに、ユニット型防音室の商品別価格を掲載（例：セフィーネNS 0.8畳 Dr-35 本体価格77万円、4.3畳 Dr-40 268.4万円。「本体価格」と税抜価格を併記、施工費・運送料別途）。6畳の工事費の目安は記載なし',
+    priceReferences: [
+      {
+        label: 'ユニット型防音室 アビテックスセフィーネNS AMDB08H',
+        price: '本体価格 77万円（税抜70万円）',
+        condition: '0.8畳／Dr-35',
+        note: '施工費・運送料は別途（公式の注記）',
+        sourceUrl: 'https://sound-kobo.jp/works-area/osaka/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'ユニット型防音室 アビテックスセフィーネNS AMDC43H',
+        price: '本体価格 268.4万円（税抜244万円）',
+        condition: '4.3畳／Dr-40',
+        note: '施工費・運送料は別途（公式の注記）',
+        sourceUrl: 'https://sound-kobo.jp/works-area/osaka/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+    ],
     warrantyInfo: '公式サイトで確認できず',
     trackRecord:
       '公式サイトの大阪府対応エリアページに「阪神間防音工事・防音室施工実績 3,021件（2024年5月現在）」と記載',
@@ -2328,7 +2490,7 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト 大阪府の対応エリア',
         url: 'https://sound-kobo.jp/works-area/osaka/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
     ],
   },
@@ -2341,6 +2503,7 @@ export const soundproofRoomCompanies: Company[] = [
     slug: 'bouon-factory',
     marketId: 'soundproof-room',
     name: '株式会社ワイ・エス・シープランニング（防音ファクトリー）',
+    nameKana: 'ぼうおんふぁくとりー',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -2360,7 +2523,8 @@ export const soundproofRoomCompanies: Company[] = [
     comparisonData: {
       '対応用途': '対応（ピアノ・ドラム・スタジオ）',
       '対応建物': '公開情報の範囲で記載',
-      '遮音性能': '対応（Dr値を公開）',
+      '参考価格（公式記載）': '6畳 200万〜270万円（Dr50以上）／300万〜380万円（Dr65以上）',
+      '遮音性能': 'Dr50以上／Dr65以上（プラン別）',
       '防振対策': '公式サイトで確認できず',
       '音響設計': '対応',
       'ショールーム': '公式サイトで確認できず',
@@ -2377,7 +2541,41 @@ export const soundproofRoomCompanies: Company[] = [
       '学校など施設の防音工事',
     ],
     priceInfo:
-      '公式サイトの料金ページに参考価格を掲載。スタンダードプランA（6畳・Dr50以上）200万〜270万円、スタンダードプランB（6畳・Dr65以上）300万〜380万円、プロフェッショナルプランA（6畳・Dr65以上）350万円〜、プロフェッショナルプランB（ダンス／音楽スタジオ・ライブハウス）55万円／坪〜と記載',
+      '公式サイトの料金ページに参考価格を掲載。スタンダードプランA（6畳・Dr50以上）200万〜270万円、スタンダードプランB（6畳・Dr65以上）300万〜380万円、プロフェッショナルプランA（6畳・Dr65以上）350万円〜、プロフェッショナルプランB（ダンス／音楽スタジオ・ライブハウス）55万円／坪〜と記載。室内機・室外機は別途',
+    priceReferences: [
+      {
+        label: 'スタンダードプランA',
+        price: '200万〜270万円',
+        condition: '6畳／防音性能Dr50以上〜',
+        note: '室内機・室外機は別途。税込／税別の記載なし。建具を1セットにする場合は値引きとの注記あり',
+        sourceUrl: 'https://bouonfactory.com/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'スタンダードプランB',
+        price: '300万〜380万円',
+        condition: '6畳／防音性能Dr65以上〜',
+        note: '室内機・室外機は別途。税込／税別の記載なし。状況に応じて鋼製防音ドアを使用',
+        sourceUrl: 'https://bouonfactory.com/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'プロフェッショナルプランA',
+        price: '350万円〜',
+        condition: '6畳／防音性能Dr65以上〜',
+        note: '室内機・室外機は別途。税込／税別の記載なし',
+        sourceUrl: 'https://bouonfactory.com/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'プロフェッショナルプランB（ダンス／音楽スタジオ・ライブハウス）',
+        price: '55万円／坪〜',
+        condition: '防音性能Dr65以上〜／数量は状況に応じて',
+        note: '室内機・室外機は別途。税込／税別の記載なし',
+        sourceUrl: 'https://bouonfactory.com/price/',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+    ],
     warrantyInfo: '公式サイトに「100%性能保証付」と記載（保証条件の詳細は公式サイトで確認できず）',
     trackRecord: '公式サイトで確認できず（施工件数の記載なし）',
     officialUrl: 'https://bouonfactory.com/',
@@ -2395,7 +2593,7 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト 料金',
         url: 'https://bouonfactory.com/price/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
     ],
   },
@@ -2408,6 +2606,7 @@ export const soundproofRoomCompanies: Company[] = [
     slug: 'brg-bouon',
     marketId: 'soundproof-room',
     name: '株式会社BRG防音',
+    nameKana: 'びーあーるじーぼうおん',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -2423,11 +2622,13 @@ export const soundproofRoomCompanies: Company[] = [
       '楽器の音域と必要な防音の強さに合わせて工事内容を変えると公式サイトに記載',
       '個人宅の楽器防音だけでなく、施設・工場の防音工事とカラオケルームの防音工事も事業内容に明記',
       '割賦契約（ローン契約）に対応すると公式サイトに記載',
+      '公式サイトの費用・注意事項ページに、6.0畳・8.0畳の目安価格表（遮音30〜70dB別・税込）を掲載している',
     ],
     comparisonData: {
       '対応用途': '対応（ピアノ・ドラム・管弦楽器）',
       '対応建物': '公開情報の範囲で記載',
-      '遮音性能': '公開情報の範囲で記載',
+      '参考価格（公式記載）': '6畳 99万円〜（30dB）〜198万円〜（70dB）、税込・目安',
+      '遮音性能': '30〜70dB（目安価格表の区分）',
       '防振対策': '公式サイトで確認できず',
       '音響設計': '公式サイトで確認できず',
       'ショールーム': '公式サイトで確認できず',
@@ -2440,7 +2641,42 @@ export const soundproofRoomCompanies: Company[] = [
       '施設・工場等の防音工事',
       '集合住宅への防音工事',
     ],
-    priceInfo: '公式サイトに料金表の記載なし。割賦契約（ローン契約）に対応と記載',
+    priceInfo:
+      '公式サイトの費用・注意事項ページ（/price）に6.0畳・8.0畳の目安価格表を掲載（ピアノ・管楽器・ホームシアター：遮音30dB 99万円〜／40dB 121万円〜／50dB 143万円〜、ドラム・サックス・トランペット・ギター：50dB 165万円〜／60dB 176万円〜／70dB 198万円〜。いずれも6.0畳・税込・目安）。トップページに割賦契約（ローン契約）に対応と記載',
+    priceReferences: [
+      {
+        label: 'ピアノ・管楽器・ホームシアター（遮音30dB）',
+        price: '99万円〜',
+        condition: '6.0畳（8.0畳は110万円〜）',
+        note: '税込・目安。実際は要望や部屋の状態を加味した見積り。何階に工事をするかで内容が変わる場合あり',
+        sourceUrl: 'https://www.bouon-gc.com/price',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'ピアノ・管楽器・ホームシアター（遮音50dB）',
+        price: '143万円〜',
+        condition: '6.0畳（8.0畳は154万円〜）',
+        note: '税込・目安。実際は要望や部屋の状態を加味した見積り',
+        sourceUrl: 'https://www.bouon-gc.com/price',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'ドラム・サックス・トランペット・ギター（遮音50dB）',
+        price: '165万円〜',
+        condition: '6.0畳（8.0畳は181.5万円〜）',
+        note: '税込・目安。実際は要望や部屋の状態を加味した見積り',
+        sourceUrl: 'https://www.bouon-gc.com/price',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+      {
+        label: 'ドラム・サックス・トランペット・ギター（遮音70dB）',
+        price: '198万円〜',
+        condition: '6.0畳（8.0畳は214.5万円〜）',
+        note: '税込・目安。実際は要望や部屋の状態を加味した見積り',
+        sourceUrl: 'https://www.bouon-gc.com/price',
+        checkedDate: SOUNDPROOF_RECHECKED,
+      },
+    ],
     warrantyInfo:
       '公式サイトに「安心保証」との表記およびJIS規格A1419への言及があるが、保証値・保証期間などの条件は公式サイトで確認できず',
     trackRecord: '公式サイトで確認できず（施工件数の記載なし）',
@@ -2449,12 +2685,17 @@ export const soundproofRoomCompanies: Company[] = [
       {
         label: '公式サイト トップページ',
         url: 'https://www.bouon-gc.com/',
-        checkedDate: SOUNDPROOF_CHECKED,
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
       {
         label: '公式サイト 会社概要',
         url: 'https://www.bouon-gc.com/company',
         checkedDate: SOUNDPROOF_CHECKED,
+      },
+      {
+        label: '公式サイト 費用・注意事項',
+        url: 'https://www.bouon-gc.com/price',
+        checkedDate: SOUNDPROOF_RECHECKED,
       },
     ],
   },
