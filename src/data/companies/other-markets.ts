@@ -526,6 +526,8 @@ export const securityCameraCompanies: Company[] = [
 // 確認日: 2026-08-04
 // ============================================================
 const KITCHEN_CHECKED = '2026-08-04';
+// 価格・買取・修理の記載を再確認した日（それ以外の出典は KITCHEN_CHECKED のまま）
+const KITCHEN_RECHECKED = '2026-11-01';
 
 export const kitchenEquipmentCompanies: Company[] = [
   // --------------------------------------------------------
@@ -671,11 +673,11 @@ export const kitchenEquipmentCompanies: Company[] = [
     ],
     comparisonData: {
       '新品・中古': '新品・中古の厨房機器販売について公式サイトに記載',
-      '買取・処分': '店舗＆厨房機器の買取・引取りについて公式サイトに記載',
+      '買取・処分': '店舗・厨房機器の買取・引取りに対応。中古機器は買取・販売・整備までワンストップ、買取のみの相談も可と記載',
       '搬入・設置': '厨房設計・施工および設備施工一式について公式サイトに記載',
       '厨房設計': '対応',
       '設備工事': '対応',
-      '修理・保守': 'メンテナンス（ダクト清掃・グリストラップ・空調など）について公式サイトに記載',
+      '修理・保守': 'グリストラップ・ダクト清掃・空調などのメンテナンスを自社対応と記載',
       '開業支援': '対応',
       '対応地域': '大阪・京都・兵庫を中心に対応（公式サイト記載）',
     },
@@ -688,13 +690,33 @@ export const kitchenEquipmentCompanies: Company[] = [
       'メンテナンス（ダクト清掃・グリストラップ・空調など）',
       '開業支援・補助金申請支援',
     ],
-    priceInfo: '公式サイトに工事費用の目安として300万〜1,000万円の記載あり（内容により変動）',
+    priceInfo:
+      '公式サイトに工事費用の目安として300万〜1,000万円の記載あり（内容により変動）。店舗工事費の事例として、バル（11坪・スケルトン）315万円（税別）、ラーメン店（13坪・居抜き）263万円（税別）を掲載（いずれも厨房機器・諸経費・デザイン費等を除く）',
     warrantyInfo: '公式サイトで確認できず',
     trackRecord: '公式サイトに「年間30件以上の施工実績」と記載',
     officialUrl: 'https://www.etenpochubou.com/',
     sources: [
       { label: '公式サイト トップ', url: 'https://www.etenpochubou.com/', checkedDate: KITCHEN_CHECKED },
       { label: '公式サイト 会社概要', url: 'https://www.etenpochubou.com/businessoutline', checkedDate: KITCHEN_CHECKED },
+      { label: '公式サイト 店舗工事費の目安', url: 'https://www.etenpochubou.com/costofconstruction', checkedDate: KITCHEN_RECHECKED },
+    ],
+    priceReferences: [
+      {
+        label: '事例 バル（11坪・14席・スケルトン）',
+        price: '315万円（税別）',
+        condition: '内装170万円＋設備145万円。坪単価約28万円。厨房機器・諸経費・デザイン費等は除く',
+        note: '個別案件の実績金額。標準価格ではない',
+        sourceUrl: 'https://www.etenpochubou.com/costofconstruction',
+        checkedDate: KITCHEN_RECHECKED,
+      },
+      {
+        label: '事例 ラーメン店（13坪・14席・居抜き）',
+        price: '263万円（税別）',
+        condition: '内装123万円＋設備140万円。坪単価約20万円。厨房機器・諸経費・デザイン費等は除く',
+        note: '個別案件の実績金額。トイレ・空調の一部・厨房部分などは既存を利用',
+        sourceUrl: 'https://www.etenpochubou.com/costofconstruction',
+        checkedDate: KITCHEN_RECHECKED,
+      },
     ],
   },
 
@@ -724,7 +746,7 @@ export const kitchenEquipmentCompanies: Company[] = [
     ],
     comparisonData: {
       '新品・中古': '中古機器の販売および新品の取り扱いについて公式サイトに記載',
-      '買取・処分': '買取に対応。産業廃棄物収集運搬業許可の保有を公式サイトに記載',
+      '買取・処分': '買取に対応。「近畿一円無料で出張査定」と記載。産業廃棄物収集運搬業許可の保有を公式サイトに記載',
       '搬入・設置': '公式サイトで確認できず',
       '厨房設計': '公式サイトで確認できず',
       '設備工事': '公式サイトで確認できず',
@@ -775,12 +797,13 @@ export const kitchenEquipmentCompanies: Company[] = [
     ],
     comparisonData: {
       '新品・中古': '業務用中古厨房機器の買取・販売について公式サイトに記載。新品の取り扱いは公式サイトで確認できず',
-      '買取・処分': '対応',
+      '買取・処分':
+        '対応（製氷機・業務用冷蔵庫・コールドテーブル・フライヤー・コンロ・シンクなどを買取。見積費・出張費は無料、写真のみでも見積可と記載）',
       '搬入・設置': '取り外し・搬出・運搬および移設作業について公式サイトに記載',
       '厨房設計': '公式サイトで確認できず',
       '設備工事':
         '内装解体・スケルトン工事について公式サイトに記載（給排水・ガス・電気工事の記載は公式サイトで確認できず）',
-      '修理・保守': '対応',
+      '修理・保守': '対応（製氷機修理20,000円〜・フライヤー修理8,000円〜、別途出張費5,000円。税込と記載）',
       '開業支援': '新店舗の開店準備（機材の一式買取・移設）に関する記載あり',
       '対応地域': '近畿（大阪・京都・兵庫・奈良・和歌山・滋賀）ほか東海・北陸・中国・四国（公式サイト記載）',
     },
@@ -796,7 +819,23 @@ export const kitchenEquipmentCompanies: Company[] = [
     warrantyInfo: '公式サイトで確認できず',
     trackRecord: '公式サイトにお客様の声の掲載あり。施工・買取件数の記載は公式サイトで確認できず',
     officialUrl: 'https://chubouliberty.com',
-    sources: [{ label: '公式サイト トップ', url: 'https://chubouliberty.com', checkedDate: KITCHEN_CHECKED }],
+    sources: [{ label: '公式サイト トップ', url: 'https://chubouliberty.com', checkedDate: KITCHEN_RECHECKED }],
+    priceReferences: [
+      {
+        label: '製氷機の修理',
+        price: '20,000円〜（税込）',
+        condition: '別途出張費5,000円',
+        sourceUrl: 'https://chubouliberty.com',
+        checkedDate: KITCHEN_RECHECKED,
+      },
+      {
+        label: 'フライヤーの修理',
+        price: '8,000円〜（税込）',
+        condition: '別途出張費5,000円',
+        sourceUrl: 'https://chubouliberty.com',
+        checkedDate: KITCHEN_RECHECKED,
+      },
+    ],
   },
 
   // --------------------------------------------------------
@@ -936,7 +975,7 @@ export const kitchenEquipmentCompanies: Company[] = [
     ],
     comparisonData: {
       '新品・中古': '中古厨房機器・店舗用品の販売について公式サイトに記載。新品の取り扱いは公式サイトで確認できず',
-      '買取・処分': '買取および閉店・移転時の廃棄処分について公式サイトに記載',
+      '買取・処分': '買取（電話・FAX・メールでメーカー名・型式などから概算見積もり、画像添付も可）と、閉店・移転・改装時の廃棄処分に対応と記載',
       '搬入・設置': '商品の全国配送について公式サイトに記載（搬入・設置の記載は公式サイトで確認できず）',
       '厨房設計': '公式サイトで確認できず',
       '設備工事':
@@ -4781,6 +4820,8 @@ export const commercialCleaningCompanies: Company[] = [
 
 // AED研修
 const AED_CHECKED = '2026-08-10';
+// 受講料の再確認日（出張経費PDFなど再確認していない出典は AED_CHECKED のまま）
+const AED_RECHECKED = '2026-11-01';
 
 export const corporateAedTrainingCompanies: Company[] = [
   // --------------------------------------------------------
@@ -4791,6 +4832,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     slug: 'osaka-life-support',
     marketId: 'corporate-aed-training',
     name: '特定非営利活動法人 大阪ライフサポート協会',
+    nameKana: 'おおさからいふさぽーときょうかい',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -4812,6 +4854,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     comparisonData: {
       研修内容: '対応（心肺蘇生・AED・応急手当）',
       実技形式: '対応',
+      '受講料（公式記載）': '市民向け2,500円〜3,000円（税込）。出張は別途経費',
       出張対応: '対応（有料）',
       対応人数: '要問い合わせ',
       講師経歴: '公式サイトで確認できず',
@@ -4838,8 +4881,54 @@ export const corporateAedTrainingCompanies: Company[] = [
     sources: [
       { label: '公式サイト トップ', url: 'https://osakalifesupport.or.jp/', checkedDate: AED_CHECKED },
       { label: '公式サイト 組織概要', url: 'https://osakalifesupport.or.jp/aboutus/', checkedDate: AED_CHECKED },
-      { label: '公式サイト 救命講習会（救急蘇生講習会）', url: 'https://osakalifesupport.or.jp/qmeikoshu/', checkedDate: AED_CHECKED },
+      { label: '公式サイト 救命講習会（救急蘇生講習会）', url: 'https://osakalifesupport.or.jp/qmeikoshu/', checkedDate: AED_RECHECKED },
       { label: '公式 出張講習会 案内PDF', url: 'https://osakalifesupport.or.jp/wp-content/uploads/2023/12/2024_shuc.pdf', checkedDate: AED_CHECKED },
+    ],
+    priceReferences: [
+      {
+        label: '市民向け 試験なしコース',
+        price: '2,500円',
+        condition: '税込・テキスト料込。受講証発行',
+        sourceUrl: 'https://osakalifesupport.or.jp/qmeikoshu/',
+        checkedDate: AED_RECHECKED,
+      },
+      {
+        label: '市民向け 試験ありコース',
+        price: '3,000円',
+        condition: '税込・テキスト料込。修了証発行',
+        sourceUrl: 'https://osakalifesupport.or.jp/qmeikoshu/',
+        checkedDate: AED_RECHECKED,
+      },
+      {
+        label: 'ファーストエイド（座学＋実技）',
+        price: '2,000円',
+        condition: '税込・テキスト料込。受講証発行',
+        sourceUrl: 'https://osakalifesupport.or.jp/qmeikoshu/',
+        checkedDate: AED_RECHECKED,
+      },
+      {
+        label: 'PUSHコース',
+        price: '1,000円',
+        condition: '受講証発行',
+        note: '「大阪ハートラボ」のみ、SNS投稿を条件に無料受講が可能と記載',
+        sourceUrl: 'https://osakalifesupport.or.jp/qmeikoshu/',
+        checkedDate: AED_RECHECKED,
+      },
+      {
+        label: '指導者養成コース（一般）',
+        price: '非会員8,000円／会員3,000円',
+        condition: '資料代込。修了証発行',
+        sourceUrl: 'https://osakalifesupport.or.jp/qmeikoshu/',
+        checkedDate: AED_RECHECKED,
+      },
+      {
+        label: '出張講習会の出張経費（目安）',
+        price: '新大阪から10km程度 片道5,000円前後／20km程度 6,000円前後／50km程度 12,000円前後',
+        condition: '平日。日祝は2割増。受講料とは別に必要',
+        note: '案内PDFの記載（今回は再確認していない）',
+        sourceUrl: 'https://osakalifesupport.or.jp/wp-content/uploads/2023/12/2024_shuc.pdf',
+        checkedDate: AED_CHECKED,
+      },
     ],
   },
 
@@ -4851,6 +4940,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     slug: 'happy-forest',
     marketId: 'corporate-aed-training',
     name: 'MFA JAPAN公認トレーニングセンター ハッピーフォレスト',
+    nameKana: 'はっぴーふぉれすと',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -4872,6 +4962,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     comparisonData: {
       研修内容: '対応（CPR・AED・ファーストエイド）',
       実技形式: '対応',
+      '受講料（公式記載）': '定期開催15,400円／個別16,500円。出張は見積り',
       出張対応: '対応（見積り制）',
       対応人数: '公開情報の範囲で記載',
       講師経歴: '公開情報の範囲で記載',
@@ -4895,10 +4986,33 @@ export const corporateAedTrainingCompanies: Company[] = [
     officialUrl: 'https://happy-forest.com/',
     sources: [
       { label: '公式サイト トップ', url: 'https://happy-forest.com/', checkedDate: AED_CHECKED },
-      { label: '公式サイト 受講方法（出張開催・個別開催・定期開催）', url: 'https://happy-forest.com/attend_index/', checkedDate: AED_CHECKED },
+      { label: '公式サイト 受講方法（出張開催・個別開催・定期開催）', url: 'https://happy-forest.com/attend_index/', checkedDate: AED_RECHECKED },
       { label: '公式サイト ベーシックプラスコース', url: 'https://happy-forest.com/mfa_program_index/mfa_program_basicplus/', checkedDate: AED_CHECKED },
       { label: '公式サイト 専属MFAインストラクター紹介', url: 'https://happy-forest.com/other/instructor/', checkedDate: AED_CHECKED },
       { label: '公式サイト 大阪教室アクセス', url: 'https://happy-forest.com/access_from_fuse/', checkedDate: AED_CHECKED },
+    ],
+    priceReferences: [
+      {
+        label: 'ベーシックプラスコース 定期開催（大阪会場）',
+        price: '15,400円',
+        condition: '参考額。コース等により異なる。標準6時間。税込・税別の表記は確認できず',
+        sourceUrl: 'https://happy-forest.com/attend_index/',
+        checkedDate: AED_RECHECKED,
+      },
+      {
+        label: 'ベーシックプラスコース 個別（リクエスト）開催',
+        price: '16,500円（基本講習費）',
+        condition: '参考額。複数名受講などの割引で定期開催と同額かそれ以下になる場合あり',
+        sourceUrl: 'https://happy-forest.com/attend_index/',
+        checkedDate: AED_RECHECKED,
+      },
+      {
+        label: '企業・団体向け 出張開催',
+        price: 'お見積り制',
+        condition: '概ね6〜8人以上で受講すると個別開催より安くなると記載',
+        sourceUrl: 'https://happy-forest.com/attend_index/',
+        checkedDate: AED_RECHECKED,
+      },
     ],
   },
 
@@ -4910,6 +5024,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     slug: 'osaka-ij',
     marketId: 'corporate-aed-training',
     name: '一般社団法人 OSAKA IJ',
+    nameKana: 'おおさかあいじぇい',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -4930,6 +5045,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     comparisonData: {
       研修内容: '対応（胸骨圧迫・AED・通報要領）',
       実技形式: '対応',
+      '受講料（公式記載）': '公式サイトで確認できず',
       出張対応: '対応（出向き実施）',
       対応人数: '公式サイトで確認できず',
       講師経歴: '公開情報の範囲で記載',
@@ -4961,6 +5077,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     slug: 'nihon-kohden',
     marketId: 'corporate-aed-training',
     name: '日本光電工業株式会社（AEDライフ）',
+    nameKana: 'にほんこうでんこうぎょう',
     listingType: 'standard',
     status: 'published',
     region: {
@@ -4980,6 +5097,7 @@ export const corporateAedTrainingCompanies: Company[] = [
     comparisonData: {
       研修内容: '対応（AED・心肺蘇生）',
       実技形式: '対応',
+      '受講料（公式記載）': '訪問60分44,000円／180分71,500円（税込）',
       出張対応: '対応（訪問講習会）',
       対応人数: '対応（1名につき20名まで）',
       講師経歴: '公式サイトで確認できず',
@@ -5002,7 +5120,7 @@ export const corporateAedTrainingCompanies: Company[] = [
       {
         label: '公式サイト AEDライフ 訪問講習会',
         url: 'https://www.aed-life.com/lecture/lecture02/',
-        checkedDate: AED_CHECKED,
+        checkedDate: AED_RECHECKED,
       },
       {
         label: '公式サイト 日本光電 関西支社（拠点情報）',
@@ -5010,120 +5128,20 @@ export const corporateAedTrainingCompanies: Company[] = [
         checkedDate: AED_CHECKED,
       },
     ],
-  },
-
-  // --------------------------------------------------------
-  // 5. 一般財団法人 大阪消防振興協会（大阪市西区）
-  // --------------------------------------------------------
-  {
-    id: 'aed-ossk',
-    slug: 'ossk',
-    marketId: 'corporate-aed-training',
-    name: '一般財団法人 大阪消防振興協会',
-    listingType: 'standard',
-    status: 'published',
-    region: {
-      headquarters: '大阪府大阪市西区江戸堀1-24-18',
-      branches: [],
-      prefectures: ['大阪府'],
-      wideAreaKansai: false,
-      travelFee: '公式サイトで確認できず',
-    },
-    overview:
-      '大阪市西区に所在する一般財団法人で、大阪市消防局からの委託を受けて救命講習・応急手当普及員講習を実施しています。公式サイトには平成6年度から救命講習及び応急手当普及員講習を実施していると記載されています。事業所単位での団体申し込みにも対応し、受講料は無料で教材費のみ実費と案内しています。',
-    features: [
-      '受講料は無料で、教材費（実費・コースにより200円〜3,960円程度）のみと公式サイトに記載',
-      '救命入門コース・普通救命講習Ⅰ〜Ⅲ・上級救命講習・応急手当普及員講習・応急手当普及員再講習の5段階を公開',
-      '応急手当普及員講習を修了すると、社内で自ら講習を実施できる「応急手当普及員」の認定を受けられると記載',
-    ],
-    comparisonData: {
-      研修内容: '対応（心肺蘇生・AED・応急手当）',
-      実技形式: '対応',
-      出張対応: '公式サイトで確認できず（事業所単位の団体申込は対応）',
-      対応人数: '公式サイトで確認できず',
-      講師経歴: '公式サイトで確認できず',
-      カスタマイズ: '公式サイトで確認できず',
-      修了証: '対応（コース別に認定証発行）',
-      対応地域: '大阪市中心（大阪市消防局委託）',
-    },
-    services: [
-      '救命入門コース（90分）',
-      '普通救命講習Ⅰ・Ⅱ・Ⅲ（3〜4時間）',
-      '上級救命講習（1日）',
-      '応急手当普及員講習（3日間）',
-      '応急手当普及員再講習（3時間）',
-    ],
-    priceInfo:
-      '公式サイトに「受講料は無料、教材費のみ実費」と記載。教材費はコースにより200円〜3,960円程度と案内',
-    warrantyInfo: '該当なし（研修サービスのため保証の概念なし）',
-    trackRecord: '公式サイトに「平成6年度から救命講習及び応急手当普及員講習を実施」と記載。実施件数・累計受講者数の記載は確認できず',
-    officialUrl: 'https://www.ossk.or.jp/',
-    sources: [
-      { label: '公式サイト トップ', url: 'https://www.ossk.or.jp/', checkedDate: AED_CHECKED },
-      { label: '公式サイト 講習会案内', url: 'https://www.ossk.or.jp/lecture/spread/', checkedDate: AED_CHECKED },
-    ],
-  },
-
-  // --------------------------------------------------------
-  // 6. 日本赤十字社 大阪府支部（大阪市中央区）
-  // --------------------------------------------------------
-  {
-    id: 'aed-japan-red-cross-osaka',
-    slug: 'japan-red-cross-osaka',
-    marketId: 'corporate-aed-training',
-    name: '日本赤十字社 大阪府支部',
-    listingType: 'standard',
-    status: 'published',
-    region: {
-      headquarters: '大阪府大阪市中央区大手前2-1-7 大阪赤十字会館2階',
-      branches: [],
-      prefectures: ['大阪府'],
-      wideAreaKansai: false,
-      travelFee: '公式サイトで確認できず',
-    },
-    overview:
-      '日本赤十字社（認可法人）の大阪府支部です。救急法基礎講習・救急員養成講習・救急法指導員養成講習を実施しており、企業・学校・団体からの講習依頼を受け付けています。依頼受付窓口では、講習会の申込は希望日の2か月前までと案内されています。',
-    features: [
-      '救急法基礎講習（4時間）1,800円、基礎講習＋救急員養成講習（3日間）4,120円と具体的な受講料を公式サイトに公開',
-      '企業・学校・団体からの講習依頼を受け付け、見積書発行にも対応すると記載',
-      '講習会の申込は「希望日の2か月前まで」という具体的なリードタイムを公式サイトに明記している',
-    ],
-    comparisonData: {
-      研修内容: '対応（心肺蘇生・AED・気道異物除去）',
-      実技形式: '対応',
-      出張対応: '対応（申込は希望日の2か月前まで）',
-      対応人数: '公式サイトで確認できず',
-      講師経歴: '対応（赤十字救急法指導員）',
-      カスタマイズ: '公式サイトで確認できず',
-      修了証: '対応（基礎講習修了証・救急員認定証）',
-      対応地域: '大阪府（大阪市中央区に支部）',
-    },
-    services: [
-      '救急法基礎講習（4時間）',
-      '基礎講習＋救急員養成講習（3日間）',
-      '救急法指導員養成講習（9日間）',
-      '企業・学校・団体向け講習依頼の受付',
-    ],
-    priceInfo:
-      '公式サイトに「救急法基礎講習4時間 1,800円」「基礎講習＋救急員養成講習3日間 4,120円」「救急法指導員養成講習9日間 無料（受講要件あり）」と記載',
-    warrantyInfo: '該当なし（研修サービスのため保証の概念なし）',
-    trackRecord: '公式サイトで確認できず',
-    officialUrl: 'https://www.jrc.or.jp/chapter/osaka/study/emergency/',
-    sources: [
+    priceReferences: [
       {
-        label: '公式サイト 講習会（救急法）',
-        url: 'https://www.jrc.or.jp/chapter/osaka/study/emergency/',
-        checkedDate: AED_CHECKED,
+        label: '訪問講習会 60分コース',
+        price: '44,000円（1開催）',
+        condition: '税込。資料代・機材運送代込み。交通費別。インストラクター1名につき受講者20名まで',
+        sourceUrl: 'https://www.aed-life.com/lecture/lecture02/',
+        checkedDate: AED_RECHECKED,
       },
       {
-        label: '公式サイト 講習会の依頼について',
-        url: 'https://www.jrc.or.jp/chapter/osaka/study/course/',
-        checkedDate: AED_CHECKED,
-      },
-      {
-        label: '公式サイト アクセス',
-        url: 'https://www.jrc.or.jp/chapter/osaka/about/access/',
-        checkedDate: AED_CHECKED,
+        label: '訪問講習会 180分コース（修了証つき）',
+        price: '71,500円（1開催）',
+        condition: '税込。資料代・機材運送代込み。交通費別。インストラクター1名につき受講者20名まで（21名以上は要相談）',
+        sourceUrl: 'https://www.aed-life.com/lecture/lecture02/',
+        checkedDate: AED_RECHECKED,
       },
     ],
   },

@@ -55,7 +55,7 @@ const breadcrumbs = [
     ? `${market.shortName}の費用・参考価格を比較｜大阪 | Oppick`
     : `${market.shortName}の費用について｜大阪 | Oppick`}
   description={hasPrices
-    ? `大阪の${market.shortName}会社${priceCompanies.length}社が公式サイトに掲載している参考価格を、出典・確認日つきで一覧。広さ・遮音性能・税込／税別などの条件の違いと、見積もり時の確認ポイントも整理します。`
+    ? `大阪の${market.shortName}会社${priceCompanies.length}社が公式サイトに掲載している参考価格を、出典・確認日つきで一覧。対象範囲・税込／税別などの条件の違いと、見積もり時の確認ポイントも整理します。`
     : `大阪の${market.shortName}の費用構成・見積もり時の確認ポイントを解説。具体的な金額は現地調査・見積もりが必要です。`}
   canonical={`/${market.slug}/cost/`}
   jsonLd={getArticleSchema({
@@ -81,8 +81,8 @@ const breadcrumbs = [
     {hasPrices ? (
       <div class="info-notice" style="margin-bottom: var(--space-8)">
         <strong>重要：</strong>下表の金額は、各社の公式サイトに掲載されている参考価格・施工事例の費用を、そのまま転記したものです。
-        広さ・遮音性能・想定用途・税込／税別・含まれる工事が会社ごとに異なるため、同じ条件での比較ではありません。
-        実際の費用は、現地調査・見積もりを複数社から取得して確認してください。
+        対象範囲・条件・税込／税別・含まれる内容が会社ごとに異なるため、同じ条件での比較ではありません。
+        実際の費用は、見積もりを複数社から取得して確認してください。
       </div>
     ) : (
       <div class="info-notice" style="margin-bottom: var(--space-8)">
@@ -138,7 +138,7 @@ const breadcrumbs = [
           </table>
         </div>
         <p class="price-footnote">
-          公式サイトに標準の価格表がない会社は、施工事例などに載っている費用を記載しています（事例は個別案件の実績金額で、標準価格ではありません）。
+          公式サイトに標準の価格表がない会社は、施工事例など公式サイトの他の記載にある金額を載せています（事例は個別案件の実績金額で、標準価格ではありません）。
           価格は変更される場合があるため、依頼前に各社の公式サイトで最新の内容を確認してください。
         </p>
       </section>
