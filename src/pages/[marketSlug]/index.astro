@@ -132,6 +132,11 @@ const jsonLd = jsonDriven
         <p class="section-subtitle">
           公式サイト等の公開情報を基に整理しています。詳しい調査方法は<a href="/methodology/">調査・比較方針</a>をご覧ください。
         </p>
+        {companies.some((c) => c.listingType === 'pr') && (
+          <p class="section-subtitle">
+            「PR」バッジの企業は有料の広告掲載です。PR掲載の有無は掲載順に影響しません。<a href="/advertising-policy/">広告掲載ポリシー</a>
+          </p>
+        )}
         {market.companyOrder === 'completeness' && (
           <p class="section-subtitle">
             並び順は、公式サイトで確認できた比較項目の数が多い順です（同数の場合は社名のよみ順）。PR掲載の有無や報酬は並び順に影響しません。
